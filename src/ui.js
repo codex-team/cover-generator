@@ -1,0 +1,1 @@
+let toolbar = require('./toolbar');
