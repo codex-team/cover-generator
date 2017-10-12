@@ -1,34 +1,22 @@
-@font-face
-{
-    font-family: "SFUI-Bold";
-    src: url(../font/SFUIText-Bold.otf);
+.cover_editor__text {
+    font-family: -apple-system ".SFNSText-Regular" "San Francisco" "Roboto" "Segoe UI" "Helvetica Neue" "Lucida Grande" sans-serif;
 }
 
-@font-face
-{
-    font-family: "SFUI-Heavy";
-    src: url(../font/SFUIText-Heavy.otf);
+.cover_editor__text_active {
+    border: 1px dashed #3c93f5;
 }
 
-span.active
-{
-    border: 1px dashed #3c93f5
-}
-
-span.font-size-small
-{
-    font-family: "SFUI-Bold";
+.cover_editor__text_font_size_small {
+    font-weight: 600;
     font-size: 20px;
 }
 
-span.font-size-medium
-{
-    font-family: "SFUI-Heavy";
+.cover_editor__text_font_size_medium {
+    font-weight: 900;
     font-size: 27px;
 }
 
-span.font-size-big
-{
-    font-family: "SFUI-Heavy";
+.cover_editor__text_font_size_big {
+    font-family: 900;
     font-size: 37px;
 }
