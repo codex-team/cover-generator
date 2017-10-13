@@ -2,21 +2,21 @@
     font-family: -apple-system ".SFNSText-Regular" "San Francisco" "Roboto" "Segoe UI" "Helvetica Neue" "Lucida Grande" sans-serif;
 }
 
-.cover_editor__text_active {
+.cover_editor__text-active {
     border: 1px dashed #3c93f5;
 }
 
-.cover_editor__text_font_size_small {
+.cover_editor__text-font-size-small {
     font-weight: 600;
     font-size: 20px;
 }
 
-.cover_editor__text_font_size_medium {
+.cover_editor__text-font-size-medium {
     font-weight: 900;
     font-size: 27px;
 }
 
-.cover_editor__text_font_size_big {
+.cover_editor__text-font-size-big {
     font-family: 900;
     font-size: 37px;
 }

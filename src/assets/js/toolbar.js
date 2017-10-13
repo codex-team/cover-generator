@@ -64,7 +64,7 @@ function Toolbar(elem, canvas, style) {
             tree.toolbar.classList.remove('cover_editor__hidden');
 
         }
-        tree.controllable.classList.add('cover_editor__text_active');
+        tree.controllable.classList.add('cover_editor__text-active');
         changeToolbarPosition();
 
     }
@@ -79,7 +79,7 @@ function Toolbar(elem, canvas, style) {
 
         if (event.target !== tree.controllable && event.target.parentNode !== tree.toolbar && event.target !== tree.toolbar) {
 
-            tree.controllable.classList.remove('cover_editor__text_active');
+            tree.controllable.classList.remove('cover_editor__text-active');
             tree.toolbar.classList.add('cover_editor__hidden');
 
         }
@@ -155,22 +155,22 @@ function Toolbar(elem, canvas, style) {
     function changeControllableFontSize(event) {
 
         //  ЗАВИСИМОЕ ПРЕОБРАЗОВАНИЕ
-        if (tree.buttons.fontSize.classList.contains('cover_editor__toolbar__button_font_size_big')) {
+        if (tree.buttons.fontSize.classList.contains('cover_editor__toolbar__button-font-size-big')) {
 
-            tree.buttons.fontSize.classList.remove('cover_editor__toolbar__button_font_size_big');
-            tree.controllable.classList.remove('cover_editor__text_font_size_big');
+            tree.buttons.fontSize.classList.remove('cover_editor__toolbar__button-font-size-big');
+            tree.controllable.classList.remove('cover_editor__text-font-size-big');
 
-        } else if (tree.buttons.fontSize.classList.contains('cover_editor__toolbar__button_font_size_medium')) {
+        } else if (tree.buttons.fontSize.classList.contains('cover_editor__toolbar__button-font-size-medium')) {
 
-            tree.buttons.fontSize.classList.remove('cover_editor__toolbar__button_font_size_medium');
-            tree.buttons.fontSize.classList.add('cover_editor__toolbar__button_font_size_big');
-            tree.controllable.classList.remove('cover_editor__text_font_size_big');
-            tree.controllable.classList.add('cover_editor__text_font_size_big');
+            tree.buttons.fontSize.classList.remove('cover_editor__toolbar__button-font-size-medium');
+            tree.buttons.fontSize.classList.add('cover_editor__toolbar__button-font-size-big');
+            tree.controllable.classList.remove('cover_editor__text-font-size-big');
+            tree.controllable.classList.add('cover_editor__text-font-size-big');
 
-        } else if (tree.buttons.fontSize.classList.contains('cover_editor__toolbar__button_font_size_small')) {
+        } else if (tree.buttons.fontSize.classList.contains('cover_editor__toolbar__button-font-size-small')) {
 
-            tree.buttons.fontSize.classList.add('cover_editor__toolbar__button_font_size_medium');
-            tree.controllable.classList.add('cover_editor__text_font_size_big');
+            tree.buttons.fontSize.classList.add('cover_editor__toolbar__button-font-size-medium');
+            tree.controllable.classList.add('cover_editor__text-font-size-big');
 
         }
 
@@ -206,7 +206,7 @@ function Toolbar(elem, canvas, style) {
 
     //Связывание объекта toolbar с controllable
     tree.controllable = elem;
-    tree.controllable.classList.add('cover_editor__text_font_size_small');
+    tree.controllable.classList.add('cover_editor__text-font-size-small');
     tree.controllable.addEventListener('dblclick', showToolbar.bind(this));
     
     //Создание блока toolbar'а
@@ -216,20 +216,20 @@ function Toolbar(elem, canvas, style) {
 
     tree.buttons.left = document.createElement('button');
     tree.buttons.left.classList.add('cover_editor__toolbar__icon');
-    tree.buttons.left.classList.add('cover_editor__toolbar__button_left');
+    tree.buttons.left.classList.add('cover_editor__toolbar__button-left');
     tree.buttons.left.addEventListener('click', changeControllableAlign.bind(this));
     tree.toolbar.appendChild(tree.buttons.left);
     tree.buttons.left.click();
 
     tree.buttons.center = document.createElement('button');
     tree.buttons.center.classList.add('cover_editor__toolbar__icon');
-    tree.buttons.center.classList.add('cover_editor__toolbar__button_center');
+    tree.buttons.center.classList.add('cover_editor__toolbar__button-center');
     tree.buttons.center.addEventListener('click', changeControllableAlign.bind(this));
     tree.toolbar.appendChild(tree.buttons.center);
 
     tree.buttons.right = document.createElement('button');
     tree.buttons.right.classList.add('cover_editor__toolbar__icon');
-    tree.buttons.right.classList.add('cover_editor__toolbar__button_right');
+    tree.buttons.right.classList.add('cover_editor__toolbar__button-right');
     tree.buttons.right.addEventListener('click', changeControllableAlign.bind(this));
     tree.toolbar.appendChild(tree.buttons.right);
 
@@ -237,18 +237,18 @@ function Toolbar(elem, canvas, style) {
 
         tree.buttons.fontSize = document.createElement('button');
         tree.buttons.fontSize.classList.add('cover_editor__toolbar__icon');
-        tree.buttons.fontSize.classList.add('cover_editor__toolbar__button_font_size_small');
+        tree.buttons.fontSize.classList.add('cover_editor__toolbar__button-font-size-small');
         tree.buttons.fontSize.addEventListener('click', changeControllableFontSize.bind(this));
         tree.toolbar.insertBefore(tree.buttons.fontSize, tree.buttons.left);
 
         tree.buttons.colorForm = document.createElement('input');
-        tree.buttons.colorForm.classList.add('cover_editor__toolbar__input_color_form');
+        tree.buttons.colorForm.classList.add('cover_editor__toolbar__input-color-form');
         tree.buttons.colorForm.addEventListener('keyup', changeToolbarColorButtonColor.bind(this));
         tree.toolbar.appendChild(tree.buttons.colorForm);
 
         tree.buttons.color = document.createElement('button');
         tree.buttons.color.classList.add('cover_editor__toolbar__icon');
-        tree.buttons.color.classList.add('cover_editor__toolbar__button_color');
+        tree.buttons.color.classList.add('cover_editor__toolbar__button-color');
         tree.buttons.color.addEventListener('click', toggleToolbarColorMode.bind(this));
         tree.toolbar.appendChild(tree.buttons.color);
 

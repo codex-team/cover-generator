@@ -35,39 +35,39 @@
         outline: none;
     }
 
-    &__button_left {
+    &__button-left {
         background-image: url(../img/left.png);
     }
     
-    &__button_center {
+    &__button-center {
         background-image: url(../img/center.png);
     }
 
-    &__button_right {
+    &__button-right {
         background-image: url(../img/right.png);
     }
 
-    &__button_font_size_small {
+    &__button-font-size-small {
         opacity: 1;
         background-image: url(../img/font-size-small.png);
         transition: background 0.5s;
     }
 
-    &__button_font_size_medium {
+    &__button-font-size-medium {
         background-image: url(../img/font-size-medium.png);
     }
 
-    &__button_font_size_big {
+    &__button-font-size-big {
         background-image: url(../img/font-size-big.png);
     }
 
-    &__button_color {
+    &__button-color {
         opacity: 1;
         background-color: black;
         border-radius: 5px;
     }
 
-    &__input_color_form {
+    &__input-color-form {
         display: none;
         width: 110px;
         margin: 0 5px;
@@ -75,7 +75,7 @@
         border-radius: 5px;
     }
 
-    &__input_color_form:focus {
+    &__input-color-form:focus {
         outline: none;
     }
 }
