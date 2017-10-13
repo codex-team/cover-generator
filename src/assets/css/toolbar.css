@@ -1,8 +1,8 @@
-.cover_editor__hidden {
+.cover-editor__hidden {
     display: none;
 }
 
-.cover_editor__toolbar {
+.cover-editor__toolbar {
     display: flex;
     flex-direction: row;
     position: absolute;
@@ -22,7 +22,7 @@
         background: rgba(0, 0, 0, 0) center no-repeat;
         transition: opacity 0.5s;
 
-        &__active {
+        &--active {
             opacity: 1;
         }
     }
@@ -35,39 +35,39 @@
         outline: none;
     }
 
-    &__button-left {
+    &__button--left {
         background-image: url(../img/left.png);
     }
     
-    &__button-center {
+    &__button--center {
         background-image: url(../img/center.png);
     }
 
-    &__button-right {
+    &__button--right {
         background-image: url(../img/right.png);
     }
 
-    &__button-font-size-small {
+    &__button--small {
         opacity: 1;
         background-image: url(../img/font-size-small.png);
         transition: background 0.5s;
     }
 
-    &__button-font-size-medium {
+    &__button--medium {
         background-image: url(../img/font-size-medium.png);
     }
 
-    &__button-font-size-big {
+    &__button--big {
         background-image: url(../img/font-size-big.png);
     }
 
-    &__button-color {
+    &__button--color {
         opacity: 1;
         background-color: black;
         border-radius: 5px;
     }
 
-    &__input-color-form {
+    &__input--color-form {
         display: none;
         width: 110px;
         margin: 0 5px;
@@ -75,7 +75,7 @@
         border-radius: 5px;
     }
 
-    &__input-color-form:focus {
+    &__input--color-form:focus {
         outline: none;
     }
 }
