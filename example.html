@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Cover Generator</title>
-    <script src="bundle.js"></script>
-    <script src = "UI.js" defer></script>
-    <link rel="stylesheet" href="Style.css">
-</head>
-<body>
-    <div id="canvas"></div>
-    <script>
-        cover.init({
-            containter: 'canvas'
-        });
-
-        cover.destroy();
-    </script>
-</body>
+    <head>
+        <title>TextEditor</title>
+        <meta charset = "windows1251">
+        <script type="text/javascript" src = "UI.js"></script>
+        <link rel="stylesheet" type="text/css" href="Style.css">
+    </head>
+    <body>
+        <div id = "Content">
+        </div>
+        <script type="text/javascript">
+            UI.create('Content');
+        </script>
+    </body>
 </html>

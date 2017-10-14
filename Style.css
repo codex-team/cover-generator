@@ -1,0 +1,168 @@
+body {
+	margin: 0 !important;
+}
+
+@font-face {
+    font-family: "SFUI-Heavy";
+    src: url(fronts/SFUIText-Heavy.otf);
+}
+
+@font-face {
+    font-family: "SFUI-Regular";
+    src: url(fronts/SFUIText-Regular.otf);
+}
+
+#Content {
+	background: #F4F5FD;
+	margin: none;
+	padding: none;
+	min-height: 1000px;
+	display: flex;
+	flex-direction: column;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	width: 100%;
+}
+
+.buttonsDiv {
+	width: 650px;
+	height: 31px;
+	display: flex;
+	flex-direction: row;
+	margin: auto;
+	margin-top: 200px;
+	margin-bottom: 0px;
+}
+
+.headButton {
+	width: 101px;
+	height: 31px;
+	margin-left: 230px;
+	border: 1px solid #D6E5F9;
+	border-radius: 3px;
+	background: #D6E5F9;
+}
+
+.imgHeadButton {
+	width: 13px;
+	height: 13px;
+	position: relative;
+	left: -10px;
+	top: 2px;
+}
+
+.textHeadButton {
+	font-size: 14px;
+	font-family: SFUI-Regular;
+	color: #8997B7;
+}
+
+.mainButton {
+	width: 104px;
+	height: 31px;
+	margin-left: 10px;
+	border: 1px solid #D6E5F9;
+	border-radius: 3px;
+	background: #D6E5F9;
+}
+
+.imgMainButton {
+	width: 13px;
+	height: 13px;
+	position: relative;
+	left: -10px;
+	top: 2px;
+}
+
+.textMainButton {
+	font-size: 14px;
+	font-family: SFUI-Regular;
+	color: #8997B7;
+}
+
+.imageButton {
+	width: 87px;
+	height: 31px;
+	margin-left: 10px;
+	border: 1px solid #D6E5F9;
+	border-radius: 3px;
+	background: #D6E5F9;
+}
+
+.imgButtonImage {
+	width: 13px;
+	height: 13px;
+	position: relative;
+	left: -10px;
+	top: 2px;
+}
+
+.textImageButton {
+	font-size: 14px;
+	font-family: SFUI-Regular;
+	color: #8997B7;
+}
+
+.saveButton {
+	width: 31px;
+	height: 31px;
+	margin-left: 10px;
+	border: 1px solid #00E3AD;
+	border-radius: 3px;
+	background: #00E3AD;
+}
+
+.saveButtonImage {
+	width: 13px;
+	height: 13px;
+	position: relative;
+	top: 2px;
+}
+
+.squareButton {
+	width: 14px !important;
+	height: 16px;
+	margin-top: 8px;
+	border: 2px solid #9EAECD;
+	background: #F4F5FD;
+	border-radius: 3px;
+}
+
+.horisontButton {
+	width: 20px;
+	height: 16px;
+	margin-left: 5px;
+	margin-top: 8px;
+	border: 2px solid #3C93F5;
+	background: #F4F5FD;
+	border-radius: 3px;
+}
+
+.vertButton {
+	width: 13px;
+	height: 22px;
+	margin-top: 5px;
+	margin-left: 5px;
+	border: 2px solid #9EAECD;
+	background: #F4F5FD;
+	border-radius: 3px;
+}
+
+.mainForm {
+	width: 650px;
+	height: 610px;
+	margin-top: 5px;
+	margin: auto;
+	margin-bottom: 130px;
+	border: 1px doted #D6E5F9;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: row;
+}
+
+.svgMainForm {
+	float: left;
+	width: 650px;
+	height: 610px;
+}
