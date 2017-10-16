@@ -6,7 +6,12 @@ class Canvas {
      */
     constructor(id) {
         this.svg = document.getElementById(id);
-        this.background = this.svg.querySelector('#svg-background');
+        this.background = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        this.background.setAttribute('height', this.svg.getAttribute('height'));
+        this.background.setAttribute('width', this.svg.getAttribute('width'));
+        this.background.setAttribute('fill', 'white');
+        this.svg.appendChild(this.background);
+        //this.background = this.svg.querySelector('#svg-background');
     }
 
     /**
@@ -30,101 +35,86 @@ class Canvas {
     }
 
     /**
-     * Создает заголовок, добавляет его в холст
-     * @param x - x position
-     * @param y - y position
+     * Создание текстового элемента
+     * @param id - id, который будет присвоен вновь созданному элементу
+     * @param x - x
+     * @param y - y
+     * @param h - высота строки
+     * @param w - ширина строки
      */
-    createHeadline(x,y) {
-        this.headline = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
-        var text = document.createElement('div');
-        text.setAttribute('contenteditable', 'true');
-        this.headline.appendChild(text);
-        this.headline.setAttribute('height', '20');
-        this.headline.setAttribute('width', '100');
-        this.setHeadlinePosition(x, y);
-        this.svg.appendChild(this.headline);
-    }
-
-    /**
-     * Устанавливает значение заголовка
-     * @param txt - текст заголовка
-     */
-    setHeadline(txt) {
-        this.headline.querySelector('div').textContent = txt;
-    }
-
-    /**
-     * Устанавливает позицию заголовка
-     * @param x
-     * @param y
-     */
-    setHeadlinePosition(x,y) {
-        this.headline.setAttribute('x', x);
-        this.headline.setAttribute('y', y);
-    }
-
-    /**
-     * Устанавливает цвет заголовка
-     * @param c - цвет
-     */
-    setHeadlineColor(c) {
-        this.headline.style.color = c;
-    }
-
-    /**
-     * Изменяет размер заголовка
-     * @param s - Имя класса
-     */
-    setHeadlineSize(s) {
-        this.headline.classList.add(s);
-    }
-
-    /**
-     * Создает основной текст, добавляет его в холст
-     * @param x position
-     * @param y position
-     */
-    createText(x,y) {
+    createText(id,x,y,h,w) {
         this.text = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
         var text = document.createElement('div');
         text.setAttribute('contenteditable', 'true');
         this.text.appendChild(text);
-        this.text.setAttribute('height', '20');
-        this.text.setAttribute('width', '100');
-        this.setTextPosition(x, y);
+        this.text.setAttribute('id', id);
+        this.text.setAttribute('height', h);
+        this.text.setAttribute('width', w);
         this.svg.appendChild(this.text);
-    }
-
-    /**
-     * Устанавливает значение текста
-     * @param txt - текст
-     */
-    setText(txt) {
-        this.text.querySelector('div').textContent = txt;
+        this.setTextPosition(id, x, y);
     }
 
     /**
      * Устанавливает позицию текста
+     * @param elem - изменяемый DOM-элемент
      * @param x
      * @param y
      */
-    setTextPosition(x,y) {
-        this.text.setAttribute('x', x);
-        this.text.setAttribute('y', y);
+    setTextPosition(elem,x,y) {
+        elem.setAttribute('x', x);
+        elem.setAttribute('y', y);
     }
 
     /**
      * Устанавливает цвет текста
+     * @param elem - изменяемый DOM-элемент
      * @param c - цвет
      */
-    setTextColor(c) {
-        this.text.style.color = c;
+    setTextColor(elem,c) {
+        elem.style.color = c;
     }
+    
     /**
      * Изменяет размер текста
+     * @param id - id изменяемого элемента
      * @param s - Имя класса
      */
-    setTextSize(s) {
-        this.text.classList.add(s);
+    setTextSize(elem,s) {
+        elem.classList.remove(this.textSizeClass);
+        this.textSizeClass = s;
+        elem.classList.add(s);
+    }
+
+    /**
+     * Задает класс элементу
+     * @param elem - изменяемый DOM-элемент
+     * @param style - класс
+     */
+    setCSS(elem, style) {
+        elem.classList.add(style);
+    }
+
+    /**
+     * Импорт изображение в png.
+     * @param id - id ссылки, которой будет задано изображение
+     */
+    importSVG(id) {
+        var svgData = new XMLSerializer().serializeToString(this.svg);
+
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+
+        var img = document.createElement('img');
+        img.setAttribute('src', 'data:image/svg+xml;base64,' + btoa( svgData ));
+
+        img.onload = function() {
+            ctx.drawImage( img, 0, 0 );
+            var dt = canvas.toDataURL('image/png');
+            var a = document.getElementById(id);
+            a.download = 'Image.png';
+            dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+            dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Image.png');
+            a.href = dt;
+        };
     }
 }
