@@ -59,6 +59,16 @@ module.exports = {
                     },
                     'postcss-loader'
                 ])
+            },
+            {
+                test: /\.(png|svg|jpg|ttf|eot|woff|woff2)$/,
+                include: /\/node_modules\//,
+                loader: 'file-loader?name=[1].[ext]&regExp=node_modules/(.*)'
+            },
+            {
+                test: /\.(png|svg|jpg|ttf|eot|woff|woff2)$/,
+                exclude: /\/node_modules\//,
+                loader: 'file-loader?name=[path][name].[ext]'
             }
         ]
     },
@@ -66,7 +76,13 @@ module.exports = {
     watchOptions: {
         aggregateTimeOut: 100
     },
-    devtool: NODE_ENV === 'development' ? 'source-map' : false,
+    /*eval - самая быстрая сборка и пересборка
+    *Вообще не строит source-map
+    * Устроен так, что создает виртуально-логические файлы, что
+    * облегчает отладку, так как позволяет заходить в каждый файл
+    * На прдакшен не подходит
+    * */
+    devtool: NODE_ENV === 'development' ? 'eval' : false,
     externals: {
 
     },
