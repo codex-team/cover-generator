@@ -67,7 +67,7 @@ module.exports = {
                  */
                 test: /\.(png|svg|jpg|ttf|eot|woff|woff2)$/,
                 exclude: /\/node_modules\//,
-                loader: 'file-loader?name=[assets][path][name].[ext]'
+                loader: 'file?name=[asssss][path][name].[ext]'
             }
         ]
     },
