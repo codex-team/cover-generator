@@ -19,7 +19,23 @@ module.exports = function () {
      */
     let init = function (initParams) {
 
-        // initialization
+        console.assert(initParams.containterId, 'Missed containterId in initial parametres');
+
+        let containter = document.getElementById(initParams.containterId);
+
+        if (!containter) {
+
+            console.warn('Container was not found by id: %o', initParams.containterId);
+            return;
+
+        }
+
+        /**
+         * Makes UI
+         */
+        ui.make({
+            containter
+        });
 
     };
 

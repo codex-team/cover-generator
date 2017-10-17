@@ -2,16 +2,15 @@
 <html>
 <head>
     <title>Cover Generator</title>
-    <script src="bundle.js"></script>
+    <script src="build/bundle.js"></script>
+    <link rel="stylesheet" href="build/bundle.css">
 </head>
 <body>
     <div id="canvas"></div>
     <script>
-        cover.init({
-            containter: 'canvas'
+        codex.cover.init({
+            containterId: 'canvas'
         });
-
-        cover.destroy();
     </script>
 </body>
 </html>

@@ -12,7 +12,8 @@ module.exports = {
     entry: './src/editor.js',
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        library: ['codex', 'cover']
     },
     module: {
         rules: [
