@@ -61,11 +61,10 @@ module.exports = {
                 ])
             },
             {
-                test: /\.(png|svg|jpg|ttf|eot|woff|woff2)$/,
-                include: /\/node_modules\//,
-                loader: 'file-loader?name=[1].[ext]&regExp=node_modules/(.*)'
-            },
-            {
+                /**
+                 * Use for all Image files loaders below
+                 * - file-loader
+                 */
                 test: /\.(png|svg|jpg|ttf|eot|woff|woff2)$/,
                 exclude: /\/node_modules\//,
                 loader: 'file-loader?name=[path][name].[ext]'
@@ -76,13 +75,7 @@ module.exports = {
     watchOptions: {
         aggregateTimeOut: 100
     },
-    /*eval - самая быстрая сборка и пересборка
-    *Вообще не строит source-map
-    * Устроен так, что создает виртуально-логические файлы, что
-    * облегчает отладку, так как позволяет заходить в каждый файл
-    * На прдакшен не подходит
-    * */
-    devtool: NODE_ENV === 'development' ? 'eval' : false,
+    devtool: NODE_ENV === 'development' ? 'source-map' : false,
     externals: {
 
     },
