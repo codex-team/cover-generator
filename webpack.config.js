@@ -61,11 +61,10 @@ module.exports = {
                 ])
             },
             {
-                test: /\.(png|svg|jpg|ttf|eot|woff|woff2)$/,
-                include: /\/node_modules\//,
-                loader: 'file-loader?name=[1].[ext]&regExp=node_modules/(.*)'
-            },
-            {
+                /**
+                *Use for all Imahe files loaders below
+                * -file-loader
+                */
                 test: /\.(png|svg|jpg|ttf|eot|woff|woff2)$/,
                 exclude: /\/node_modules\//,
                 loader: 'file-loader?name=[path][name].[ext]'
