@@ -29,7 +29,7 @@ module.exports = {
                         loader: 'babel-loader',
                         options: {
                             presets: [ 'env' ]
-                        },
+                        }
                     },
                     /** ES lint For webpack build */
                     {
@@ -40,6 +40,15 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                /**
+                 * Use for all Image files loaders below
+                 * - file-loader
+                 */
+                test: /\.(png|svg|jpg|ttf|eot|woff|woff2)$/,
+                exclude: /\/node_modules\//,
+                loader: 'file-loader?name=[path][name].[ext]'
             },
             {
                 /**
@@ -59,15 +68,6 @@ module.exports = {
                     },
                     'postcss-loader'
                 ])
-            },
-            {
-                /**
-                 * Use for all Image files loaders below
-                 * - file-loader
-                 */
-                test: /\.(png|svg|jpg|ttf|eot|woff|woff2)$/,
-                exclude: /\/node_modules\//,
-                loader: 'file?name=[asssss][path][name].[ext]'
             }
         ]
     },

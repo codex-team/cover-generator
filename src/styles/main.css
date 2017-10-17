@@ -1,2 +1,6 @@
 @import "variables.css";
 @import "components/toolbar.css";
+
+body {
+    background: url("../assets/func1.jpg");
+}
