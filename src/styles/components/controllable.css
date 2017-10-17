@@ -1,0 +1,22 @@
+.cover-editor__text {
+    font-family: -apple-system ".SFNSText-Regular" "San Francisco" "Roboto" "Segoe UI" "Helvetica Neue" "Lucida Grande" sans-serif;
+}
+
+.cover-editor__text--active {
+    border: 1px dashed #3c93f5;
+}
+
+.cover-editor__text--small {
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.cover-editor__text--medium {
+    font-weight: 900;
+    font-size: 27px;
+}
+
+.cover-editor__text--big {
+    font-family: 900;
+    font-size: 37px;
+}
