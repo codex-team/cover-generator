@@ -15,7 +15,7 @@ var UI = function () {
         sizeVertButton: 'cover-generation__vert-button',
         mainFormCG: 'cover-generation__main-form',
         mainFormSVG: 'cover-generation__svg-main-form'
-    }
+    };
 
     /**
     * Helper for making Elements with classname and attributes
@@ -24,24 +24,34 @@ var UI = function () {
     * @param  {Object} attributes        - any attributes
     * @return {Element}
     */
-    const DOM = function() {
+    const DOM = function () {
+
         function make(tagName, classNames, attributes) {
-        var el = document.createElement(tagName);
 
-        if ( Array.isArray(classNames) ) {
-            el.classList.add(...classNames);
-        } else if( classNames ) {
-            el.classList.add(classNames);
-        }
+            var el = document.createElement(tagName);
 
-        for (let attrName in attributes) {
-            el[attrName] = attributes[attrName];
-        }
-                return el;
+            if ( Array.isArray(classNames) ) {
+
+                el.classList.add(...classNames);
+
+            } else if( classNames ) {
+
+                el.classList.add(classNames);
+
+            }
+
+            for (let attrName in attributes) {
+
+                el[attrName] = attributes[attrName];
+
+            }
+            return el;
+
         };
 
         return {make: make};
-    }()    
+
+    }();
 
     /**
     * Create cover-editor
@@ -52,11 +62,11 @@ var UI = function () {
 
         var holder = document.getElementByClassName(HolderID);
 
-        var mainWindow = DOM.make('div',mainWindowCG);
+        var mainWindow = DOM.make('div', CSS.mainWindowCG);
 
-        var buttonsDiv = DOM.make('div',allButtons);
+        var buttonsDiv = DOM.make('div', CSS.allButtons);
 
-        //functions for creating elements
+        // functions for creating elements
         console.log(createResizeButtonSquareButton());
         buttonsDiv.appendChild(createResizeButtonSquareButton());
         buttonsDiv.appendChild(createResizeButtonHorisontButton());
@@ -82,23 +92,28 @@ var UI = function () {
     * @returns {Element} new created svg tag
     */
     function createSVG(kindSVG, param) {
-        n = document.createElementNS("http://www.w3.org/2000/svg", kindSVG);
+
+        var n = document.createElementNS('http://www.w3.org/2000/svg', kindSVG);
+
         for (var p in param) {
+
             n.setAttributeNS(null, p, param[p]);
+
         }
-        return n
+        return n;
+
     }
 
     /**
     * Creates resize button square
     */
     function createResizeButtonSquareButton() {
-        
 
-        var squareButton = DOM.make('button',sizeSquareButton);
 
-        //squareButton.addEventListener("click",canvasSquareButton);
-        
+        var squareButton = DOM.make('button', CSS.sizeSquareButton);
+
+        // squareButton.addEventListener("click",canvasSquareButton);
+
         return squareButton;
 
     }
@@ -107,24 +122,24 @@ var UI = function () {
     * Creates resize button horisontal
     */
     function createResizeButtonHorisontButton() {
-        
-        var horisontButton = DOM.make('button',sizeHorisontButton);
 
-        //horisontButton.addEventListener("click",canvasHorisontButton);
-    
+        var horisontButton = DOM.make('button', CSS.sizeHorisontButton);
+
+        // horisontButton.addEventListener("click",canvasHorisontButton);
+
         return horisontButton;
 
     }
-        
+
     /**
     * Creates resize button vertical
     */  
     function createResizeButtonVertButton() {
-        
-        var vertButton = DOM.make('button',sizeVertButton);
-        
-        //vertButton.addEventListener("click",canvasVertButton);
-        
+
+        var vertButton = DOM.make('button', CSS.sizeVertButton);
+
+        // vertButton.addEventListener("click",canvasVertButton);
+
         return vertButton;
 
     }
@@ -135,22 +150,22 @@ var UI = function () {
     function createHeadButton() {
 
         // Form
-        
+
         var headlineButton = DOM.make('button', CSS.headlineButton);
 
         // MainText
 
-        var text = DOM.make('span', headlineButtonText, {
+        var text = DOM.make('span', CSS.headlineButtonText, {
             textContent: 'Headline'
-        })
+        });
 
-        headButton.appendChild(text);
+        headlineButton.appendChild(text);
 
         // addButton
 
-        //headButton.addEventListener("click",canvasHeadButton);
-        
-        return headButton;
+        // headButton.addEventListener("click",canvasHeadButton);
+
+        return headlineButton;
 
     }
 
@@ -158,47 +173,47 @@ var UI = function () {
     * Creates button for main text
     */
     function createMainButton() {
-        
+
         // Form
 
-        var mainButton = DOM.make('button',mainlineButton);
+        var mainlineButton = DOM.make('button', CSS.mainlineButton);
 
         // MainText
 
-        var text = DOM.make('span',mainlineButtonText, {
+        var text = DOM.make('span', CSS.mainlineButtonText, {
             textContent: 'Main text'
-        })
+        });
 
-        mainButton.appendChild(text);
+        mainlineButton.appendChild(text);
 
         // addButton
 
-        //mainButton.addEventListener("click",canvasMainButton);
-        
-        return mainButton;
-    
+        // mainButton.addEventListener("click",canvasMainButton);
+
+        return mainlineButton;
+
     }
 
     /**
     * Creates button for image
     */
     function createImageButton() {
-        
+
         // Form
 
-        var imageButton = DOM.make('button',imagelineButton);
+        var imageButton = DOM.make('button', CSS.imagelineButton);
 
         // MainText
 
-        var text = DOM.make('span',imagelineButtonText, {
+        var text = DOM.make('span', CSS.imagelineButtonText, {
             textContent: 'Image'
-        })
+        });
 
         imageButton.appendChild(text);
 
         // addButton
 
-        //imageButton.addEventListener("click",canvasImageButton);
+        // imageButton.addEventListener("click",canvasImageButton);
 
         return imageButton;
 
@@ -208,52 +223,52 @@ var UI = function () {
     * Creates button for saving
     */
     function createSaveButton() {
-        
+
         // Form
 
-        var saveButton = DOM.make('button',forSaveButton);
-
-        saveButton.appendChild(img);
+        var saveButton = DOM.make('button', CSS.forSaveButton);
 
         // addButton
 
-        //saveButton.addEventListener("click",canvasImageButton);
+        // saveButton.addEventListener("click",canvasImageButton);
 
         return saveButton;
-    
+
     }
 
-    
+
     /**
     * Creates main form
     */
     function createMainForm() {
 
-        //Form
+        // Form
 
-        var MainFormDiv = DOM.make('div',mainFormCG);
+        var MainFormDiv = DOM.make('div', CSS.mainFormCG);
 
         var svg = createSVG('svg');
-        svg.classList.add(mainFormSVG);
+
+        svg.classList.add(CSS.mainFormSVG);
 
         MainFormDiv.appendChild(svg);
 
-        //Svg
+        // Svg
 
         var formSVG = createSVG('rect', {
-            width: 650, 
-            height: 370, 
-            rx: 2, 
-            ry: 2, 
-            fill: '#FFFFFF', 
-            stroke:'#D6E5F9', 
-            strokeWidth:3, 
-            strokeDasharray: "0.5%", 
-            strokeDashoffset: "10%", 
-            strokeLinejoin: "miter", 
-            strokeLinecap: "butt"
+            width: 650,
+            height: 370,
+            rx: 2,
+            ry: 2,
+            fill: '#FFFFFF',
+            stroke:'#D6E5F9',
+            strokeWidth:3,
+            strokeDasharray: '0.5%',
+            strokeDashoffset: '10%',
+            strokeLinejoin: 'miter',
+            strokeLinecap: 'butt'
         });
-        svg.appendChild(formSVG); 
+
+        svg.appendChild(formSVG);
 
         return MainFormDiv;
 
@@ -262,17 +277,17 @@ var UI = function () {
     function getToolbar() {
 
         var ToolBar = new ToolBar();
-    
+
     }
 
     function getCanvas() {
 
         var Canvas = new Canvas();
-    
+
     }
 
     return {
         create
-    }
+    };
 
-}()
+}();
