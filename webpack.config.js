@@ -62,9 +62,15 @@ module.exports = {
             },
             {
                 /**
+<<<<<<< HEAD
                  * Use for all Image files loaders below
                  * - file-loader
                  */
+=======
+                *Use for all Imahe files loaders below
+                * -file-loader
+                */
+>>>>>>> 89ca154faa0354de41f979fd92c699505abb8798
                 test: /\.(png|svg|jpg|ttf|eot|woff|woff2)$/,
                 exclude: /\/node_modules\//,
                 loader: 'file-loader?name=[path][name].[ext]'
