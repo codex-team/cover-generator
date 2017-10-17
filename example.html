@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TextEditor</title>
-        <meta charset = "utf-8">
-        <script type="text/javascript" src = "src/ui.js"></script>
-        <link rel="stylesheet" type="text/css" href="src/Style.css">
+        <title>Cover Editor</title>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="build/bundle.js"></script>
+        <link rel="stylesheet" type="text/css" href="build/bundle.css">
     </head>
     <body>
-        <div class = "cover-generation">
-        </div>
+        <div id="coverGenerator"></div>
         <script type="text/javascript">
-            UI.create('cover-generation');
+            codex.cover.init({
+                containerId: 'coverGenerator'
+            });
         </script>
     </body>
 </html>

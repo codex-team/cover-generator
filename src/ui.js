@@ -1,6 +1,10 @@
-var UI = function () {
+/**
+ * User interface module
+ */
+module.exports = function () {
 
     const CSS = {
+        editor: 'cover-generation',
         mainWindowCG: 'cover-generation__main-window',
         allButtons: 'cover-generation__buttons-div',
         headlineButton: 'cover-generation__headline-button',
@@ -56,11 +60,11 @@ var UI = function () {
     /**
     * Create cover-editor
     * @param {object} settings - array of paramertres
-    * @param {string} settings.holderId - ID of element to create cover-editor
+    * @param {Element} settings.container - element to create cover-editor
     */
-    function create(HolderID) {
+    function create(container) {
 
-        var holder = document.getElementByClassName(HolderID);
+        var editor = DOM.make('div', CSS.editor);
 
         var mainWindow = DOM.make('div', CSS.mainWindowCG);
 
@@ -79,7 +83,8 @@ var UI = function () {
         mainWindow.appendChild(buttonsDiv);
         mainWindow.appendChild(createMainForm());
 
-        holder.appendChild(mainWindow);
+        editor.appendChild(mainWindow);
+        container.appendChild(editor);
 
     }
 
@@ -133,7 +138,7 @@ var UI = function () {
 
     /**
     * Creates resize button vertical
-    */  
+    */
     function createResizeButtonVertButton() {
 
         var vertButton = DOM.make('button', CSS.sizeVertButton);

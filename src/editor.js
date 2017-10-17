@@ -15,11 +15,23 @@ module.exports = function () {
     /**
      * Initialization method
      * @param  {object} initParams
-     * @param  {string} initParams.containterId - in that Node we will render Editor
+     * @param  {string} initParams.containerId - in that Node we will render Editor
      */
-    let init = function (initParams) {
+    let init = function (initParams = {}) {
 
-        // initialization
+        console.assert(initParams.containerId, 'Container id is missed');
+
+        let container = document.getElementById(initParams.containerId);
+
+        if (!container) {
+
+            console.warn('Container was not found by id %o', initParams.containerId);
+            return;
+
+        }
+
+
+        ui.create(container);
 
     };
 
