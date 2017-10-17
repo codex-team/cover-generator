@@ -26,6 +26,10 @@
             opacity: 1;
         }
     }
+    
+    &--color-mode &__icon {
+        display: none;
+    }
 
     &__icon:hover {
         opacity: 0.7;
@@ -62,6 +66,7 @@
     }
 
     &__button--color {
+        display: flex !important;
         opacity: 1;
         background-color: black;
         border-radius: 5px;
@@ -73,6 +78,10 @@
         margin: 0 5px;
         border: none;
         border-radius: 5px;
+    }
+
+    &--color_mode &__input--color-form {
+        display: flex;
     }
 
     &__input--color-form:focus {

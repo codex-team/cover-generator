@@ -12,16 +12,46 @@ function Toolbar(elem, canvas, properties) {
 
     var tree = {
 
-        "toolbar": undefined,
-        "controllable": undefined,
-        "buttons": {
+        'toolbar': undefined,
+        'controllable': undefined,
+        'buttons': {
 
-            "fontSize": undefined,
-            "left": undefined,
-            "center": undefined,
-            "right": undefined,
-            "colorForm": undefined,
-            "color": undefined;
+            'fontSize': undefined,
+            'left': undefined,
+            'center': undefined,
+            'right': undefined,
+            'colorForm': undefined,
+            'color': undefined;
+
+        }
+
+    }
+
+    var styles = {
+
+        'hidden': 'cover_editor__hidden',
+        'toolbar': {
+
+            'colorMode': 'cover-editor__toolbar--color_mode',
+            'normal': 'cover-editor__toolbar'
+
+        },
+        'controllable': {
+
+            'active': 'cover_editor__text--active',
+            'fontSize': ['cover_editor__text--small', 'cover_editor__text--medium', 'cover_editor__text--big']
+
+        },
+        'buttons': {
+
+            'main': 'cover_editor__toolbar__icon',
+            'active': 'cover_editor__toolbar__icon--active',
+            'left': 'cover_editor__toolbar__button--left',
+            'center': 'cover_editor__toolbar__button--center',
+            'right': 'cover_editor__toolbar__button-right',
+            'fontSize': ['cover_editor__toolbar__button--small', 'cover_editor__toolbar__button--medium', 'cover_editor__toolbar__button--big'],
+            'colorForm': 'cover_editor__toolbar__input--color-form',
+            'color': 'cover_editor__toolbar__buttin--color'
 
         }
 
@@ -51,7 +81,7 @@ function Toolbar(elem, canvas, properties) {
     */
     function showToolbar() {
 
-        if (tree.toolbar.classList.contains('cover_editor__hidden')) {
+        if (tree.toolbar.classList.contains(styles.hidden)) {
 
             if (window.getSelection) {
 
@@ -62,10 +92,10 @@ function Toolbar(elem, canvas, properties) {
                 document.selection.empty();
 
             }
-            tree.toolbar.classList.remove('cover_editor__hidden');
+            tree.toolbar.classList.remove(styles.hidden);
 
         }
-        tree.controllable.classList.add('cover_editor__text--active');
+        tree.controllable.classList.add(styles.controllable.active);
         changeToolbarPosition();
 
     }
@@ -80,8 +110,8 @@ function Toolbar(elem, canvas, properties) {
 
         if (event.target !== tree.controllable && event.target.parentNode !== tree.toolbar && event.target !== tree.toolbar) {
 
-            tree.controllable.classList.remove('cover_editor__text--active');
-            tree.toolbar.classList.add('cover_editor__hidden');
+            tree.controllable.classList.remove(styles.controllable.active);
+            tree.toolbar.classList.add(styles.hidden);
 
         }
 
@@ -107,40 +137,13 @@ function Toolbar(elem, canvas, properties) {
     */
     function toggleToolbarColorMode(event) {
 
-        if (tree.colorForm.classList.contains('cover_editor__hidden')) {
+        if (tree.toolbar.contains(styles.toolbar.colorMode)) {
 
-            tree.colorForm.classList.remove('cover_editor__hidden');
-            tree.buttons.forEach
-            (
-                (function (element) {
-
-                    if (element !== tree.buttons.color && element !== tree.buttons.colorForm) {
-
-                        element.classList.add('cover_editor__hidden');
-
-                    }
-
-                }).bind(this);
-
-            );
+            tree.toolbar.classList.add(styles.toolbar.colorMode);
 
         } else {
 
-            colorForm.classList.add('cover_editor__hidden');
-            tree.buttons.forEach
-            (
-                (function (element) {
-
-                    if (element !== tree.buttons.color && element !== tree.buttons.colorForm) {
-
-                        element.classList.remove('cover_editor__hidden');
-
-                    }
-
-                }).bind(this);
-
-            );
-
+            tree.toolbar.classList.add(styles.toolbar.colorMode);
             canvas.setTextColor(controllable, getComputedStyle(controllable).color);
         }
 
@@ -154,24 +157,12 @@ function Toolbar(elem, canvas, properties) {
     */
     function changeControllableFontSize(event) {
 
-        if (tree.buttons.fontSize.classList.contains('cover_editor__toolbar__button--big')) {
-
-            tree.buttons.fontSize.classList.remove('cover_editor__toolbar__button--big');
-            tree.controllable.classList.remove('cover_editor__text--big');
-
-        } else if (tree.buttons.fontSize.classList.contains('cover_editor__toolbar__button--medium')) {
-
-            tree.buttons.fontSize.classList.remove('cover_editor__toolbar__button--medium');
-            tree.buttons.fontSize.classList.add('cover_editor__toolbar__button--big');
-            tree.controllable.classList.remove('cover_editor__text--big');
-            tree.controllable.classList.add('cover_editor__text--big');
-
-        } else if (tree.buttons.fontSize.classList.contains('cover_editor__toolbar__button--small')) {
-
-            tree.buttons.fontSize.classList.add('cover_editor__toolbar__button--medium');
-            tree.controllable.classList.add('cover_editor__text--big');
-
-        }
+        event.target.classList.remove(styles.buttons.fontSize[event.target.dataset.fontSize]);
+        controllable.classList.remove(styles.controllable.fontSize[event.target.dataset.fontSize]);
+        event.target.dataset.fontSize += 1;
+        event.target.dataset.fontSize %= styles.buttons.fontSize.length;
+        event.target.classList.add(styles.buttons.fontSize[event.target.dataset.fontSize]);
+        controllable.classList.add(styles.controllable.fontSize[event.target.dataset.fontSize]);
 
         changeToolbarPosition();
 
@@ -185,86 +176,77 @@ function Toolbar(elem, canvas, properties) {
     */
     function changeControllableAlign(event) {
 
-        //  ЗАВИСИМОЕ ПРЕОБРАЗОВАНИЕ
-        var actives = tree.buttons.getElementsByClassName('cover_editor__toolbar__icon--active');
-
-        for (var counter = 0; counter < actives.length; counter++) {
-
-            if (actives[counter] === tree.buttons.left || actives[counter] === tree.buttons.center || actives[counter] === tree.buttons.right) {
-
-                actives[counter].classList.remove('cover_editor__toolbar__icon--active');
-                break;
-
-            }
-
-        }
-        event.target.classList.add('cover_editor__toolbar__icon--active');
+        tree.buttons.left.classList.remove(styles.buttons.active);
+        tree.buttons.center.classList.remove(styles.buttons.active);
+        tree.buttons.right.classList.remove(styles.buttons.active);
+        event.target.classList.add(styles.buttons.active);
 
         var canvasShape = {'width': canvas.clientWidth, 'height': canvas.clientHeight},
 	    controllableShape = {'width': controllable.clientWidth, 'height': controllable.clientHeight};
 
-	if (event.target.classList.contains('cover_editor__toolbar__icon--left')) {
+        if (event.target.classList.contains(styles.buttons.left)) {
 
-	    canvas.setTextPosition(controllable, canvasShape.width/properties.elementAlignPadding, controllable.getAttribute("y"));
+            canvas.setTextPosition(controllable, canvasShape.width/properties.elementAlignPadding, controllable.getAttribute("y"));
 
-	} else if (event.target.classList.contains('cover_editor__toolbar__icon--center')) {
+        } else if (event.target.classList.contains(styles.buttons.center)) {
 
-	    canvas.setTextPosition(controllable, (canvasShape.width - controllableShape.width)/2, controllable.getAttribute("y"));
+            canvas.setTextPosition(controllable, (canvasShape.width - controllableShape.width)/2, controllable.getAttribute("y"));
 
-	} else if (event.target.classList.contains('cover_editor__toolbar__icon--right')) {
+        } else if (event.target.classList.contains(styles.buttons.right)) {
 
-	    canvas.setTextPosition(controllable, canvasShape.width - controllableShape.width - canvasShape.width/properties.elementAlignPadding, controllable.getAttribute("y"));
+            canvas.setTextPosition(controllable, canvasShape.width - controllableShape.width - canvasShape.width/properties.elementAlignPadding, controllable.getAttribute("y"));
 
-	}
+        }
         changeToolbarPosition();
 
     }
 
     //Связывание объекта toolbar с controllable
     tree.controllable = elem;
-    tree.controllable.classList.add('cover_editor__text--small');
+    tree.controllable.classList.add(styles.controllable.fontSize[0]);
     tree.controllable.addEventListener('dblclick', showToolbar.bind(this));
     
     //Создание блока toolbar'а
     tree.toolbar = document.createElement('div'),
-    tree.toolbar.classList.add('cover_editor__toolbar');
-    tree.toolbar.classList.add('cover_editor__hidden');
+    tree.toolbar.classList.add(styles.toolbar.normal);
+    tree.toolbar.classList.add(styles.hidden);
 
     tree.buttons.left = document.createElement('button');
-    tree.buttons.left.classList.add('cover_editor__toolbar__icon');
-    tree.buttons.left.classList.add('cover_editor__toolbar__button--left');
+    tree.buttons.left.classList.add(styles.buttons.main);
+    tree.buttons.left.classList.add(styles.buttons.left);
     tree.buttons.left.addEventListener('click', changeControllableAlign.bind(this));
     tree.toolbar.appendChild(tree.buttons.left);
     tree.buttons.left.click();
 
     tree.buttons.center = document.createElement('button');
-    tree.buttons.center.classList.add('cover_editor__toolbar__icon');
-    tree.buttons.center.classList.add('cover_editor__toolbar__button--center');
+    tree.buttons.center.classList.add(styles.buttons.main);
+    tree.buttons.center.classList.add(styles.buttons.center);
     tree.buttons.center.addEventListener('click', changeControllableAlign.bind(this));
     tree.toolbar.appendChild(tree.buttons.center);
 
     tree.buttons.right = document.createElement('button');
-    tree.buttons.right.classList.add('cover_editor__toolbar__icon');
-    tree.buttons.right.classList.add('cover_editor__toolbar__button--right');
+    tree.buttons.right.classList.add(styles.buttons.main);
+    tree.buttons.right.classList.add(styles.buttons.right);
     tree.buttons.right.addEventListener('click', changeControllableAlign.bind(this));
     tree.toolbar.appendChild(tree.buttons.right);
 
     if (controllable.tagName == 'FOREIGNOBJECT') {
 
         tree.buttons.fontSize = document.createElement('button');
-        tree.buttons.fontSize.classList.add('cover_editor__toolbar__icon');
-        tree.buttons.fontSize.classList.add('cover_editor__toolbar__button--small');
+        tree.buttons.fontSize.classList.add(styles.buttons.main);
+        tree.buttons.fontSize.dataset.fontSize = 0;
+        tree.buttons.fontSize.classList.add(styles.buttons.fontSize[0]);
         tree.buttons.fontSize.addEventListener('click', changeControllableFontSize.bind(this));
         tree.toolbar.insertBefore(tree.buttons.fontSize, tree.buttons.left);
 
         tree.buttons.colorForm = document.createElement('input');
-        tree.buttons.colorForm.classList.add('cover_editor__toolbar__input--color-form');
+        tree.buttons.colorForm.classList.add(styles.buttons.colorForm);
         tree.buttons.colorForm.addEventListener('keyup', changeToolbarColorButtonColor.bind(this));
         tree.toolbar.appendChild(tree.buttons.colorForm);
 
         tree.buttons.color = document.createElement('button');
-        tree.buttons.color.classList.add('cover_editor__toolbar__icon');
-        tree.buttons.color.classList.add('cover_editor__toolbar__button--color');
+        tree.buttons.color.classList.add(styles.buttons.main);
+        tree.buttons.color.classList.add(styles.buttons.color);
         tree.buttons.color.addEventListener('click', toggleToolbarColorMode.bind(this));
         tree.toolbar.appendChild(tree.buttons.color);
 
