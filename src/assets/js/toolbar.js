@@ -1,13 +1,14 @@
 /**
  *   Creates a toolbar
  *   @class Toolbar
- *   @param {Element} elem         - element on a canvas which properties will be changed by toolbar
- *   @param {Canvas} canvas        - object of canvas where controllable element is located
- *   @param {Object} style         - object containing additional properties for toolbar
- *   @param {number} style.padding - size of padding between toolbar and controllable element
+ *   @param {Element} elem                             - element on a canvas which properties will be changed by toolbar
+ *   @param {Canvas} canvas                            - object of canvas where controllable element is located
+ *   @param {Object} properties                        - object containing additional properties for toolbar
+ *   @param {number} properties.padding                - size of padding between toolbar and controllable element
+ *   @param {number} properties.elementAlignPadding    - size of padding between the border of canvas and controllable element in %
  *   @return {Toolbar}
  */
-function Toolbar(elem, canvas, style) {
+function Toolbar(elem, canvas, properties) {
 
     var tree = {
 
@@ -34,11 +35,11 @@ function Toolbar(elem, canvas, style) {
     */
     function changeToolbarPosition() {
 
-        var canvasCoords = canvas.getBoundingClientRect(),
+        var canvasCoords = canvas.svg.getBoundingClientRect(),
             controllableCoords = tree.controllable.getBoundingClientRect();
 
         tree.toolbar.style.left = controllableCoords.left - canvasCoords.left + (tree.controllable.clientWidth - tree.toolbar.clientWidth)/2 + 'px';
-        tree.toolbar.style.top = controllableCoords.top - canvasCoords.top - tree.controllable.clientHeight - style.padding + 'px';
+        tree.toolbar.style.top = controllableCoords.top - canvasCoords.top - tree.controllable.clientHeight - properties.padding + 'px';
 
     }
 
@@ -139,9 +140,8 @@ function Toolbar(elem, canvas, style) {
                 }).bind(this);
 
             );
-            //  ЗАВИСИМОЕ ПРЕОБРАЗОВАНИЕ
-            tree.controllable.style.color = window.getComputedStyle(tree.buttons.color).backgroundColor;
 
+            canvas.setTextColor(controllable, getComputedStyle(controllable).color);
         }
 
     }
@@ -154,7 +154,6 @@ function Toolbar(elem, canvas, style) {
     */
     function changeControllableFontSize(event) {
 
-        //  ЗАВИСИМОЕ ПРЕОБРАЗОВАНИЕ
         if (tree.buttons.fontSize.classList.contains('cover_editor__toolbar__button--big')) {
 
             tree.buttons.fontSize.classList.remove('cover_editor__toolbar__button--big');
@@ -200,6 +199,23 @@ function Toolbar(elem, canvas, style) {
 
         }
         event.target.classList.add('cover_editor__toolbar__icon--active');
+
+        var canvasShape = {'width': canvas.clientWidth, 'height': canvas.clientHeight},
+	    controllableShape = {'width': controllable.clientWidth, 'height': controllable.clientHeight};
+
+	if (event.target.classList.contains('cover_editor__toolbar__icon--left')) {
+
+	    canvas.setTextPosition(controllable, canvasShape.width/properties.elementAlignPadding, controllable.getAttribute("y"));
+
+	} else if (event.target.classList.contains('cover_editor__toolbar__icon--center')) {
+
+	    canvas.setTextPosition(controllable, (canvasShape.width - controllableShape.width)/2, controllable.getAttribute("y"));
+
+	} else if (event.target.classList.contains('cover_editor__toolbar__icon--right')) {
+
+	    canvas.setTextPosition(controllable, canvasShape.width - controllableShape.width - canvasShape.width/properties.elementAlignPadding, controllable.getAttribute("y"));
+
+	}
         changeToolbarPosition();
 
     }
@@ -233,7 +249,7 @@ function Toolbar(elem, canvas, style) {
     tree.buttons.right.addEventListener('click', changeControllableAlign.bind(this));
     tree.toolbar.appendChild(tree.buttons.right);
 
-    if (tree.controllable.tagName === 'SPAN' || tree.controllable.tagName === 'DIV') {
+    if (controllable.tagName == 'FOREIGNOBJECT') {
 
         tree.buttons.fontSize = document.createElement('button');
         tree.buttons.fontSize.classList.add('cover_editor__toolbar__icon');
