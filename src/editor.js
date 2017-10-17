@@ -1,7 +1,14 @@
 /**
  * Cover module entry poit
  */
-module.exports = function(){
+module.exports = function () {
+
+    'use strict';
+
+    /**
+     * Requre CSS
+     */
+    require('./styles/main.css');
 
     let ui = require('./ui');
 
@@ -21,10 +28,11 @@ module.exports = function(){
      */
     let destroy = function () {
 
-    }
+    };
 
     return {
         init,
         destroy
-    }
-}()
+    };
+
+}();
