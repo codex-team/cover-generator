@@ -1,5 +1,22 @@
 var UI = function () {
 
+    const CSS = {
+        mainWindowCG: 'cover-generation__main-window',
+        allButtons: 'cover-generation__buttons-div',
+        headlineButton: 'cover-generation__headline-button',
+        headlineButtonText: 'cover-generation__headline-button-text',
+        mainlineButton: 'cover-generation__mainline-button',
+        mainlineButtonText: 'cover-generation__headline-button-text',
+        imagelineButton: 'cover-generation__imageline-button',
+        imagelineButtonText: 'cover-generation__imageline-button-text',
+        forSaveButton: 'cover-generation__save-button',
+        sizeSquareButton: 'cover-generation__square-button',
+        sizeHorisontButton: 'cover-generation__horisont-button',
+        sizeVertButton: 'cover-generation__vert-button',
+        mainFormCG: 'cover-generation__main-form',
+        mainFormSVG: 'cover-generation__svg-main-form'
+    }
+
     /**
     * Helper for making Elements with classname and attributes
     * @param  {string} tagName           - new Element tag name
@@ -33,11 +50,11 @@ var UI = function () {
     */
     function create(HolderID) {
 
-        var holder = document.getElementById(HolderID);
+        var holder = document.getElementByClassName(HolderID);
 
-        var mainWindow = DOM.make('div','cover-generation__mainWindow');
+        var mainWindow = DOM.make('div',mainWindowCG);
 
-        var buttonsDiv = DOM.make('div','cover-generation__buttonsDiv');
+        var buttonsDiv = DOM.make('div',allButtons);
 
         //functions for creating elements
         console.log(createResizeButtonSquareButton());
@@ -78,7 +95,7 @@ var UI = function () {
     function createResizeButtonSquareButton() {
         
 
-        var squareButton = DOM.make('button','cover-generation__squareButton');
+        var squareButton = DOM.make('button',sizeSquareButton);
 
         //squareButton.addEventListener("click",canvasSquareButton);
         
@@ -91,7 +108,7 @@ var UI = function () {
     */
     function createResizeButtonHorisontButton() {
         
-        var horisontButton = DOM.make('button','cover-generation__horisontButton');
+        var horisontButton = DOM.make('button',sizeHorisontButton);
 
         //horisontButton.addEventListener("click",canvasHorisontButton);
     
@@ -104,7 +121,7 @@ var UI = function () {
     */  
     function createResizeButtonVertButton() {
         
-        var vertButton = DOM.make('button','cover-generation__vertButton');
+        var vertButton = DOM.make('button',sizeVertButton);
         
         //vertButton.addEventListener("click",canvasVertButton);
         
@@ -119,19 +136,11 @@ var UI = function () {
 
         // Form
         
-        var headButton = DOM.make('button', 'cover-generation__headButton');
-
-        // Image        
-
-        var imageHeadButton = DOM.make('img', 'cover-generation__imgHeadButton', {
-            src: 'images/CharT.svg'
-        })
-
-        headButton.appendChild(imageHeadButton);
+        var headlineButton = DOM.make('button', CSS.headlineButton);
 
         // MainText
 
-        var text = DOM.make('span', 'cover-generation__textHeadButton', {
+        var text = DOM.make('span', headlineButtonText, {
             textContent: 'Headline'
         })
 
@@ -152,19 +161,11 @@ var UI = function () {
         
         // Form
 
-        var mainButton = DOM.make('button','cover-generation__mainButton');
-
-        // Image
-
-        var img = DOM.make('img','cover-generation__imgMainButton', {
-            src: 'images/CharT.svg'
-        })
-        
-        mainButton.appendChild(img);
+        var mainButton = DOM.make('button',mainlineButton);
 
         // MainText
 
-        var text = DOM.make('span','cover-generation__textMainButton', {
+        var text = DOM.make('span',mainlineButtonText, {
             textContent: 'Main text'
         })
 
@@ -185,19 +186,11 @@ var UI = function () {
         
         // Form
 
-        var imageButton = DOM.make('button','cover-generation__imageButton');
-
-        // Image
-
-        var img = DOM.make('img','cover-generation__imgButtonImage', {
-            src: 'images/imgButton.svg'
-        })
-
-        imageButton.appendChild(img);
+        var imageButton = DOM.make('button',imagelineButton);
 
         // MainText
 
-        var text = DOM.make('span','cover-generation__textImageButton', {
+        var text = DOM.make('span',imagelineButtonText, {
             textContent: 'Image'
         })
 
@@ -218,13 +211,7 @@ var UI = function () {
         
         // Form
 
-        var saveButton = DOM.make('button','cover-generation__saveButton');
-
-        // Image
-
-        var img = DOM.make('img','cover-generation__saveButtonImage', {
-            src: 'images/save.svg'
-        });
+        var saveButton = DOM.make('button',forSaveButton);
 
         saveButton.appendChild(img);
 
@@ -244,10 +231,10 @@ var UI = function () {
 
         //Form
 
-        var MainFormDiv = DOM.make('div','cover-generation__mainForm');
+        var MainFormDiv = DOM.make('div',mainFormCG);
 
         var svg = createSVG('svg');
-        svg.classList.add('cover-generation__svgMainForm');
+        svg.classList.add(mainFormSVG);
 
         MainFormDiv.appendChild(svg);
 
