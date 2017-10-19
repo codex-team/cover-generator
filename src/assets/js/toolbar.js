@@ -6,7 +6,7 @@
  *   @param {Object} properties                        - object containing additional properties for toolbar
  *   @param {number} properties.padding                - size of padding between toolbar and controllable element
  *   @param {number} properties.elementAlignPadding    - size of padding between the border of canvas and controllable element in %
- *   @return {Toolbar}
+ *   @return {Element}
  */
 function Toolbar(elem, canvas, properties) {
 
@@ -60,8 +60,6 @@ function Toolbar(elem, canvas, properties) {
     /**
     *   Moving toolbar to the controllable element
     *   @private
-    *   @param {void}
-    *   @return {void}
     */
     function changeToolbarPosition() {
 
@@ -76,8 +74,6 @@ function Toolbar(elem, canvas, properties) {
     /**
     *   Showing toolbar after clicking on controllable element
     *   @private
-    *   @param {void}
-    *   @return {void}
     */
     function showToolbar() {
 
@@ -104,7 +100,6 @@ function Toolbar(elem, canvas, properties) {
     *   Hiding toolbar after controllable element has been unfocused
     *   @private
     *   @param {Event} event - event of clicking on body
-    *   @return {void}
     */
     function hideToolbar(event) {
 
@@ -121,7 +116,6 @@ function Toolbar(elem, canvas, properties) {
     *   Chenging color of color button in toolbar after valid CSS color string has been written in colorForm element
     *   @private
     *   @param {Event} event - event of keyup in colorForm field in toolbar
-    *   @return {void}
     */
     function changeToolbarColorButtonColor(event) {
 
@@ -132,10 +126,8 @@ function Toolbar(elem, canvas, properties) {
     /**
     *   Unhiding or hiding color input field in toolbar
     *   @private
-    *   @param {Event} event - event of click  on color button in toolbar
-    *   @return {void}
     */
-    function toggleToolbarColorMode(event) {
+    function toggleToolbarColorMode() {
 
         if (tree.toolbar.contains(styles.toolbar.colorMode)) {
 
@@ -152,8 +144,7 @@ function Toolbar(elem, canvas, properties) {
     /**
     *   Changes a font size of controllable element after clicking on fontSize button
     *   @private
-    *   @param {Event} event - event of click on fontSize button
-    *   @return {void}
+    *   @param {MouseEvent} event - event of click on fontSize button
     */
     function changeControllableFontSize(event) {
 
@@ -172,7 +163,6 @@ function Toolbar(elem, canvas, properties) {
     *   Changes position of controllable element after clicking on left/center/right button
     *   @private
     *   @param {Event} event - event of click on left/center/right button
-    *   @return {void}
     */
     function changeControllableAlign(event) {
 
