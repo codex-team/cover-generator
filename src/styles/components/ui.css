@@ -1,0 +1,100 @@
+/**
+ * User interface styles
+ */
+.cover-editor {
+    max-width: 650px;
+    margin: 0 auto;
+
+    /**
+     * Line with UI buttons
+     */
+    &__controls {
+        margin-bottom: 12px;
+
+        &::after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+    }
+
+    &__resize-canvas {
+        display: inline-block;
+        border: 2px solid #9eaecd;
+        border-radius: 3px;
+        box-sizing: border-box;
+        margin-right: 10px;
+        margin-top: 10px;
+        vertical-align: middle;
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--blueColor);
+        }
+
+        &--square {
+            width: 14px;
+            height: 14px;
+        }
+
+        &--vertical {
+            width: 13px;
+            height: 18px;
+        }
+
+        &--horisontal {
+            width: 20px;
+            height: 14px;
+        }
+    }
+
+    &__control-button {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 3px;
+        background: #D6E5F9;
+        margin-left: 10px;
+        color: #546287;
+        font-size: 14.5px;
+        letter-spacing: 0.17px;
+        cursor: pointer;
+        float: right;
+
+        &:hover {
+            background-color: color(#D6E5F9 lightness(-5%));
+        }
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            background-color: red;
+            margin-right: 0.4em;
+            vertical-align: middle;
+            margin-top: -3px;
+        }
+
+        &--save {
+            background-color: #00e3ad;
+
+            &:hover {
+                background-color: color(#00e3ad lightness(-5%));
+            }
+
+            &::before {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &__canvas-wrapper {
+        border: 2px dashed #c0d5ef;
+        padding: 5px;
+    }
+
+    &__canvas {
+        vertical-align: bottom;
+        border-radius: 3px;
+    }
+}
