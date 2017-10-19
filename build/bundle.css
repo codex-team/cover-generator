@@ -1,193 +1,107 @@
+:root {
+
+    /**
+     * Hover on buttons
+     */
+
+}
 /**
- * Temporary styles for testing nested rules bundle
+ * User interface styles
  */
-.toolbar__button {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        color: #444;
+.cover-editor {
+    max-width: 650px;
+    margin: 0 auto;
+}
+/**
+     * Line with UI buttons
+     */
+.cover-editor__controls {
+        margin-bottom: 12px
     }
-html {
-	width: 100%;
-	height: 100%;
+.cover-editor__controls::after {
+    content: '';
+    display: table;
+    clear: both;
+
 }
-body {
-	width: 100%;
-	height: 100%;
-}
-#coverGenerator {
-	width: 100%;
-	height: 100%;
-	background: #F4F5FD;
-	margin: none;
-	padding: none;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	    -ms-flex-direction: column;
-	        flex-direction: column;
-	-ms-flex-wrap: wrap;
-	    flex-wrap: wrap;
-	-webkit-box-align: center;
-	    -ms-flex-align: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	    -ms-flex-pack: center;
-	        justify-content: center;
-}
-.cover-generation__main-window {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	    -ms-flex-direction: column;
-	        flex-direction: column;
-}
-.cover-generation__buttons-div {
-	width: 650px;
-	height: 31px;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
-	    -ms-flex-direction: row;
-	        flex-direction: row;
-	margin-bottom: 20px;
-	margin-left: 8px;
-}
-.cover-generation__headline-button {
-	width: 101px;
-	height: 31px;
-	margin-left: 230px;
-	border: 1px solid #D6E5F9;
-	border-radius: 3px;
-	background: #D6E5F9
-}
-.cover-generation__headline-button::before {
-        content: '';/*background: url('assets/icon-text.svg');
- */
+.cover-editor__resize-canvas {
         display: inline-block;
-        width: 13px;
-        height: 13px;
-        margin-right: 0.15em;
+        border: 2px solid #9eaecd;
+        border-radius: 3px;
+        box-sizing: border-box;
+        margin-right: 10px;
+        margin-top: 10px;
+        vertical-align: middle;
+        cursor: pointer
+    }
+.cover-editor__resize-canvas:hover {
+    border-color: #3c93f5;
+
 }
-.cover-generation__headline-button-text {
-	font-size: 14px;
-	font-family: -apple-system, BlinkMacSystemFont, sans-serif;;
-	color: #8997B7;
+.cover-editor__resize-canvas--square {
+            width: 14px;
+            height: 14px;
+
 }
-.cover-generation__mainline-button {
-	width: 104px;
-	height: 31px;
-	margin-left: 10px;
-	border: 1px solid #D6E5F9;
-	border-radius: 3px;
-	background: #D6E5F9
+.cover-editor__resize-canvas--vertical {
+            width: 13px;
+            height: 18px;
+
 }
-.cover-generation__mainline-button::before {
-        content: '';/*background: url('assets/icon-text.svg');
- */
+.cover-editor__resize-canvas--horisontal {
+            width: 20px;
+            height: 14px;
+
+}
+.cover-editor__control-button {
         display: inline-block;
-        width: 13px;
-        height: 13px;
-        margin-right: 0.15em;
+        padding: 8px 12px;
+        border-radius: 3px;
+        background: #D6E5F9;
+        margin-left: 10px;
+        color: #546287;
+        font-size: 14.5px;
+        letter-spacing: 0.17px;
+        cursor: pointer;
+        float: right
+    }
+.cover-editor__control-button:hover {
+    background-color: rgb(193, 216, 246);
+
 }
-.cover-generation__headline-button-text {
-	font-size: 14px;
-	font-family: -apple-system, BlinkMacSystemFont, sans-serif;;
-	color: #8997B7;
+.cover-editor__control-button::before {
+    content: '';
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    background-color: red;
+    margin-right: 0.4em;
+    vertical-align: middle;
+    margin-top: -3px;
+
 }
-.cover-generation__imageline-button {
-	width: 87px;
-	height: 31px;
-	margin-left: 10px;
-	border: 1px solid #D6E5F9;
-	border-radius: 3px;
-	background: #D6E5F9
+.cover-editor__control-button--save {
+            background-color: #00e3ad;
+
 }
-.cover-generation__imageline-button::before {
-        content: '';/*background: url('assets/icon-picture.svg');
- */
-        display: inline-block;
-        width: 13px;
-        height: 13px;
-        margin-right: 0.15em;
+.cover-editor__control-button--save:hover {
+    background-color: rgb(0, 204, 156);
+
 }
-.cover-generation__imageline-button-text {
-	font-size: 14px;
-	font-family: -apple-system, BlinkMacSystemFont, sans-serif;;
-	color: #8997B7;
+.cover-editor__control-button--save::before {
+    margin-right: 0;
+
 }
-.cover-generation__save-button {
-	width: 31px;
-	height: 31px;
-	margin-left: 10px;
-	border: 1px solid #00E3AD;
-	border-radius: 3px;
-	background: #00E3AD
-}
-.cover-generation__save-button::before {
-        content: '';/*background: url('assets/icon-save.svg');
- */
-        display: inline-block;
-        width: 13px;
-        height: 13px;
-        margin-right: 0.15em;
-}
-.cover-generation__square-button {
-	width: 14px !important;
-	height: 16px;
-	margin-top: 8px;
-	border: 2px solid #9EAECD;
-	background: #F4F5FD;
-	border-radius: 3px;
-}
-.cover-generation__horisont-button {
-	width: 20px;
-	height: 16px;
-	margin-left: 5px;
-	margin-top: 8px;
-	border: 2px solid #3C93F5;
-	background: #F4F5FD;
-	border-radius: 3px;
-}
-.cover-generation__vert-button {
-	width: 13px;
-	height: 22px;
-	margin-top: 5px;
-	margin-left: 5px;
-	border: 2px solid #9EAECD;
-	background: #F4F5FD;
-	border-radius: 3px;
-}
-.cover-generation__main-form {
-	width: 655px;
-	height: 375px;
-	padding: 2px;
-	border: 2.5px dashed #D6E5F9;
-	border-radius: 3px;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
-	    -ms-flex-direction: row;
-	        flex-direction: row;
-	-webkit-box-align: center;
-	    -ms-flex-align: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	    -ms-flex-pack: center;
-	        justify-content: center;
-}
-.cover-generation__svg-main-form {
-	width: 650px;
-	height: 375px;
-	margin-top: 3px;
+.cover-editor__canvas-wrapper {
+        border: 2px dashed #c0d5ef;
+        padding: 5px;
+    }
+.cover-editor__canvas {
+        vertical-align: bottom;
+        border-radius: 3px;
+    }
+.cover-editor {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue;
 }
 
 

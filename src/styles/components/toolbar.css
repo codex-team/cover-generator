@@ -1,9 +1,0 @@
-/**
- * Temporary styles for testing nested rules bundle
- */
-.toolbar {
-    &__button {
-        display: flex;
-        color: var(--grayColor);
-    }
-}

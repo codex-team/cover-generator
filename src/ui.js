@@ -3,59 +3,129 @@
  */
 module.exports = function () {
 
+    'use strict';
+
+    let $ = require('./dom').default;
+
+    /**
+     * Style classnames
+     * @type {Object}
+     */
     const CSS = {
-        editor: 'cover-generation',
-        mainWindowCG: 'cover-generation__main-window',
-        allButtons: 'cover-generation__buttons-div',
-        headlineButton: 'cover-generation__headline-button',
-        headlineButtonText: 'cover-generation__headline-button-text',
-        mainlineButton: 'cover-generation__mainline-button',
-        mainlineButtonText: 'cover-generation__headline-button-text',
-        imagelineButton: 'cover-generation__imageline-button',
-        imagelineButtonText: 'cover-generation__imageline-button-text',
-        forSaveButton: 'cover-generation__save-button',
-        sizeSquareButton: 'cover-generation__square-button',
-        sizeHorisontButton: 'cover-generation__horisont-button',
-        sizeVertButton: 'cover-generation__vert-button',
-        mainFormCG: 'cover-generation__main-form',
-        mainFormSVG: 'cover-generation__svg-main-form'
+        editor                 : 'cover-editor',
+        controls               : 'cover-editor__controls',
+
+        resizeButton           : 'cover-editor__resize-canvas',
+        resizeButtonActive     : 'cover-editor__resize-canvas--active',
+
+        resizeButtonSquare     : 'cover-editor__resize-canvas--square',
+        resizeButtonVertical   : 'cover-editor__resize-canvas--vertical',
+        resizeButtonHorisontal : 'cover-editor__resize-canvas--horisontal',
+
+        controlButton          : 'cover-editor__control-button',
+        controlButtonSave      : 'cover-editor__control-button--save',
+
+        canvasWrapper          : 'cover-editor__canvas-wrapper',
+        canvas                 : 'cover-editor__canvas'
     };
 
     /**
-    * Helper for making Elements with classname and attributes
-    * @param  {string} tagName           - new Element tag name
-    * @param  {array|string} classNames  - list or name of CSS classname(s)
-    * @param  {Object} attributes        - any attributes
-    * @return {Element}
+     * Static nodes cache
+     * @type {Object}
+     */
+    let nodes = {
+        canvasWrapper    : null,
+        canvas           : null,
+        mainRectangle    : null,
+        controls : {
+            resizeSqure      : null,
+            resizeVertical   : null,
+            resizeHorisontal : null,
+            saveButton       : null,
+            pictureButton    : null,
+            mainTextButton   : null,
+            headlineButton   : null,
+        }
+    };
+
+    /**
+    * Creates main form
     */
-    const DOM = function () {
+    function createCanvas() {
 
-        function make(tagName, classNames, attributes) {
+        nodes.canvasWrapper = $.make('div', CSS.canvasWrapper);
 
-            var el = document.createElement(tagName);
+        nodes.canvas = $.svg('svg', {
+            width: '100%',
+            height: '100%'
+        });
 
-            if ( Array.isArray(classNames) ) {
+        nodes.mainRectangle = $.svg('rect', {
+            width: '100%',
+            height: '100%',
+            fill: '#FFFFFF'
+        });
 
-                el.classList.add(...classNames);
+        nodes.canvas.classList.add(CSS.canvas);
+        nodes.canvas.appendChild(nodes.mainRectangle);
+        nodes.canvasWrapper.appendChild(nodes.canvas);
 
-            } else if( classNames ) {
+        return nodes.canvasWrapper;
 
-                el.classList.add(classNames);
+    }
 
-            }
+    /**
+     * Save button click listener
+     */
+    function saveButtonClicked() {
 
-            for (let attrName in attributes) {
+        console.log('saveButtonClicked');
 
-                el[attrName] = attributes[attrName];
+    }
 
-            }
-            return el;
+    /**
+     * Resize button click listener
+     * @param {MouseEvent} event — click
+     */
+    function resizeButtonClicked(event) {
 
-        };
+        let button = event.target,
+            size = button.dataset.size;
 
-        return {make: make};
+        console.log('resize to: %o', size);
 
-    }();
+
+    }
+
+    /**
+     * Show and hide button click listener
+     * @param  {MouseEvent} event  - click
+     */
+    function toggleObjectClicked(event) {
+
+        let button = event.target,
+            object = button.dataset.object;
+
+        console.log('toggle: %o', object);
+
+    }
+
+    /**
+     * Bind necessary event to manupulate controls
+     */
+    function bindEvents() {
+
+        nodes.controls.saveButton.addEventListener('click', saveButtonClicked);
+
+        nodes.controls.resizeSqure.addEventListener('click', resizeButtonClicked);
+        nodes.controls.resizeVertical.addEventListener('click', resizeButtonClicked);
+        nodes.controls.resizeHorisontal.addEventListener('click', resizeButtonClicked);
+
+        nodes.controls.pictureButton.addEventListener('click', toggleObjectClicked);
+        nodes.controls.mainTextButton.addEventListener('click', toggleObjectClicked);
+        nodes.controls.headlineButton.addEventListener('click', toggleObjectClicked);
+
+    }
 
     /**
     * Create cover-editor
@@ -64,232 +134,49 @@ module.exports = function () {
     */
     function create(container) {
 
-        var editor = DOM.make('div', CSS.editor);
+        var editor   = $.make('div', CSS.editor),
+            controls = $.make('div', CSS.controls),
+            canvas   = createCanvas();
 
-        var mainWindow = DOM.make('div', CSS.mainWindowCG);
+        nodes.controls.resizeSqure      = $.make('span', [CSS.resizeButton, CSS.resizeButtonSquare]);
+        nodes.controls.resizeVertical   = $.make('span', [CSS.resizeButton, CSS.resizeButtonVertical]);
+        nodes.controls.resizeHorisontal = $.make('span', [CSS.resizeButton, CSS.resizeButtonHorisontal]);
+        nodes.controls.saveButton       = $.make('span', [CSS.controlButton, CSS.controlButtonSave]);
+        nodes.controls.pictureButton    = $.make('span', CSS.controlButton, { textContent: 'Image' });
+        nodes.controls.mainTextButton   = $.make('span', CSS.controlButton, { textContent: 'Main Text' });
+        nodes.controls.headlineButton   = $.make('span', CSS.controlButton, { textContent: 'Headline' });
 
-        var buttonsDiv = DOM.make('div', CSS.allButtons);
+        /**
+         * Save size in button's data-size
+         */
+        nodes.controls.resizeSqure.dataset.size = 'square';
+        nodes.controls.resizeVertical.dataset.size = 'vertical';
+        nodes.controls.resizeHorisontal.dataset.size = 'horisontal';
 
-        // functions for creating elements
-        console.log(createResizeButtonSquareButton());
-        buttonsDiv.appendChild(createResizeButtonSquareButton());
-        buttonsDiv.appendChild(createResizeButtonHorisontButton());
-        buttonsDiv.appendChild(createResizeButtonVertButton());
-        buttonsDiv.appendChild(createHeadButton());
-        buttonsDiv.appendChild(createMainButton());
-        buttonsDiv.appendChild(createImageButton());
-        buttonsDiv.appendChild(createSaveButton());
 
-        mainWindow.appendChild(buttonsDiv);
-        mainWindow.appendChild(createMainForm());
+        /**
+         * Save create element type in button's data-object
+         */
+        nodes.controls.mainTextButton.dataset.object = 'mainText';
+        nodes.controls.headlineButton.dataset.object = 'headline';
+        nodes.controls.pictureButton.dataset.object = 'picture';
 
-        editor.appendChild(mainWindow);
-        container.appendChild(editor);
+        for (let buttonName in nodes.controls) {
 
-    }
-
-    /**
-    * Creates SVG element
-    *
-    * @param {string} kindSVG - element tag name
-    * @param {object} param - parametrs
-    *
-    * @returns {Element} new created svg tag
-    */
-    function createSVG(kindSVG, param) {
-
-        var n = document.createElementNS('http://www.w3.org/2000/svg', kindSVG);
-
-        for (var p in param) {
-
-            n.setAttributeNS(null, p, param[p]);
+            controls.appendChild(nodes.controls[buttonName]);
 
         }
-        return n;
+
+        editor.appendChild(controls);
+        editor.appendChild(canvas);
+
+        container.appendChild(editor);
+
+
+        bindEvents();
 
     }
 
-    /**
-    * Creates resize button square
-    */
-    function createResizeButtonSquareButton() {
-
-
-        var squareButton = DOM.make('button', CSS.sizeSquareButton);
-
-        // squareButton.addEventListener("click",canvasSquareButton);
-
-        return squareButton;
-
-    }
-
-    /**
-    * Creates resize button horisontal
-    */
-    function createResizeButtonHorisontButton() {
-
-        var horisontButton = DOM.make('button', CSS.sizeHorisontButton);
-
-        // horisontButton.addEventListener("click",canvasHorisontButton);
-
-        return horisontButton;
-
-    }
-
-    /**
-    * Creates resize button vertical
-    */
-    function createResizeButtonVertButton() {
-
-        var vertButton = DOM.make('button', CSS.sizeVertButton);
-
-        // vertButton.addEventListener("click",canvasVertButton);
-
-        return vertButton;
-
-    }
-
-    /**
-    * Creates button for head text
-    */
-    function createHeadButton() {
-
-        // Form
-
-        var headlineButton = DOM.make('button', CSS.headlineButton);
-
-        // MainText
-
-        var text = DOM.make('span', CSS.headlineButtonText, {
-            textContent: 'Headline'
-        });
-
-        headlineButton.appendChild(text);
-
-        // addButton
-
-        // headButton.addEventListener("click",canvasHeadButton);
-
-        return headlineButton;
-
-    }
-
-    /**
-    * Creates button for main text
-    */
-    function createMainButton() {
-
-        // Form
-
-        var mainlineButton = DOM.make('button', CSS.mainlineButton);
-
-        // MainText
-
-        var text = DOM.make('span', CSS.mainlineButtonText, {
-            textContent: 'Main text'
-        });
-
-        mainlineButton.appendChild(text);
-
-        // addButton
-
-        // mainButton.addEventListener("click",canvasMainButton);
-
-        return mainlineButton;
-
-    }
-
-    /**
-    * Creates button for image
-    */
-    function createImageButton() {
-
-        // Form
-
-        var imageButton = DOM.make('button', CSS.imagelineButton);
-
-        // MainText
-
-        var text = DOM.make('span', CSS.imagelineButtonText, {
-            textContent: 'Image'
-        });
-
-        imageButton.appendChild(text);
-
-        // addButton
-
-        // imageButton.addEventListener("click",canvasImageButton);
-
-        return imageButton;
-
-    }
-
-    /**
-    * Creates button for saving
-    */
-    function createSaveButton() {
-
-        // Form
-
-        var saveButton = DOM.make('button', CSS.forSaveButton);
-
-        // addButton
-
-        // saveButton.addEventListener("click",canvasImageButton);
-
-        return saveButton;
-
-    }
-
-
-    /**
-    * Creates main form
-    */
-    function createMainForm() {
-
-        // Form
-
-        var MainFormDiv = DOM.make('div', CSS.mainFormCG);
-
-        var svg = createSVG('svg');
-
-        svg.classList.add(CSS.mainFormSVG);
-
-        MainFormDiv.appendChild(svg);
-
-        // Svg
-
-        var formSVG = createSVG('rect', {
-            width: 650,
-            height: 370,
-            rx: 2,
-            ry: 2,
-            fill: '#FFFFFF',
-            stroke:'#D6E5F9',
-            strokeWidth:3,
-            strokeDasharray: '0.5%',
-            strokeDashoffset: '10%',
-            strokeLinejoin: 'miter',
-            strokeLinecap: 'butt'
-        });
-
-        svg.appendChild(formSVG);
-
-        return MainFormDiv;
-
-    }
-
-    function getToolbar() {
-
-        var ToolBar = new ToolBar();
-
-    }
-
-    function getCanvas() {
-
-        var Canvas = new Canvas();
-
-    }
 
     return {
         create

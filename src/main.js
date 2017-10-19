@@ -10,6 +10,9 @@ module.exports = function () {
      */
     require('./styles/main.css');
 
+    /**
+     * User Interface module
+     */
     let ui = require('./ui');
 
     /**
@@ -30,7 +33,9 @@ module.exports = function () {
 
         }
 
-
+        /**
+         * Make interface and bind events
+         */
         ui.create(container);
 
     };
