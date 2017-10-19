@@ -54,7 +54,7 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: {
-                          minimize: 1,
+                          // minimize: 1,
                           importLoaders: 1
                         }
                     },
@@ -80,7 +80,7 @@ module.exports = {
         }),
 
         /** Минифицируем CSS и JS */
-        new webpack.optimize.UglifyJsPlugin(),
+        // new webpack.optimize.UglifyJsPlugin(),
 
         /** Block build if errors found */
         new webpack.NoEmitOnErrorsPlugin(),

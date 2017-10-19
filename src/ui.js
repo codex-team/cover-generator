@@ -34,6 +34,7 @@ module.exports = function () {
      * @type {Object}
      */
     let nodes = {
+        editor: null,
         canvasWrapper    : null,
         canvas           : null,
         mainRectangle    : null,
@@ -108,6 +109,15 @@ module.exports = function () {
 
         console.log('toggle: %o', object);
 
+        /**
+         * Test
+         *
+         * Open toolbar near button
+         */
+        codex.cover.toolbar.openNear({
+            target : button
+        });
+
     }
 
     /**
@@ -134,8 +144,9 @@ module.exports = function () {
     */
     function create(container) {
 
-        var editor   = $.make('div', CSS.editor),
-            controls = $.make('div', CSS.controls),
+        nodes.editor = $.make('div', CSS.editor);
+
+        let controls = $.make('div', CSS.controls),
             canvas   = createCanvas();
 
         nodes.controls.resizeSqure      = $.make('span', [CSS.resizeButton, CSS.resizeButtonSquare]);
@@ -167,10 +178,10 @@ module.exports = function () {
 
         }
 
-        editor.appendChild(controls);
-        editor.appendChild(canvas);
+        nodes.editor.appendChild(controls);
+        nodes.editor.appendChild(canvas);
 
-        container.appendChild(editor);
+        container.appendChild(nodes.editor);
 
 
         bindEvents();
