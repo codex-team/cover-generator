@@ -16,6 +16,12 @@ module.exports = function () {
     let ui = require('./ui');
 
     /**
+     * Canvas module
+     * @type {Canvas}
+     */
+    let Canvas = require('./canvas').default;
+
+    /**
      * Initialization method
      * @param  {object} initParams
      * @param  {string} initParams.containerId - in that Node we will render Editor
@@ -36,7 +42,11 @@ module.exports = function () {
         /**
          * Make interface and bind events
          */
-        ui.create(container);
+        let nodes = ui.create(container);
+
+        let canvas = new Canvas({
+            canvas: nodes.canvas
+        });
 
     };
 

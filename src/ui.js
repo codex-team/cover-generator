@@ -175,6 +175,8 @@ module.exports = function () {
 
         bindEvents();
 
+        return nodes;
+
     }
 
 
