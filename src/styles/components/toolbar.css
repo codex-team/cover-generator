@@ -105,12 +105,20 @@
     &-input--color-form {
         display: none;
         width: 110px;
+<<<<<<< HEAD
         margin: 10px 5px;
+=======
+        margin: 0 5px;
+>>>>>>> 91acf4e542fd530bfe2f0de8d239f691691ff7be
         border: none;
         border-radius: 5px;
     }
 
+<<<<<<< HEAD
     &--color_mode &-input--color-form {
+=======
+    &--color_mode &__input--color-form {
+>>>>>>> 91acf4e542fd530bfe2f0de8d239f691691ff7be
         display: flex;
     }
 
