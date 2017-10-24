@@ -9,10 +9,11 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 
 module.exports = {
-    entry: './src/editor.js',
+    entry: './src/main.js',
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        library: ['codex', 'cover']
     },
     module: {
         rules: [

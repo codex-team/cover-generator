@@ -1,2 +1,7 @@
 @import "variables.css";
+@import "components/ui.css";
 @import "components/toolbar.css";
+
+.cover-editor {
+    font-family: system-ui;
+}
