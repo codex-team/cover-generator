@@ -14,16 +14,6 @@ let $ = require('./dom').default;
  *  @property {Element} this.canvas  — main canvas SVG
 
  *  @property {Element} this.target  — on which element toolbar was open
-<<<<<<< HEAD
-=======
- *
- *   @param {Element} elem                             - element on a canvas which properties will be changed by toolbar
- *   @param {Canvas} canvas                            - object of canvas where controllable element is located
- *   @param {Object} properties                        - object containing additional properties for toolbar
- *   @param {number} properties.padding                - size of padding between toolbar and controllable element
- *   @param {number} properties.elementAlignPadding    - size of padding between the border of canvas and controllable element in %
- *   @return {Toolbar}
->>>>>>> 91acf4e542fd530bfe2f0de8d239f691691ff7be
  */
 export default class Toolbar {
 
