@@ -175,6 +175,7 @@ export default class Toolbar {
 
             case 'color':
                 this.changeColorMode();
+                break;
 
         }
 
@@ -193,8 +194,6 @@ export default class Toolbar {
         this.target.classList.add(this.CSS.target.fontSize[this.target.dataset.fontSize]);
         this.tree.toolbar.classList.add(this.CSS.toolbar.fontSize[this.target.dataset.fontSize]);
 
-        console.log('changeFontSize: %o');
-
     }
 
     /**
@@ -210,8 +209,6 @@ export default class Toolbar {
             this.tree.buttons[type].classList.remove(this.CSS.toolbar.buttons.active);
 
         });
-        //        this.tree.buttons.center.classList.remove(this.CSS.toolbar.buttons.active);
-        //        this.tree.buttons.right.classList.remove(this.CSS.toolbar.buttons.active);
 
         switch (alignment) {
 
@@ -228,8 +225,6 @@ export default class Toolbar {
                 break;
 
         }
-
-        console.log('alignment: %o', alignment);
 
     }
 
@@ -273,7 +268,6 @@ export default class Toolbar {
             to = this.target.getBoundingClientRect();
 
         this.tree.toolbar.style.left = to.left - relatively.left + (to.clientWidth - this.tree.toolbar.clientWidth)/2 + 'px';
-        // Починить отступ
         this.tree.toolbar.style.top = to.top - relatively.top - this.tree.controllable.clientHeight - 10 + 'px';
 
     }
@@ -318,9 +312,6 @@ export default class Toolbar {
         this.moveToTarget();
         this.getTargetParams();
         this.tree.toolbar.classList.remove(this.CSS.hidden);
-
-        console.log('now we need to open toolbar near: %o', this.target);
-
 
     }
 
