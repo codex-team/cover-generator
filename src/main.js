@@ -19,7 +19,16 @@ module.exports = function () {
      * Canvas module
      * @type {Canvas}
      */
-    let Canvas = require('./canvas').default;
+    // let Canvas = require('./canvas').default;
+
+    /**
+     * Toolbar module
+     */
+    let Toolbar = require('./toolbar').default;
+
+    let toolbarInstance = new Toolbar();
+
+
 
     /**
      * Initialization method
@@ -44,9 +53,18 @@ module.exports = function () {
          */
         let nodes = ui.create(container);
 
-        let canvas = new Canvas({
+        // let canvas = new Canvas({
+        //     canvas: nodes.canvas
+        // });
+        //
+        //
+
+        toolbarInstance.prepare({
+            editor: nodes.editor,
             canvas: nodes.canvas
         });
+
+        console.log('toolbarInstance: %o', toolbarInstance);
 
     };
 
@@ -59,7 +77,8 @@ module.exports = function () {
 
     return {
         init,
-        destroy
+        destroy,
+        toolbar: toolbarInstance
     };
 
 }();

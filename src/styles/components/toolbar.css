@@ -1,3 +1,120 @@
 /**
  * Toolbar styles
  */
+.cover-editor__hidden {
+    display: none;
+}
+
+.cover-editor__toolbar {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    border-radius: 5px;
+    background: #313542;
+    transition: left 1s, top 1s, opacity 1s;
+
+    &--color-mode &__icon {
+        display: none;
+    }
+
+    &-button {
+        position: relative;
+        border: none;
+        padding: 10px;
+        transition: opacity 0.5s;
+
+        &--active {
+            opacity: 1;
+        }
+
+        &:hover {
+            opacity: 0.7;
+        }
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 15px;
+            height: 13px;
+            background: #191D29;
+            border-radius: 2px;
+            font-size: 11px;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        &--font-size {
+            &::before {
+                content: 'font';
+            }
+        }
+
+        &--left {
+            &::before {
+                content: 'left';
+            }
+            /*background-image: url(../img/left.png);*/
+        }
+
+        &--center {
+            &::before {
+                content: 'center';
+            }
+            /*background-image: url(../img/center.png);*/
+        }
+
+        &--right {
+            &::before {
+                content: 'right';
+            }
+            /*background-image: url(../img/right.png);*/
+        }
+
+        &--small {
+            &::before {
+                content: 'small';
+            }
+            /*background-image: url(../img/font-size-small.png);*/
+        }
+
+
+        &--medium {
+            &::before {
+                content: 'medium';
+            }
+            /*background-image: url(../img/font-size-medium.png);*/
+        }
+
+        &--big {
+            &::before {
+                content: 'big';
+            }
+            /*background-image: url(../img/font-size-big.png);*/
+        }
+
+        &--color {
+            background-color: red;
+            &::before {
+                content: 'color';
+            }
+        }
+
+    }
+
+    &-color-form {
+        display: none;
+        width: 110px;
+        margin: 0 5px;
+        border: none;
+        border-radius: 5px;
+    }
+
+    &--color_mode &-color-form {
+        display: flex;
+    }
+
+    &-color-form:focus {
+        outline: none;
+    }
+}
