@@ -26,7 +26,8 @@ module.exports = function () {
         controlButtonSave      : 'cover-editor__control-button--save',
 
         canvasWrapper          : 'cover-editor__canvas-wrapper',
-        canvas                 : 'cover-editor__canvas'
+        canvas                 : 'cover-editor__canvas',
+        canvasActive           : 'cover-editor__canvas-wrapper--active'
     };
 
     /**
@@ -34,9 +35,11 @@ module.exports = function () {
      * @type {Object}
      */
     let nodes = {
-        canvasWrapper    : null,
-        canvas           : null,
-        mainRectangle    : null,
+        canvasWrapper        : null,
+        canvas               : null,
+        mainRectangle : {
+            foreignObject    : null,
+        },
         controls : {
             resizeSqure      : null,
             resizeVertical   : null,
@@ -56,8 +59,8 @@ module.exports = function () {
         nodes.canvasWrapper = $.make('div', CSS.canvasWrapper);
 
         nodes.canvas = $.svg('svg', {
-            width: '100%',
-            height: '100%'
+            width: '650px',
+            height: '370px'
         });
 
         nodes.mainRectangle = $.svg('rect', {
@@ -66,11 +69,49 @@ module.exports = function () {
             fill: '#FFFFFF'
         });
 
+        /* nodes.canvas.foreignObject = $.svg('foreignObject', {
+            width: '100%',
+            height: '100%',
+            requiredExtensions: 'http://www.w3.org/1999/xhtml'
+        });
+
+        let spanForeignObject = $.make('span', 'spanForeignObject');
+
+        nodes.canvas.foreignObject.dataset.object = '';
+        nodes.canvas.foreignObject.add(spanForeignObject);*/
+
+
         nodes.canvas.classList.add(CSS.canvas);
         nodes.canvas.appendChild(nodes.mainRectangle);
         nodes.canvasWrapper.appendChild(nodes.canvas);
 
+
         return nodes.canvasWrapper;
+
+    }
+
+    /**
+     * Counter in function canvasClicked
+     */
+    var i = 0;
+
+    /**
+     * Canvas clicked
+     */
+    function canvasClicked() {
+
+        if (i % 2 == 0) {
+
+            nodes.canvasWrapper.classList.add(CSS.canvasActive);
+            i++;
+
+        } else {
+
+            nodes.canvasWrapper.classList.remove(CSS.canvasActive);
+            i--;
+
+        }
+        console.log('canvasActive');
 
     }
 
@@ -114,6 +155,8 @@ module.exports = function () {
      * Bind necessary event to manupulate controls
      */
     function bindEvents() {
+
+        nodes.canvas.addEventListener('click', canvasClicked);
 
         nodes.controls.saveButton.addEventListener('click', saveButtonClicked);
 

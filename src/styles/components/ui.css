@@ -2,8 +2,9 @@
  * User interface styles
  */
 .cover-editor {
-    max-width: 650px;
+    display: table;
     margin: 0 auto;
+    user-select: none;
 
     /**
      * Line with UI buttons
@@ -91,6 +92,10 @@
     &__canvas-wrapper {
         border: 2px dashed #c0d5ef;
         padding: 5px;
+
+        &--active {
+            border-color: var(--blueColor);
+        }
     }
 
     &__canvas {
