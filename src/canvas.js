@@ -33,13 +33,12 @@ export default class Canvas {
 
     create( parent ) {
 
-        let rectangle = this.$.svg('rect', {fill: '#FFFFFF'});
-
-        this.setSize(rectangle, this.formats.horisontal);
+        this.tree.rectangle = this.$.svg('rect', {fill: '#FFFFFF'});
+        this.setSize(this.tree.rectangle, this.formats.horisontal);
 
         this.tree.svg = this.$.svg('svg');
         this.setCanvasFormat('horisontal');
-        this.tree.svg.appendChild(rectangle);
+        this.tree.svg.appendChild(this.tree.rectangle);
 
         return this.tree.svg;
 
@@ -52,6 +51,7 @@ export default class Canvas {
     setCanvasFormat( format ) {
 
         this.setSize(this.tree.svg, this.formats[format]);
+        this.setSize(this.tree.rectangle, this.formats[format]);
 
     }
 
@@ -103,12 +103,12 @@ export default class Canvas {
     }
 
     /**
-     * Creates a text element
+     * Creates an image element
      *
-     * @param {Object|String} coords   - where to place text on canvas
+     * @param {Object|String} coords   - where to place image on canvas
      * @param {Number} coords.x        - x coord
      * @param {Number} coords.y        - y coord
-     * @return {Element}               - created text
+     * @return {Element}               - created image
      */
     createText( coords ) {
 
