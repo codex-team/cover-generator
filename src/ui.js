@@ -30,6 +30,11 @@ module.exports = function () {
         canvasActive           : 'cover-editor__canvas-wrapper--active'
     };
 
+    const instances = {
+        canvas       : null,
+        toolbar      : null
+    };
+
     /**
      * Static nodes cache
      * @type {Object}
@@ -94,6 +99,8 @@ module.exports = function () {
 
         console.log('resize to: %o', size);
 
+        instances.canvas.setCanvasFormat(size);
+
 
     }
 
@@ -139,6 +146,8 @@ module.exports = function () {
         var editor   = $.make('div', CSS.editor),
             controls = $.make('div', CSS.controls);
 
+
+        instances.canvas                = canvasInstance;
         nodes.canvasWrapper             = $.make('div', CSS.canvasWrapper);
         nodes.controls.resizeSqure      = $.make('span', [CSS.resizeButton, CSS.resizeButtonSquare]);
         nodes.controls.resizeVertical   = $.make('span', [CSS.resizeButton, CSS.resizeButtonVertical]);
