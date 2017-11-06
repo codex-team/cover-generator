@@ -37,7 +37,7 @@ module.exports = function () {
     let nodes = {
         canvasWrapper        : null,
         canvas               : null,
-        mainRectangle        : null, 
+        mainRectangle        : null,
         controls : {
             resizeSqure      : null,
             resizeVertical   : null,
@@ -115,7 +115,7 @@ module.exports = function () {
      */
     function bindEvents() {
 
-        nodes.canvas.addEventListener('click', canvasClicked);
+        nodes.canvasWrapper.addEventListener('click', canvasClicked);
 
         nodes.controls.saveButton.addEventListener('click', saveButtonClicked);
 
@@ -137,7 +137,7 @@ module.exports = function () {
     function create(container, canvasInstance) {
 
         var editor   = $.make('div', CSS.editor),
-            controls = $.make('div', CSS.controls),
+            controls = $.make('div', CSS.controls);
 
         nodes.canvasWrapper             = $.make('div', CSS.canvasWrapper);
         nodes.controls.resizeSqure      = $.make('span', [CSS.resizeButton, CSS.resizeButtonSquare]);
@@ -170,7 +170,8 @@ module.exports = function () {
         }
 
         editor.appendChild(controls);
-        editor.appendChild(canvasInstance.create(nodes.canvasWrapper));
+        canvasWrapper.appendChild(canvasInstance.create(nodes.canvasWrapper));
+        editor.appendChild(canvasWrapper);
 
         container.appendChild(editor);
 
