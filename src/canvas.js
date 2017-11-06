@@ -6,7 +6,6 @@ export default class Canvas {
     /**
      * Initialisation of canvas module
      * @param {Object} properties               - object with properties for canvas creating
-     * @param {Element} properties.canvas       - link to th DOMElement of canvas
      * @param {String|Object} properties.shape  - type of format, can be 'album', 'square' or 'portrait'
      * @param {Number} properties.shape.width   - width of canvas
      * @param {Number} properties.shape.height  - height of canvas
@@ -50,7 +49,7 @@ export default class Canvas {
         this.svg = this.$.svg('svg');
         this.setCanvasFormat('album');
 
-        parent.appendChild(this.svg);
+        return this.svg;
 
     }
 
