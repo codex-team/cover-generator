@@ -70,7 +70,7 @@
             display: inline-block;
             width: 13px;
             height: 13px;
-            background-color: red;
+            background-image: url(assets/icon-save.svg);
             margin-right: 0.4em;
             vertical-align: middle;
             margin-top: -3px;
