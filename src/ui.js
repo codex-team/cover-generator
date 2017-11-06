@@ -101,7 +101,6 @@ module.exports = function () {
 
         instances.canvas.setCanvasFormat(size);
 
-
     }
 
     /**
@@ -114,6 +113,8 @@ module.exports = function () {
             object = button.dataset.object;
 
         console.log('toggle: %o', object);
+
+        instances.canvas.createElement(object);
 
     }
 
