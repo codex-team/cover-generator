@@ -32,6 +32,10 @@
         &:hover {
             border-color: var(--blueColor);
         }
+        
+        &--active {
+            border-color: var(--blueColor);
+        }
 
         &--square {
             width: 14px;

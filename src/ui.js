@@ -97,8 +97,13 @@ module.exports = function () {
         let button = event.target,
             size = button.dataset.size;
 
-        console.log('resize to: %o', size);
+        ['resizeSqure', 'resizeVertical', 'resizeHorisontal'].forEach( header => {
 
+            nodes.controls[header].classList.remove(CSS.resizeButtonActive);
+
+        });
+
+        event.target.classList.add(CSS.resizeButtonActive);
         instances.canvas.setCanvasFormat(size);
 
     }
@@ -164,7 +169,7 @@ module.exports = function () {
         nodes.controls.resizeSqure.dataset.size = 'square';
         nodes.controls.resizeVertical.dataset.size = 'vertical';
         nodes.controls.resizeHorisontal.dataset.size = 'horisontal';
-
+        nodes.controls.resizeHorisontal.classList.add(CSS.resizeButtonActive);
 
         /**
          * Save create element type in button's data-object
