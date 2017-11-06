@@ -26,6 +26,7 @@ export default class Canvas {
 
         this.positions = {
             mainText: {x: undefined, y: 271},
+            image: {x: undefined, y: 115},
             headline: {x: undefined, y: 132}
         };
 
@@ -103,12 +104,12 @@ export default class Canvas {
     }
 
     /**
-     * Creates an image element
+     * Creates an text element
      *
-     * @param {Object|String} coords   - where to place image on canvas
+     * @param {Object|String} coords   - where to place text on canvas
      * @param {Number} coords.x        - x coord
      * @param {Number} coords.y        - y coord
-     * @return {Element}               - created image
+     * @return {Element}               - created text
      */
     createText( coords ) {
 
@@ -125,6 +126,25 @@ export default class Canvas {
 
     }
 
+    /**
+     * Creates an image element
+     *
+     * @param {Object|String} coords   - where to place image on canvas
+     * @param {Number} coords.x        - x coord
+     * @param {Number} coords.y        - y coord
+     * @return {Element}               - created image
+     */
+    createImage( coords ) {
+
+        let image = this.$.svg('image');
+
+        this.setPosition(image, coords);
+        this.setSize(image, {width: '87', height: '87'});
+        this.tree.svg.appendChild(image);
+
+        return image;
+
+    }
 
     /**
      * Creates elements from parameter
@@ -138,7 +158,9 @@ export default class Canvas {
             return this.createText(element);
 
         } else {
-            // return this.createImage(element);
+
+            return this.createImage(element);
+
         }
 
     }
