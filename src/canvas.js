@@ -125,4 +125,26 @@ export default class Canvas {
 
     }
 
+
+    /**
+     * Creates elements from parameter
+     *
+     * @param {String} - type of elements: 'mainText', 'headline', 'image'
+     */
+    createElement( element ) {
+
+        if (element instanceof String) {
+
+            if (element === 'mainText' || element === 'headline') {
+
+                return this.createText(element);
+
+            } else {
+                // return this.createImage(element);
+            }
+
+        }
+
+    }
+
 }
