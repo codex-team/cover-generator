@@ -133,16 +133,12 @@ export default class Canvas {
      */
     createElement( element ) {
 
-        if (element instanceof String) {
+        if (element === 'mainText' || element === 'headline') {
 
-            if (element === 'mainText' || element === 'headline') {
+            return this.createText(element);
 
-                return this.createText(element);
-
-            } else {
-                // return this.createImage(element);
-            }
-
+        } else {
+            // return this.createImage(element);
         }
 
     }
