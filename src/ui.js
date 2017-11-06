@@ -84,7 +84,7 @@ module.exports = function () {
      */
     function saveButtonClicked() {
 
-        console.log('saveButtonClicked');
+        instances.canvas.import();
 
     }
 

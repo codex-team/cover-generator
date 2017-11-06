@@ -157,11 +157,42 @@ export default class Canvas {
 
             return this.createText(element);
 
-        } else {
+        } else if (element === 'image') {
 
             return this.createImage(element);
 
         }
+
+    }
+
+    import() {
+
+        let serializer = new window.XMLSerializer(),
+            source = serializer.serializeToString(this.tree.svg);
+
+        if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+
+            source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+
+        }
+        if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+
+            source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+
+        }
+
+        source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+        let link = document.createElement('a', {});
+
+        link.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source));
+        link.setAttribute('download', 'cover.svg');
+
+        link.style.display = 'none';
+        document.body.appendChild(link);
+
+        link.click();
+        document.body.removeChild(link);
 
     }
 
