@@ -170,8 +170,8 @@ module.exports = function () {
         }
 
         editor.appendChild(controls);
-        canvasWrapper.appendChild(canvasInstance.create(nodes.canvasWrapper));
-        editor.appendChild(canvasWrapper);
+        nodes.canvasWrapper.appendChild(canvasInstance.create(nodes.canvasWrapper));
+        editor.appendChild(nodes.canvasWrapper);
 
         container.appendChild(editor);
 
