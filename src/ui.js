@@ -37,9 +37,7 @@ module.exports = function () {
     let nodes = {
         canvasWrapper        : null,
         canvas               : null,
-        mainRectangle : {
-            foreignObject    : null,
-        },
+        mainRectangle        : null, 
         controls : {
             resizeSqure      : null,
             resizeVertical   : null,
@@ -50,45 +48,6 @@ module.exports = function () {
             headlineButton   : null,
         }
     };
-
-    /**
-    * Creates main form
-    */
-    function createCanvas() {
-
-        nodes.canvasWrapper = $.make('div', CSS.canvasWrapper);
-
-        nodes.canvas = $.svg('svg', {
-            width: '650px',
-            height: '370px'
-        });
-
-        nodes.mainRectangle = $.svg('rect', {
-            width: '100%',
-            height: '100%',
-            fill: '#FFFFFF'
-        });
-
-        /* nodes.canvas.foreignObject = $.svg('foreignObject', {
-            width: '100%',
-            height: '100%',
-            requiredExtensions: 'http://www.w3.org/1999/xhtml'
-        });
-
-        let spanForeignObject = $.make('span', 'spanForeignObject');
-
-        nodes.canvas.foreignObject.dataset.object = '';
-        nodes.canvas.foreignObject.add(spanForeignObject);*/
-
-
-        nodes.canvas.classList.add(CSS.canvas);
-        nodes.canvas.appendChild(nodes.mainRectangle);
-        nodes.canvasWrapper.appendChild(nodes.canvas);
-
-
-        return nodes.canvasWrapper;
-
-    }
 
     /**
      * Counter in function canvasClicked
@@ -175,12 +134,12 @@ module.exports = function () {
     * @param {object} settings - array of paramertres
     * @param {Element} settings.container - element to create cover-editor
     */
-    function create(container) {
+    function create(container, canvasInstance) {
 
         var editor   = $.make('div', CSS.editor),
             controls = $.make('div', CSS.controls),
-            canvas   = createCanvas();
 
+        nodes.canvasWrapper             = $.make('div', CSS.canvasWrapper);
         nodes.controls.resizeSqure      = $.make('span', [CSS.resizeButton, CSS.resizeButtonSquare]);
         nodes.controls.resizeVertical   = $.make('span', [CSS.resizeButton, CSS.resizeButtonVertical]);
         nodes.controls.resizeHorisontal = $.make('span', [CSS.resizeButton, CSS.resizeButtonHorisontal]);
@@ -211,7 +170,7 @@ module.exports = function () {
         }
 
         editor.appendChild(controls);
-        editor.appendChild(canvas);
+        editor.appendChild(canvasInstance.create(nodes.canvasWrapper));
 
         container.appendChild(editor);
 
