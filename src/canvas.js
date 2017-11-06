@@ -33,8 +33,13 @@ export default class Canvas {
 
     create( parent ) {
 
+        let rectangle = this.$.svg('rect', {fill: '#FFFFFF'});
+
+        this.setSize(rectangle, this.formats.horisontal);
+
         this.tree.svg = this.$.svg('svg');
         this.setCanvasFormat('horisontal');
+        this.tree.svg.appendChild(rectangle);
 
         return this.tree.svg;
 
