@@ -80,6 +80,16 @@
             margin-top: -3px;
         }
 
+        &--headLine {
+            position: absolute;
+            top: var(--headlineCoordY);
+        }
+
+        &--mainText {
+            position: absolute;
+            top: var(--mainTextCoordY);
+        }
+
         &--save {
             background-color: #00e3ad;
 

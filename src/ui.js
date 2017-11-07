@@ -23,6 +23,8 @@ module.exports = function () {
         resizeButtonHorisontal : 'cover-editor__resize-canvas--horisontal',
 
         controlButton          : 'cover-editor__control-button',
+        headline               : 'cover-editor__control-button--headline',
+        mainText               : 'cover-editor__control-button--mainText',
         controlButtonSave      : 'cover-editor__control-button--save',
 
         canvasWrapper          : 'cover-editor__canvas-wrapper',
@@ -44,6 +46,7 @@ module.exports = function () {
      * @type {Object}
      */
     let nodes = {
+        currentText          : null,
         canvasWrapper        : null,
         canvas               : null,
         mainRectangle        : null,
@@ -65,7 +68,7 @@ module.exports = function () {
     var i = 0;
 
     /**
-     * Canvas clicked
+     * Make canvas active
      */
     function canvasClicked() {
 
@@ -80,6 +83,41 @@ module.exports = function () {
             i--;
 
         }
+
+    }
+
+    /**
+     *
+     *
+    */
+    function editText(event) {
+
+        let textarea = document.createElement('textarea');
+
+        nodes.currentText = event.target;
+
+        let coords = event.target.getBoundingClientRect();
+
+        if (coords.bottom < (nodes.canvasWrapper.clientHeight / 2)) {
+
+            textarea.classList.add(CSS.headline);
+
+        } else {
+
+            textarea.classList.add(CSS.mainText);
+
+        }
+
+        nodes.canvasWrapper.appendChild(textarea);
+        textarea.click();
+
+        textarea.addEventListener('blur', function () {
+
+            console.log(textarea.dataset);
+            instances.canvas.setInnerText(nodes.currentText, textarea.value);
+            nodes.canvasWrapper.removeChild(textarea);
+
+        });
 
     }
 
@@ -121,6 +159,14 @@ module.exports = function () {
         let button = event.target,
             object = button.dataset.object,
             element = instances.canvas.createElement(object);
+
+        if (object == 'headline' || object == 'mainText') {
+
+            element.addEventListener('click', editText);
+
+        }
+
+        element.dispatchEvent(new window.Event('click'));
 
     }
 

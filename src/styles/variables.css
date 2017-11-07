@@ -3,6 +3,12 @@
     /**
      * Hover on buttons
      */
-    --blueColor: #3c93f5
+    --blueColor: #3c93f5;
+
+    /**
+     * Position of textarea
+     */
+	--mainTextCoordY: 276;
+	--headlineCoordY: 121;
 
 }
