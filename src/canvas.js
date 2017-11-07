@@ -118,16 +118,32 @@ export default class Canvas {
      */
     createText( coords ) {
 
-        let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        let text = this.$.svg('text');
 
         text.setAttribute('height', '10');
         text.setAttribute('width', '20');
-        text.setAttribute('x', '0');
-        text.setAttribute('y', '30');
         text.innerHTML = 'New text';
+        this.setPosition(coords);
+
         this.tree.svg.appendChild(text);
 
         return text;
+
+    }
+
+    /**
+     * Sets text element
+     *
+     * @param {Element} coords - where to place inner text
+     * @param {String} text    - text to append
+     */
+    setInnerText( element, text ) {
+
+        if (element instanceof window.Element) {
+
+            element.textContent = text;
+
+        }
 
     }
 
