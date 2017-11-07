@@ -26,9 +26,11 @@ export default class Canvas {
 
         this.positions = {
             mainText: {x: undefined, y: 271},
-            image: {x: undefined, y: 115},
-            headline: {x: undefined, y: 132}
+            image: {x: undefined, y: 132},
+            headline: {x: undefined, y: 115}
         };
+
+        this.padding = 30;
 
     }
 
@@ -86,8 +88,18 @@ export default class Canvas {
      */
     setPosition( element, coords ) {
 
-        coords = coords.y == undefined ? this.positions[coords] : coords;
-        element.setAttribute('y', coords.y);
+        if (typeof coords === 'string') {
+
+            coords = this.positions[coords];
+
+        }
+        if (!coords) {
+
+            return;
+
+        }
+
+        coords.y ? element.setAttribute('y', coords.y) : null;
         coords.x ? element.setAttribute('x', coords.x) : null;
 
     }
@@ -100,9 +112,20 @@ export default class Canvas {
      */
     setAlign( element, align ) {
 
-        if (align == 'left') {
+        let canvasSizes = {width: this.tree.svg.clientWidth, height: this.tree.svg.clientHeight},
+            elementSizes = {width: element.clientWidth, height: element.clientHeight};
 
-            this.setPosition();
+        if (align === 'left') {
+
+            this.setPosition(element, {x: this.padding, y: undefined});
+
+        } else if (align === 'center') {
+
+            this.setPosition(element, {x: canvasSizes.width - elementSizes.width, y: undefined});
+
+        } else if (align === 'right') {
+
+            this.setPosition(element, {x: canvasSizes.width - elementSizes.width - this.padding, y: undefined});
 
         }
 
@@ -123,11 +146,15 @@ export default class Canvas {
         text.setAttribute('height', '10');
         text.setAttribute('width', '20');
         text.innerHTML = 'New text';
-        this.setPosition(coords);
+        this.setPosition(text, coords);
 
         this.tree.svg.appendChild(text);
 
         return text;
+
+    }
+
+    setText() {
 
     }
 
