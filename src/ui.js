@@ -30,6 +30,10 @@ module.exports = function () {
         canvasActive           : 'cover-editor__canvas-wrapper--active'
     };
 
+    /**
+     * Static instances
+     * @type {Object}
+     */
     const instances = {
         canvas       : null,
         toolbar      : null
@@ -51,7 +55,8 @@ module.exports = function () {
             pictureButton    : null,
             mainTextButton   : null,
             headlineButton   : null,
-        }
+        },
+        currentCanvasEditing : null
     };
 
     /**
@@ -75,7 +80,6 @@ module.exports = function () {
             i--;
 
         }
-        console.log('canvasActive');
 
     }
 
@@ -115,11 +119,8 @@ module.exports = function () {
     function toggleObjectClicked(event) {
 
         let button = event.target,
-            object = button.dataset.object;
-
-        console.log('toggle: %o', object);
-
-        instances.canvas.createElement(object);
+            object = button.dataset.object,
+            element = instances.canvas.createElement(object);
 
     }
 
@@ -154,7 +155,9 @@ module.exports = function () {
 
 
         instances.canvas                = canvasInstance;
+
         nodes.canvasWrapper             = $.make('div', CSS.canvasWrapper);
+        nodes.canvas                    = instances.canvas.create(nodes.canvasWrapper);
         nodes.controls.resizeSqure      = $.make('span', [CSS.resizeButton, CSS.resizeButtonSquare]);
         nodes.controls.resizeVertical   = $.make('span', [CSS.resizeButton, CSS.resizeButtonVertical]);
         nodes.controls.resizeHorisontal = $.make('span', [CSS.resizeButton, CSS.resizeButtonHorisontal]);
@@ -185,7 +188,7 @@ module.exports = function () {
         }
 
         editor.appendChild(controls);
-        nodes.canvasWrapper.appendChild(canvasInstance.create(nodes.canvasWrapper));
+        nodes.canvasWrapper.appendChild(nodes.canvas);
         editor.appendChild(nodes.canvasWrapper);
 
         container.appendChild(editor);

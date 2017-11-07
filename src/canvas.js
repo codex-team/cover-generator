@@ -32,7 +32,12 @@ export default class Canvas {
 
     }
 
-    create( parent ) {
+    /**
+     * Creates an SVG DOMElement
+     *
+     * @return {Element} - created SVG
+     */
+    create() {
 
         this.tree.rectangle = this.$.svg('rect', {fill: '#FFFFFF'});
         this.setSize(this.tree.rectangle, this.formats.horisontal);
@@ -113,14 +118,14 @@ export default class Canvas {
      */
     createText( coords ) {
 
-        let container = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject'),
-            text = document.createElement('div');
+        let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 
-        text.setAttribute('contenteditable', 'true');
-        container.appendChild(text);
-        this.setPosition(container, coords);
-        this.setSize(container, {width: 100, height: 10});
-        this.tree.svg.appendChild(container);
+        text.setAttribute('height', '10');
+        text.setAttribute('width', '20');
+        text.setAttribute('x', '0');
+        text.setAttribute('y', '30');
+        text.innerHTML = 'New text';
+        this.tree.svg.appendChild(text);
 
         return text;
 
@@ -183,7 +188,7 @@ export default class Canvas {
 
         source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
 
-        let link = document.createElement('a', {});
+        let link = document.createElement('a');
 
         link.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source));
         link.setAttribute('download', 'cover.svg');
