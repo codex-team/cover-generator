@@ -89,18 +89,27 @@ export default class Canvas {
     }
 
     /**
+     * Changes the color of svg element
+     *
+     * @param {Element} element - element to change size
+     * @param {String} color    - color of text to set
+     */
+    setColor(element, color) {
+
+        element.children[0].style.color = color;
+
+    }
+
+    /**
      * Changes the font size of svg element
      *
      * @param {Element} element    - element to change size
-     * @param {Number} size        - sizes of text to set
+     * @param {Number} size        - size of text to set
      */
     setFontSize( element, size ) {
 
-        if (element.tagName === 'TEXT') {
-
-            element.setAttribute('font-size', size);
-
-        }
+        element.children[0].style.fontSize = size;
+        this.setSize(element, {x: 'auto'});
 
     }
 

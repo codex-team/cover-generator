@@ -39,9 +39,9 @@ export default class Toolbar {
         this.target = null;
         this.properties = {
             fontSize: {
-                small: 25,
-                medium: 28,
-                big: 31
+                small: '25px',
+                medium: '28px',
+                big: '31px'
             }
         };
 
@@ -173,9 +173,6 @@ export default class Toolbar {
     buttonClicked(event) {
 
         let buttonClicked = event.target,
-            action = buttonClicked.dataset.action;
-
-        console.log('clicked: %o', action);
 
         switch ( action ) {
 
@@ -203,13 +200,30 @@ export default class Toolbar {
      */
     changeFontSize( fontSize ) {
 
-        /* let current = this.target.dataset.fontSize;
+        let current = this.target.dataset.fontSize;
+
+        console.log(current);
 
         if (current == 'small') {
 
-            this.ins;
+            current = 'medium';
 
-        }*/
+        } else if (current == 'medium') {
+
+            current = 'big';
+
+        } else if (current == 'big') {
+
+            current = 'small';
+
+        } else {
+
+            return;
+
+        }
+
+        this.target.dataset.fontSize = current;
+        this.instances.canvas.setFontSize(this.target, this.properties.fontSize[current]);
 
     }
 
@@ -238,7 +252,7 @@ export default class Toolbar {
      */
     changeColor( color ) {
 
-        this.target.style.color = color;
+        this.instances.canvas.setColor(this.target, color);
         this.target.dataset.color = color;
         this.tree.buttons.color.style.background = color;
 
@@ -259,7 +273,6 @@ export default class Toolbar {
             this.tree.toolbar.classList.add(this.CSS.toolbar.colorMode);
 
         }
-        console.log('openColorForm: %o');
 
     }
 
@@ -272,14 +285,8 @@ export default class Toolbar {
             relatively = this.editor.getBoundingClientRect(),
             to = this.target.getBoundingClientRect();
 
-        console.log(this.tree.toolbar.offsetParent);
-        console.log(to);
-
         this.tree.toolbar.style.left = to.left + (to.offsetWidth - this.tree.toolbar.offsetWidth) / 2 + 'px';
         this.tree.toolbar.style.top = to.top + 'px';
-
-        console.log(window.getComputedStyle(this.tree.toolbar).top);
-        console.log('\n');
 
     }
 
