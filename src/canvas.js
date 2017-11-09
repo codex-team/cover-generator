@@ -67,14 +67,40 @@ export default class Canvas {
      * Changes the sizes of svg element
      *
      * @param {Element} element    - element to change size
-     * @param {Object} size        - sizes of canvas
+     * @param {Object|String} size - sizes of canvas, if string, then 'auto'
      * @param {Number} size.width  - width of canvas
      * @param {Number} size.height - height of canvas
      */
     setSize( element, size ) {
 
-        element.setAttribute('height', size.height);
-        element.setAttribute('width', size.width);
+        if (size === 'auto' && element.tagName == 'foreignObject') {
+
+            let text = element.children[0];
+
+            element.setAttribute('width', this.tree.svg.clientWidth);
+            element.setAttribute('height', this.tree.svg.clientHeight);
+            size = {width: text.offsetWidth + 10, height: text.offsetHeight + 10};
+
+        }
+
+        size.height ? element.setAttribute('height', size.height) : null;
+        size.width ? element.setAttribute('width', size.width) : null;
+
+    }
+
+    /**
+     * Changes the font size of svg element
+     *
+     * @param {Element} element    - element to change size
+     * @param {Number} size        - sizes of text to set
+     */
+    setFontSize( element, size ) {
+
+        if (element.tagName === 'TEXT') {
+
+            element.setAttribute('font-size', size);
+
+        }
 
     }
 
@@ -93,41 +119,32 @@ export default class Canvas {
             coords = this.positions[coords];
 
         }
+
         if (!coords) {
 
             return;
 
         }
 
-        coords.y ? element.setAttribute('y', coords.y) : null;
-        coords.x ? element.setAttribute('x', coords.x) : null;
+        let canvasSizes = {width: this.tree.svg.clientWidth, height: this.tree.svg.clientWidth},
+            elementSizes = {width: element.clientWidth + 5, height: element.clientWidth + 5};
 
-    }
+        if (coords.x === 'left') {
 
-    /**
-     * Changes horizontal align
-     *
-     * @param {Element} - element to align
-     * @param {String}  - type of alignment
-     */
-    setAlign( element, align ) {
+            coords.x = this.padding;
 
-        let canvasSizes = {width: this.tree.svg.clientWidth, height: this.tree.svg.clientHeight},
-            elementSizes = {width: element.clientWidth, height: element.clientHeight};
+        } else if (coords.x === 'center') {
 
-        if (align === 'left') {
+            coords.x = (canvasSizes.width - elementSizes.width) / 2;
 
-            this.setPosition(element, {x: this.padding, y: undefined});
+        } else if (coords.x === 'right') {
 
-        } else if (align === 'center') {
-
-            this.setPosition(element, {x: canvasSizes.width - elementSizes.width, y: undefined});
-
-        } else if (align === 'right') {
-
-            this.setPosition(element, {x: canvasSizes.width - elementSizes.width - this.padding, y: undefined});
+            coords.x = canvasSizes.width - elementSizes.width - this.padding;
 
         }
+
+        coords.y ? element.setAttribute('y', coords.y) : null;
+        coords.x ? element.setAttribute('x', coords.x) : null;
 
     }
 
@@ -141,20 +158,25 @@ export default class Canvas {
      */
     createText( coords ) {
 
-        let text = this.$.svg('text');
+        let text = this.$.make('span'),
+            container = this.$.svg('foreignObject'),
+            position = this.positions[coords];
 
-        text.setAttribute('height', '10');
-        text.setAttribute('width', '20');
         text.innerHTML = 'New text';
-        this.setPosition(text, coords);
+        text.setAttribute('contenteditable', true);
+        text.addEventListener('keyup', (event) => {
 
-        this.tree.svg.appendChild(text);
+            this.setSize(event.target.parentNode, 'auto');
 
-        return text;
+        });
+        container.appendChild(text);
+        this.tree.svg.appendChild(container);
 
-    }
+        position.x = 'left';
+        this.setSize(container, 'auto');
+        this.setPosition(container, coords);
 
-    setText() {
+        return container;
 
     }
 
