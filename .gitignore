@@ -26,6 +26,5 @@ jspm_packages
 
 *.sublime-workspace
 
-build/
 .gitignore
 webpack.config.js
