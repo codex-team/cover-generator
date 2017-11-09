@@ -109,7 +109,7 @@ export default class Canvas {
     setFontSize( element, size ) {
 
         element.children[0].style.fontSize = size;
-        this.setSize(element, {x: 'auto'});
+        this.setSize(element, 'auto');
 
     }
 

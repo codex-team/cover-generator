@@ -173,6 +173,7 @@ export default class Toolbar {
     buttonClicked(event) {
 
         let buttonClicked = event.target,
+            action = event.target.dataset.action;
 
         switch ( action ) {
 
@@ -298,23 +299,23 @@ export default class Toolbar {
         if (this.target.dataset.fontSize == undefined)  {
 
             this.target.dataset.fontSize = 'small';
+            this.changeFontSize(this.target.dataset.fontSize);
 
         }
-        this.changeFontSize(this.target.dataset.fontSize);
 
         if (this.target.dataset.alignment == undefined) {
 
             this.target.dataset.alignment = 'left';
+            this.changeAlignment(this.target.dataset.alignment);
 
         }
-        this.changeAlignment(this.target.dataset.alignment);
 
         if (this.target.dataset.color == undefined) {
 
             this.target.dataset.color = '#000000';
+            this.changeColor(this.target.dataset.color);
 
         }
-        this.changeColor(this.target.dataset.color);
 
     }
 
