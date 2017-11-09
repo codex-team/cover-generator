@@ -87,41 +87,6 @@ module.exports = function () {
     }
 
     /**
-     *
-     *
-    */
-    function editText(event) {
-
-        let textarea = document.createElement('textarea');
-
-        nodes.currentText = event.target;
-
-        let coords = event.target.getBoundingClientRect();
-
-        if (coords.bottom < (nodes.canvasWrapper.clientHeight / 2)) {
-
-            textarea.classList.add(CSS.headline);
-
-        } else {
-
-            textarea.classList.add(CSS.mainText);
-
-        }
-
-        nodes.canvasWrapper.appendChild(textarea);
-        textarea.click();
-
-        textarea.addEventListener('blur', function () {
-
-            console.log(textarea.dataset);
-            instances.canvas.setInnerText(nodes.currentText, textarea.value);
-            nodes.canvasWrapper.removeChild(textarea);
-
-        });
-
-    }
-
-    /**
      * Save button click listener
      */
     function saveButtonClicked() {
@@ -160,12 +125,18 @@ module.exports = function () {
             object = button.dataset.object,
             element = instances.canvas.createElement(object);
 
-        if (object == 'headline' || object == 'mainText') {
+        element.addEventListener('click', (e) => {
 
-            element.addEventListener('click', editText);
+            if (event.target.tagName === 'SPAN') {
 
-        }
+                instances.toolbar.openNear({target: e.target.parentNode});
+                return;
 
+            }
+
+            instances.toolbar.openNear({target: e.target});
+
+        });
         element.dispatchEvent(new window.Event('click'));
 
     }
@@ -194,13 +165,14 @@ module.exports = function () {
     * @param {object} settings - array of paramertres
     * @param {Element} settings.container - element to create cover-editor
     */
-    function create(container, canvasInstance) {
+    function create(container, canvasInstance, toolbarInstance) {
 
         var editor   = $.make('div', CSS.editor),
             controls = $.make('div', CSS.controls);
 
 
         instances.canvas                = canvasInstance;
+        instances.toolbar               = toolbarInstance;
 
         nodes.canvasWrapper             = $.make('div', CSS.canvasWrapper);
         nodes.canvas                    = instances.canvas.create(nodes.canvasWrapper);
@@ -239,6 +211,7 @@ module.exports = function () {
 
         container.appendChild(editor);
 
+        instances.toolbar.create(editor, instances.canvas);
 
         bindEvents();
 

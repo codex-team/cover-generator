@@ -25,10 +25,25 @@ export default class Toolbar {
     constructor() {
 
         /**
+         * Components which are controlling something.
+         * @type {Object}
+         */
+        this.instances = {
+            canvas: null
+        };
+
+        /**
          * On which element toolbar was open
          * @type {Element|null}
          */
         this.target = null;
+        this.properties = {
+            fontSize: {
+                small: 25,
+                medium: 28,
+                big: 31
+            }
+        };
 
         /**
          * DOM Elements
@@ -87,17 +102,17 @@ export default class Toolbar {
      *  Prepares toolbar elements
      *
      * @param  {object} params
-     * @param  {Element} params.editor - main wrapper
-     * @param  {Element} params.canvas - main svg canvas
+     * @param  {Element} editor         - main wrapper
+     * @param  {Element} canvasInstance - canvas object
      */
-    init(params) {
+    create(editor, canvasInstance) {
 
         /**
          * Main Editor wrapper
          * @type {Element}
          */
-        this.editor = params.editor;
-        this.instances.canvas = params.canvas;
+        this.editor = editor;
+        this.instances.canvas = canvasInstance;
 
         this.make();
 
@@ -188,12 +203,13 @@ export default class Toolbar {
      */
     changeFontSize( fontSize ) {
 
-        this.target.classList.remove(this.CSS.target.fontSize[this.target.dataset.fontSize]);
-        this.tree.toolbar.classList.remove(this.CSS.target.fontSize[this.target.dataset.fontSize]);
+        /* let current = this.target.dataset.fontSize;
 
-        this.target.dataset.fontSize = fontSize;
-        this.target.classList.add(this.CSS.target.fontSize[this.target.dataset.fontSize]);
-        this.tree.toolbar.classList.add(this.CSS.target.fontSize[this.target.dataset.fontSize]);
+        if (current == 'small') {
+
+            this.ins;
+
+        }*/
 
     }
 
@@ -211,24 +227,8 @@ export default class Toolbar {
 
         });
 
-        switch (alignment) {
-
-            case ('left'):
-                this.instances.canvas.setPosition('left');
-                this.tree.buttons.left.classList.add(this.CSS.buttons.active);
-                break;
-
-            case ('center'):
-                this.instances.canvas.setPosition('center');
-                this.tree.buttons.center.classList.add(this.CSS.buttons.active);
-                break;
-
-            case ('right'):
-                this.instances.canvas.setPosition('right');
-                this.tree.buttons.right.classList.add(this.CSS.buttons.active);
-                break;
-
-        }
+        this.instances.canvas.setPosition(this.target, {x: alignment, y: undefined});
+        this.moveToTarget();
 
     }
 
@@ -268,11 +268,18 @@ export default class Toolbar {
      */
     moveToTarget() {
 
-        var relatively = this.editor.getBoundingClientRect(),
+        let element = this.target,
+            relatively = this.editor.getBoundingClientRect(),
             to = this.target.getBoundingClientRect();
 
-        this.tree.toolbar.style.left = to.left - relatively.left + (to.clientWidth - this.tree.toolbar.clientWidth)/2 + 'px';
-        this.tree.toolbar.style.top = to.top - relatively.top - this.target.clientHeight - 20 + 'px';
+        console.log(this.tree.toolbar.offsetParent);
+        console.log(to);
+
+        this.tree.toolbar.style.left = to.left + (to.offsetWidth - this.tree.toolbar.offsetWidth) / 2 + 'px';
+        this.tree.toolbar.style.top = to.top + 'px';
+
+        console.log(window.getComputedStyle(this.tree.toolbar).top);
+        console.log('\n');
 
     }
 
@@ -283,7 +290,7 @@ export default class Toolbar {
 
         if (this.target.dataset.fontSize == undefined)  {
 
-            this.target.dataset.fontSize = 0;
+            this.target.dataset.fontSize = 'small';
 
         }
         this.changeFontSize(this.target.dataset.fontSize);

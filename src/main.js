@@ -46,7 +46,7 @@ module.exports = function () {
         /**
          * Make interface and bind events
          */
-        let nodes = ui.create(container, canvasInstance);
+        let nodes = ui.create(container, canvasInstance, toolbarInstance);
 
     };
 
