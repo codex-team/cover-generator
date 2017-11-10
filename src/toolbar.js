@@ -204,8 +204,6 @@ export default class Toolbar {
 
         let current = this.target.dataset.fontSize;
 
-        console.log(current);
-
         if (current == 'small') {
 
             current = 'medium';
@@ -290,8 +288,6 @@ export default class Toolbar {
 
         this.tree.toolbar.style.left = relatively.left + to.left + (element.clientWidth - this.tree.toolbar.clientWidth) / 2 + 'px';
         this.tree.toolbar.style.top = relatively.top + to.top - this.tree.toolbar.clientHeight + 'px';
-
-        console.log(this.canvas.parentNode);
 
     }
 
