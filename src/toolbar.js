@@ -353,6 +353,7 @@ export default class Toolbar {
      */
     hide() {
 
+        console.log('hide');
         this.removeTargetParams();
         this.target = null;
         this.tree.toolbar.classList.add(this.CSS.hidden);

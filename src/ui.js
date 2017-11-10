@@ -84,6 +84,8 @@ module.exports = function () {
 
         }
 
+        instances.toolbar.hide();
+
     }
 
     /**
