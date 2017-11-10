@@ -73,7 +73,7 @@ export default class Canvas {
      */
     setSize( element, size ) {
 
-        if (size === 'auto' && element.dataset.type === 'text') {
+        if (size === 'auto' && (element.dataset.type === 'mainText' || element.dataset.type === 'headline')) {
 
             let text = element.children[0];
 
@@ -136,21 +136,22 @@ export default class Canvas {
         }
 
         let canvasSizes = {width: this.tree.svg.clientWidth, height: this.tree.svg.clientWidth},
-            elementSizes = {width: element.clientWidth + 5, height: element.clientWidth + 5};
+            elementSizes = {width: element.clientWidth + 5, height: element.clientWidth + 5},
+            isText = element.dataset.type === 'mainText' || element.dataset.type === 'headline';
 
         if (coords.x === 'left') {
 
-            element.dataset.type === 'text' ? element.children[0].style.textAlign = coords.x : null;
+            isText ? element.children[0].style.textAlign = coords.x : null;
             coords.x = this.padding;
 
         } else if (coords.x === 'center') {
 
-            element.dataset.type === 'text' ? element.children[0].style.textAlign = coords.x : null;
+            isText ? element.children[0].style.textAlign = coords.x : null;
             coords.x = (canvasSizes.width - elementSizes.width) / 2;
 
         } else if (coords.x === 'right') {
 
-            element.dataset.type === 'text' ? element.children[0].style.textAlign = coords.x : null;
+            isText ? element.children[0].style.textAlign = coords.x : null;
             coords.x = canvasSizes.width - elementSizes.width - this.padding;
 
         }
@@ -176,15 +177,17 @@ export default class Canvas {
 
         text.innerHTML = 'New text';
         text.style.display = 'inline-flex';
-        text.style.shrink = '0';
         text.setAttribute('contenteditable', true);
         text.addEventListener('keyup', (event) => {
 
             this.setSize(event.target.parentNode, 'auto');
+            /*let newPosition = this.positions[event.target.parentNode.dataset.type];
+
+            event.target.parentNode.dataset.type === 'headline' ? newPosition.y -= event.target.clientWidth : newPosition.y += event.target.clientWidth;*/
             this.setPosition(event.target.parentNode, {x: event.target.parentNode.dataset.alignment, y: undefined});
 
         });
-        container.dataset.type = 'text';
+        container.dataset.type = coords;
         container.appendChild(text);
         this.tree.svg.appendChild(container);
 
