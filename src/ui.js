@@ -127,7 +127,7 @@ module.exports = function () {
 
         element.addEventListener('click', (e) => {
 
-            if (e.target.tagName === 'SPAN') {
+            if (e.target.tagName === 'DIV') {
 
                 instances.toolbar.openNear({target: e.target.parentNode});
                 return;

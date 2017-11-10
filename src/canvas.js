@@ -73,7 +73,7 @@ export default class Canvas {
      */
     setSize( element, size ) {
 
-        if (size === 'auto' && element.tagName == 'foreignObject') {
+        if (size === 'auto' && element.dataset.type === 'text') {
 
             let text = element.children[0];
 
@@ -140,14 +140,17 @@ export default class Canvas {
 
         if (coords.x === 'left') {
 
+            element.dataset.type === 'text' ? element.children[0].style.textAlign = coords.x : null;
             coords.x = this.padding;
 
         } else if (coords.x === 'center') {
 
+            element.dataset.type === 'text' ? element.children[0].style.textAlign = coords.x : null;
             coords.x = (canvasSizes.width - elementSizes.width) / 2;
 
         } else if (coords.x === 'right') {
 
+            element.dataset.type === 'text' ? element.children[0].style.textAlign = coords.x : null;
             coords.x = canvasSizes.width - elementSizes.width - this.padding;
 
         }
@@ -167,17 +170,21 @@ export default class Canvas {
      */
     createText( coords ) {
 
-        let text = this.$.make('span'),
+        let text = this.$.make('div'),
             container = this.$.svg('foreignObject'),
             position = this.positions[coords];
 
         text.innerHTML = 'New text';
+        text.style.display = 'inline-flex';
+        text.style.shrink = '0';
         text.setAttribute('contenteditable', true);
         text.addEventListener('keyup', (event) => {
 
             this.setSize(event.target.parentNode, 'auto');
+            this.setPosition(event.target.parentNode, {x: event.target.parentNode.dataset.alignment, y: undefined});
 
         });
+        container.dataset.type = 'text';
         container.appendChild(text);
         this.tree.svg.appendChild(container);
 
