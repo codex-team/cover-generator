@@ -260,6 +260,7 @@ module.exports = function () {
         controlButton: 'cover-editor__control-button',
         headline: 'cover-editor__control-button--headline',
         mainText: 'cover-editor__control-button--mainText',
+        image: 'cover-editor__control-button--image',
         controlButtonSave: 'cover-editor__control-button--save',
 
         canvasWrapper: 'cover-editor__canvas-wrapper',
@@ -406,9 +407,9 @@ module.exports = function () {
         nodes.controls.resizeVertical = $.make('span', [CSS.resizeButton, CSS.resizeButtonVertical]);
         nodes.controls.resizeHorisontal = $.make('span', [CSS.resizeButton, CSS.resizeButtonHorisontal]);
         nodes.controls.saveButton = $.make('span', [CSS.controlButton, CSS.controlButtonSave]);
-        nodes.controls.pictureButton = $.make('span', CSS.controlButton, { textContent: 'Image' });
-        nodes.controls.mainTextButton = $.make('span', CSS.controlButton, { textContent: 'Main Text' });
-        nodes.controls.headlineButton = $.make('span', CSS.controlButton, { textContent: 'Headline' });
+        nodes.controls.pictureButton = $.make('span', [CSS.controlButton, CSS.image], { textContent: 'Image' });
+        nodes.controls.mainTextButton = $.make('span', [CSS.controlButton, CSS.mainText], { textContent: 'Main Text' });
+        nodes.controls.headlineButton = $.make('span', [CSS.controlButton, CSS.headline], { textContent: 'Headline' });
 
         /**
          * Save size in button's data-size

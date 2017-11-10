@@ -45,6 +45,8 @@
     "postcss-nesting": "^4.0.1",
     "postcss-smart-import": "^0.7.4",
     "stylelint-webpack-plugin": "^0.4.2",
+    "svg-inline-loader": "^0.8.0",
+    "svg-url-loader": "^2.3.0",
     "webpack": "^3.7.1"
   }
 }

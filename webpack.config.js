@@ -60,6 +60,18 @@ module.exports = {
                     },
                     'postcss-loader'
                 ])
+            },
+            {
+                /**
+                 * Use for all SVG files loadews below
+                 * - svg-inline-loader
+                 */
+                test: /\.svg$/,
+                use: {
+                    loader: 'svg-url-loader',
+                    options: {}
+                }
+            
             }
         ]
     },

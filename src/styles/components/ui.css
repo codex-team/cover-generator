@@ -74,20 +74,31 @@
             display: inline-block;
             width: 13px;
             height: 13px;
-            background-color: red;
             margin-right: 0.4em;
             vertical-align: middle;
             margin-top: -3px;
+
         }
 
-        &--headLine {
-            position: absolute;
-            top: var(--headlineCoordY);
+        &--image {
+
+            &::before {
+                background-image: url(../assets/icon-picture.svg);
+            }
+        }
+
+        &--headline {
+            
+            &::before {
+                background-image: url(../assets/icon-text.svg);
+            }
         }
 
         &--mainText {
-            position: absolute;
-            top: var(--mainTextCoordY);
+
+            &::before {
+                background-image: url(../assets/icon-text.svg);
+            }
         }
 
         &--save {
@@ -99,6 +110,7 @@
 
             &::before {
                 margin-right: 0;
+                background-image: url(../assets/icon-save.svg);
             }
         }
     }
