@@ -105,13 +105,14 @@ export default class Toolbar {
      * @param  {Element} editor         - main wrapper
      * @param  {Element} canvasInstance - canvas object
      */
-    create(editor, canvasInstance) {
+    create(editor, canvas, canvasInstance) {
 
         /**
          * Main Editor wrapper
          * @type {Element}
          */
         this.editor = editor;
+        this.canvas = canvas;
         this.instances.canvas = canvasInstance;
 
         this.make();
@@ -225,6 +226,7 @@ export default class Toolbar {
 
         this.target.dataset.fontSize = current;
         this.instances.canvas.setFontSize(this.target, this.properties.fontSize[current]);
+        this.moveToTarget();
 
     }
 
@@ -283,11 +285,13 @@ export default class Toolbar {
     moveToTarget() {
 
         let element = this.target,
-            relatively = this.editor.getBoundingClientRect(),
-            to = this.target.getBoundingClientRect();
+            relatively = {left: this.canvas.parentNode.offsetLeft, top: this.canvas.parentNode.offsetTop},
+            to = {left: window.Number(element.getAttribute('x')), top: window.Number(element.getAttribute('y'))};
 
-        this.tree.toolbar.style.left = to.left + (to.offsetWidth - this.tree.toolbar.offsetWidth) / 2 + 'px';
-        this.tree.toolbar.style.top = to.top + 'px';
+        this.tree.toolbar.style.left = relatively.left + to.left + (element.clientWidth - this.tree.toolbar.clientWidth) / 2 + 'px';
+        this.tree.toolbar.style.top = relatively.top + to.top - this.tree.toolbar.clientHeight + 'px';
+
+        console.log(this.canvas.parentNode);
 
     }
 
@@ -328,9 +332,9 @@ export default class Toolbar {
     openNear({ target }) {
 
         this.target = target;
+        this.tree.toolbar.classList.remove(this.CSS.hidden);
         this.moveToTarget();
         this.getTargetParams();
-        this.tree.toolbar.classList.remove(this.CSS.hidden);
 
     }
 

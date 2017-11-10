@@ -211,7 +211,7 @@ module.exports = function () {
 
         container.appendChild(editor);
 
-        instances.toolbar.create(editor, instances.canvas);
+        instances.toolbar.create(editor, nodes.canvas, instances.canvas);
 
         bindEvents();
 
