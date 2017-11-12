@@ -66,11 +66,8 @@ module.exports = {
                  * Use for all SVG files loadews below
                  * - svg-inline-loader
                  */
-                test: /\.svg$/,
-                use: {
-                    loader: 'svg-url-loader',
-                    options: {}
-                }
+                test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+                loader: 'file-loader?name=[name].[ext]'
             
             }
         ]
