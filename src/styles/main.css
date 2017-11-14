@@ -1,4 +1,5 @@
 @import "variables.css";
+@import "components/canvas.css";
 @import "components/toolbar.css";
 @import "components/ui.css";
 

@@ -18,6 +18,12 @@ export default class Canvas {
             svg : null
         };
 
+        this.CSS = {
+            elements: {
+                text: 'cover-editor__canvas--text'
+            }
+        };
+
         this.formats = {
             vertical: {width: 510, height: 560},
             horisontal: {width: 650, height: 370},
@@ -175,6 +181,7 @@ export default class Canvas {
             container = this.$.svg('foreignObject'),
             position = this.positions[coords];
 
+        text.classList.add(this.CSS.elements.text);
         text.innerHTML = 'New text';
         text.style.display = 'inline-flex';
         text.setAttribute('contenteditable', true);
