@@ -465,8 +465,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
+ * DOM utility
+ */
+var $ = __webpack_require__(0).default;
+
+/**
  * Canvas module
  */
+
 var Canvas = function () {
 
     /**
@@ -478,8 +484,6 @@ var Canvas = function () {
      */
     function Canvas(properties) {
         _classCallCheck(this, Canvas);
-
-        this.$ = __webpack_require__(0).default;
 
         this.tree = {
             svg: null
@@ -517,10 +521,10 @@ var Canvas = function () {
         key: 'create',
         value: function create() {
 
-            this.tree.rectangle = this.$.svg('rect', { fill: '#FFFFFF' });
+            this.tree.rectangle = $.svg('rect', { fill: '#FFFFFF' });
             this.setSize(this.tree.rectangle, this.formats.horisontal);
 
-            this.tree.svg = this.$.svg('svg');
+            this.tree.svg = $.svg('svg');
             this.setCanvasFormat('horisontal');
             this.tree.svg.appendChild(this.tree.rectangle);
 
@@ -593,6 +597,7 @@ var Canvas = function () {
 
             element.children[0].style.fontSize = size;
             this.setSize(element, 'auto');
+            this.setPosition(element, { x: element.dataset.alignment, y: undefined });
         }
 
         /**
@@ -654,8 +659,8 @@ var Canvas = function () {
         value: function createText(coords) {
             var _this = this;
 
-            var text = this.$.make('div'),
-                container = this.$.svg('foreignObject'),
+            var text = $.make('div'),
+                container = $.svg('foreignObject'),
                 position = this.positions[coords];
 
             text.classList.add(this.CSS.elements.text);
@@ -665,8 +670,6 @@ var Canvas = function () {
             text.addEventListener('keyup', function (event) {
 
                 _this.setSize(event.target.parentNode, 'auto');
-                /* let newPosition = this.positions[event.target.parentNode.dataset.type];
-                 event.target.parentNode.dataset.type === 'headline' ? newPosition.y -= event.target.clientWidth : newPosition.y += event.target.clientWidth;*/
                 _this.setPosition(event.target.parentNode, { x: event.target.parentNode.dataset.alignment, y: undefined });
             });
             container.dataset.type = coords;
@@ -710,7 +713,7 @@ var Canvas = function () {
         key: 'createImage',
         value: function createImage(coords) {
 
-            var image = this.$.svg('image');
+            var image = $.svg('image');
 
             this.setPosition(image, coords);
             this.setSize(image, { width: '87', height: '87' });
@@ -737,6 +740,11 @@ var Canvas = function () {
                 return this.createImage(element);
             }
         }
+
+        /**
+         * Export canvas as SVG file
+         */
+
     }, {
         key: 'import',
         value: function _import() {
@@ -1069,6 +1077,8 @@ var Toolbar = function () {
 
                 this.tree.toolbar.classList.add(this.CSS.toolbar.colorMode);
             }
+
+            this.moveToTarget();
         }
 
         /**
@@ -1083,7 +1093,17 @@ var Toolbar = function () {
                 relatively = { left: this.canvas.parentNode.offsetLeft, top: this.canvas.parentNode.offsetTop },
                 to = { left: window.Number(element.getAttribute('x')), top: window.Number(element.getAttribute('y')) };
 
-            this.tree.toolbar.style.left = relatively.left + to.left + (element.clientWidth - this.tree.toolbar.clientWidth) / 2 + 'px';
+            if (this.target.dataset.alignment === 'left') {
+
+                this.tree.toolbar.style.left = relatively.left + to.left + 'px';
+            } else if (this.target.dataset.alignment === 'center') {
+
+                this.tree.toolbar.style.left = relatively.left + to.left + (element.clientWidth - this.tree.toolbar.clientWidth) / 2 + 'px';
+            } else if (this.target.dataset.alignment === 'right') {
+
+                this.tree.toolbar.style.left = relatively.left + to.left + this.target.clientWidth - this.tree.toolbar.clientWidth + 'px';
+            }
+
             this.tree.toolbar.style.top = relatively.top + to.top - this.tree.toolbar.clientHeight + 'px';
         }
 

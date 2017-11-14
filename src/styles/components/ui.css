@@ -4,7 +4,6 @@
 .cover-editor {
     display: table;
     margin: 0 auto;
-    user-select: none;
 
     /**
      * Line with UI buttons
@@ -64,6 +63,7 @@
         letter-spacing: 0.17px;
         cursor: pointer;
         float: right;
+        user-select: none;
 
         &:hover {
             background-color: color(#D6E5F9 lightness(-5%));

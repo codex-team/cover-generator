@@ -15,6 +15,8 @@ let $ = require('./dom').default;
 
  *  @property {Element} this.target  — on which element toolbar was open
  */
+
+
 export default class Toolbar {
 
     /**

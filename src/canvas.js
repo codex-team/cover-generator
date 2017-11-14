@@ -1,5 +1,5 @@
 /**
- *
+ * DOM utility
  */
 let $ = require('./dom').default;
 
@@ -192,9 +192,6 @@ export default class Canvas {
         text.addEventListener('keyup', (event) => {
 
             this.setSize(event.target.parentNode, 'auto');
-            /* let newPosition = this.positions[event.target.parentNode.dataset.type];
-
-            event.target.parentNode.dataset.type === 'headline' ? newPosition.y -= event.target.clientWidth : newPosition.y += event.target.clientWidth;*/
             this.setPosition(event.target.parentNode, {x: event.target.parentNode.dataset.alignment, y: undefined});
 
         });
@@ -265,6 +262,9 @@ export default class Canvas {
 
     }
 
+    /**
+     * Export canvas as SVG file
+     */
     import() {
 
         let serializer = new window.XMLSerializer(),
