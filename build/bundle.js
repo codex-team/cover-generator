@@ -485,6 +485,12 @@ var Canvas = function () {
             svg: null
         };
 
+        this.CSS = {
+            elements: {
+                text: 'cover-editor__canvas--text'
+            }
+        };
+
         this.formats = {
             vertical: { width: 510, height: 560 },
             horisontal: { width: 650, height: 370 },
@@ -652,6 +658,7 @@ var Canvas = function () {
                 container = this.$.svg('foreignObject'),
                 position = this.positions[coords];
 
+            text.classList.add(this.CSS.elements.text);
             text.innerHTML = 'New text';
             text.style.display = 'inline-flex';
             text.setAttribute('contenteditable', true);
@@ -1134,12 +1141,12 @@ var Toolbar = function () {
         key: 'removeTargetParams',
         value: function removeTargetParams() {
 
-            this.target.classList.add(this.CSS.target.fontSize[this.target.dataset.fontSize]);
-            this.tree.toolbar.classList.add(this.CSS.toolbar.fontSize[this.target.dataset.fontSize]);
+            // this.target.classList.add(this.CSS.target.fontSizes[this.target.dataset.fontSize]);
+            // this.tree.toolbar.classList.add(this.CSS.toolbar.fontSize[this.target.dataset.fontSize]);
 
-            this.tree.buttons.left.classList.remove(this.CSS.toolbar.buttons.active);
-            this.tree.buttons.center.classList.remove(this.CSS.toolbar.buttons.active);
-            this.tree.buttons.right.classList.remove(this.CSS.toolbar.buttons.active);
+            this.tree.buttons.left.classList.remove(this.CSS.buttons.active);
+            this.tree.buttons.center.classList.remove(this.CSS.buttons.active);
+            this.tree.buttons.right.classList.remove(this.CSS.buttons.active);
         }
 
         /**
