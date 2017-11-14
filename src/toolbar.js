@@ -286,25 +286,25 @@ export default class Toolbar {
      */
     moveToTarget() {
 
-        let element = this.target,
-            relatively = {left: this.canvas.parentNode.offsetLeft, top: this.canvas.parentNode.offsetTop},
-            to = {left: window.Number(element.getAttribute('x')), top: window.Number(element.getAttribute('y'))};
+        let toolbar = this.tree.toolbar,
+            canvasWrapper = {left: this.canvas.parentNode.offsetLeft, top: this.canvas.parentNode.offsetTop},
+            element = {left: window.Number(this.target.getAttribute('x')), top: window.Number(this.target.getAttribute('y')), width: this.target.clientWidth};
 
         if (this.target.dataset.alignment === 'left') {
 
-            this.tree.toolbar.style.left = relatively.left + to.left + 'px';
+            toolbar.style.left = canvasWrapper.left + element.left + 'px';
 
         } else if (this.target.dataset.alignment === 'center') {
 
-            this.tree.toolbar.style.left = relatively.left + to.left + (element.clientWidth - this.tree.toolbar.clientWidth) / 2 + 'px';
+            toolbar.style.left = canvasWrapper.left + element.left + (element.width - toolbar.clientWidth) / 2 + 'px';
 
         } else if (this.target.dataset.alignment === 'right') {
 
-            this.tree.toolbar.style.left = relatively.left + to.left + this.target.clientWidth - this.tree.toolbar.clientWidth + 'px';
+            toolbar.style.left = canvasWrapper.left + element.left + element.width - toolbar.clientWidth + 'px';
 
         }
 
-        this.tree.toolbar.style.top = relatively.top + to.top - this.tree.toolbar.clientHeight + 'px';
+        toolbar.style.top = canvasWrapper.top + element.top - toolbar.clientHeight + 'px';
 
     }
 
