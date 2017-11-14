@@ -313,7 +313,7 @@ export default class Toolbar {
      */
     getTargetParams() {
 
-        if (this.target.dataset.fontSize == undefined)  {
+        if (this.target.dataset.fontSize) {
 
             this.target.dataset.fontSize = 'small';
             this.changeFontSize(this.target.dataset.fontSize);
@@ -370,7 +370,6 @@ export default class Toolbar {
      */
     hide() {
 
-        console.log('hide');
         this.removeTargetParams();
         this.target = null;
         this.tree.toolbar.classList.add(this.CSS.hidden);

@@ -94,7 +94,7 @@
             }
         }
 
-        &--mainText {
+        &--main-text {
 
             &::before {
                 background-image: url(../assets/icon-text.svg);

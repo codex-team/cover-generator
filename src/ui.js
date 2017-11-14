@@ -24,7 +24,7 @@ module.exports = function () {
 
         controlButton          : 'cover-editor__control-button',
         headline               : 'cover-editor__control-button--headline',
-        mainText               : 'cover-editor__control-button--mainText',
+        mainText               : 'cover-editor__control-button--main-text',
         image                  : 'cover-editor__control-button--image',
         controlButtonSave      : 'cover-editor__control-button--save',
 
@@ -66,7 +66,7 @@ module.exports = function () {
     /**
      * Counter in function canvasClicked
      */
-    var i = 0;
+    let i = 0;
 
     /**
      * Make canvas active
@@ -140,7 +140,7 @@ module.exports = function () {
             instances.toolbar.openNear({target: e.target});
 
         });
-        element.dispatchEvent(new window.Event('click'));
+        element.click();
 
     }
 
