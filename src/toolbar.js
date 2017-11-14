@@ -339,8 +339,8 @@ export default class Toolbar {
      */
     removeTargetParams() {
 
-        //this.target.classList.add(this.CSS.target.fontSizes[this.target.dataset.fontSize]);
-        //this.tree.toolbar.classList.add(this.CSS.toolbar.fontSize[this.target.dataset.fontSize]);
+        // this.target.classList.add(this.CSS.target.fontSizes[this.target.dataset.fontSize]);
+        // this.tree.toolbar.classList.add(this.CSS.toolbar.fontSize[this.target.dataset.fontSize]);
 
         this.tree.buttons.left.classList.remove(this.CSS.buttons.active);
         this.tree.buttons.center.classList.remove(this.CSS.buttons.active);
