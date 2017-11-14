@@ -1,4 +1,9 @@
 /**
+ *
+ */
+let $ = require('./dom').default;
+
+/**
  * Canvas module
  */
 export default class Canvas {
@@ -11,8 +16,6 @@ export default class Canvas {
      * @param {Number} properties.shape.height  - height of canvas
      */
     constructor( properties ) {
-
-        this.$ = require('./dom').default;
 
         this.tree = {
             svg : null
@@ -47,10 +50,10 @@ export default class Canvas {
      */
     create() {
 
-        this.tree.rectangle = this.$.svg('rect', {fill: '#FFFFFF'});
+        this.tree.rectangle = $.svg('rect', {fill: '#FFFFFF'});
         this.setSize(this.tree.rectangle, this.formats.horisontal);
 
-        this.tree.svg = this.$.svg('svg');
+        this.tree.svg = $.svg('svg');
         this.setCanvasFormat('horisontal');
         this.tree.svg.appendChild(this.tree.rectangle);
 
@@ -116,6 +119,7 @@ export default class Canvas {
 
         element.children[0].style.fontSize = size;
         this.setSize(element, 'auto');
+        this.setPosition(element, {x: element.dataset.alignment, y: undefined});
 
     }
 
@@ -177,8 +181,8 @@ export default class Canvas {
      */
     createText( coords ) {
 
-        let text = this.$.make('div'),
-            container = this.$.svg('foreignObject'),
+        let text = $.make('div'),
+            container = $.svg('foreignObject'),
             position = this.positions[coords];
 
         text.classList.add(this.CSS.elements.text);
@@ -232,7 +236,7 @@ export default class Canvas {
      */
     createImage( coords ) {
 
-        let image = this.$.svg('image');
+        let image = $.svg('image');
 
         this.setPosition(image, coords);
         this.setSize(image, {width: '87', height: '87'});
