@@ -127,10 +127,6 @@ export default class Toolbar {
      */
     make() {
 
-        // tree.controllable = elem;
-        // tree.controllable.classList.add(styles.controllable.fontSize[0]);
-        // tree.controllable.addEventListener('dblclick', showToolbar.bind(this));
-
         this.tree.toolbar = $.make('div', [this.CSS.toolbar.normal, this.CSS.hidden]);
 
         /**
@@ -355,9 +351,6 @@ export default class Toolbar {
      * Clears buttons states in toolbar
      */
     removeTargetParams() {
-
-        // this.target.classList.add(this.CSS.target.fontSizes[this.target.dataset.fontSize]);
-        // this.tree.toolbar.classList.add(this.CSS.toolbar.fontSize[this.target.dataset.fontSize]);
 
         this.tree.buttons.left.classList.remove(this.CSS.buttons.active);
         this.tree.buttons.center.classList.remove(this.CSS.buttons.active);
