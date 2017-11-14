@@ -17,28 +17,43 @@ export default class Canvas {
      */
     constructor( properties ) {
 
+        /**
+         * DOM of this class
+        */
         this.tree = {
             svg : null
         };
 
+        /**
+         * CSS of this class
+        */
         this.CSS = {
             elements: {
                 text: 'cover-editor__canvas--text'
             }
         };
 
+        /**
+         * Sizes of the canvas
+        */
         this.formats = {
             vertical: {width: 510, height: 560},
             horisontal: {width: 650, height: 370},
             square: {width: 510, height: 510}
         };
 
+        /**
+         * Positions of elements at the canvas
+        */
         this.positions = {
             mainText: {x: undefined, y: 271},
             image: {x: undefined, y: 132},
             headline: {x: undefined, y: 115}
         };
 
+        /**
+         * Padding between the elements and canvas end
+        */
         this.padding = 30;
 
     }
