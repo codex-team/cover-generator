@@ -12,7 +12,6 @@
     top: 0;
     border-radius: 5px;
     background: #313542;
-    transition: opacity 1s;
 
     &--color-mode &__icon {
         display: none;
