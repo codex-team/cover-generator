@@ -52,6 +52,15 @@ export default class Canvas {
         };
 
         /**
+         * Types of elements at the canvas
+        */
+        this.types = {
+            mainText: 'mainText',
+            image: 'image',
+            headline: 'headline'
+        };
+
+        /**
          * Padding between the elements and canvas end
         */
         this.padding = 30;
