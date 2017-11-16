@@ -116,8 +116,16 @@ export default class Canvas {
 
         }
 
-        size.height ? element.setAttribute('height', size.height) : null;
-        size.width ? element.setAttribute('width', size.width) : null;
+        if (size.height) {
+
+            element.setAttribute('height', size.height);
+
+        }
+        if (size.width) {
+
+            element.setAttribute('width', size.width);
+
+        }
 
     }
 
@@ -173,25 +181,36 @@ export default class Canvas {
             elementSizes = {width: element.clientWidth + 5, height: element.clientWidth + 5},
             isText = element.dataset.type === 'mainText' || element.dataset.type === 'headline';
 
+        if (isText && ['left', 'center', 'rigth'].indexOf(coords.x)) {
+
+            element.children[0].style.textAlign = coords.x;
+
+        }
+
         if (coords.x === 'left') {
 
-            isText ? element.children[0].style.textAlign = coords.x : null;
             coords.x = this.padding;
 
         } else if (coords.x === 'center') {
 
-            isText ? element.children[0].style.textAlign = coords.x : null;
             coords.x = (canvasSizes.width - elementSizes.width) / 2;
 
         } else if (coords.x === 'right') {
 
-            isText ? element.children[0].style.textAlign = coords.x : null;
             coords.x = canvasSizes.width - elementSizes.width - this.padding;
 
         }
 
-        coords.y ? element.setAttribute('y', coords.y) : null;
-        coords.x ? element.setAttribute('x', coords.x) : null;
+        if (coords.y) {
+
+            element.setAttribute('y', coords.y);
+
+        }
+        if (coords.x) {
+
+            element.setAttribute('x', coords.x);
+
+        }
 
     }
 
