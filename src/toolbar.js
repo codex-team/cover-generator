@@ -90,21 +90,21 @@ export default class Toolbar {
                     'cover-editor__text--big'
                 ],
             },
-            button : 'cover-editor__toolbar-button',
+            button : 'cover-editor__button',
             buttons: {
-                active    : 'cover-editor__toolbar-button--active',
-                left      : 'cover-editor__toolbar-button--left',
-                center    : 'cover-editor__toolbar-button--center',
-                right     : 'cover-editor__toolbar-button--right',
-                fontSize  : 'cover-editor__toolbar-button--font-size',
+                active    : 'cover-editor__button--active',
+                left      : 'cover-editor__button--left',
+                center    : 'cover-editor__button--center',
+                right     : 'cover-editor__button--right',
+                fontSize  : 'cover-editor__button--font-size',
                 fontSizes  : {
-                    small: 'cover-editor__toolbar-button--small',
-                    medium: 'cover-editor__toolbar-button--medium',
-                    big: 'cover-editor__toolbar-button--big'
+                    small: 'cover-editor__button--small',
+                    medium: 'cover-editor__button--medium',
+                    big: 'cover-editor__button--big'
                 },
-                color : 'cover-editor__toolbar-button--color'
+                color : 'cover-editor__button--color'
             },
-            colorForm : 'cover-editor__toolbar-color-form'
+            colorForm : 'cover-editor__color-form'
         };
 
     }
@@ -332,7 +332,7 @@ export default class Toolbar {
 
         if (this.target.dataset.fontSize == undefined) {
 
-            this.target.dataset.fontSize = 'small';
+            this.target.dataset.fontSize = 'big';
             this.changeFontSize(this.target.dataset.fontSize);
 
         } else {
