@@ -209,28 +209,29 @@ export default class Toolbar {
      */
     changeFontSize( fontSize ) {
 
-        let current = this.target.dataset.fontSize;
+        let current = this.target.dataset.fontSize, next;
 
-        if (current == 'small') {
+        switch (current) {
 
-            current = 'medium';
+            case 'small':
+                next = 'medium';
+                break;
 
-        } else if (current == 'medium') {
+            case 'medium':
+                next = 'big';
+                break;
 
-            current = 'big';
+            case 'big':
+                next = 'small';
+                break;
 
-        } else if (current == 'big') {
-
-            current = 'small';
-
-        } else {
-
-            return;
+            default:
+                return;
 
         }
 
-        this.target.dataset.fontSize = current;
-        this.instances.canvas.setFontSize(this.target, this.properties.fontSize[current]);
+        this.target.dataset.fontSize = next;
+        this.instances.canvas.setFontSize(this.target, this.properties.fontSize[next]);
         this.moveToTarget();
 
     }
@@ -295,17 +296,19 @@ export default class Toolbar {
             canvasWrapper = {left: this.canvas.parentNode.offsetLeft, top: this.canvas.parentNode.offsetTop},
             element = {left: window.Number(this.target.getAttribute('x')), top: window.Number(this.target.getAttribute('y')), width: this.target.clientWidth};
 
-        if (this.target.dataset.alignment === 'left') {
+        switch (this.target.dataset.alignment) {
 
-            toolbar.style.left = canvasWrapper.left + element.left + 'px';
+            case 'left':
+                toolbar.style.left = canvasWrapper.left + element.left + 'px';
+                break;
 
-        } else if (this.target.dataset.alignment === 'center') {
+            case 'center':
+                toolbar.style.left = canvasWrapper.left + element.left + (element.width - toolbar.clientWidth) / 2 + 'px';
+                break;
 
-            toolbar.style.left = canvasWrapper.left + element.left + (element.width - toolbar.clientWidth) / 2 + 'px';
-
-        } else if (this.target.dataset.alignment === 'right') {
-
-            toolbar.style.left = canvasWrapper.left + element.left + element.width - toolbar.clientWidth + 'px';
+            case 'right':
+                toolbar.style.left = canvasWrapper.left + element.left + element.width - toolbar.clientWidth + 'px';
+                break;
 
         }
 
