@@ -34,9 +34,18 @@ export default class Canvas {
         };
 
         /**
-         * Sizes of the canvas
+         * Formats of the canvas, using with its sizes
         */
         this.formats = {
+            vertical: 'vertical',
+            horisontal: 'horisontal',
+            square: 'square'
+        };
+
+        /**
+         * Sizes of the canvas
+        */
+        this.sizes = {
             vertical: {width: 510, height: 560},
             horisontal: {width: 650, height: 370},
             square: {width: 510, height: 510}
@@ -75,10 +84,10 @@ export default class Canvas {
     create() {
 
         this.tree.rectangle = $.svg('rect', {fill: '#FFFFFF'});
-        this.setSize(this.tree.rectangle, this.formats.horisontal);
+        this.setSize(this.tree.rectangle, this.sizes.horisontal);
 
         this.tree.svg = $.svg('svg');
-        this.setCanvasFormat('horisontal');
+        this.setCanvasFormat(this.formats.horisontal);
         this.tree.svg.appendChild(this.tree.rectangle);
 
         return this.tree.svg;
@@ -91,8 +100,8 @@ export default class Canvas {
      */
     setCanvasFormat( format ) {
 
-        this.setSize(this.tree.svg, this.formats[format]);
-        this.setSize(this.tree.rectangle, this.formats[format]);
+        this.setSize(this.tree.svg, this.sizes[format]);
+        this.setSize(this.tree.rectangle, this.sizes[format]);
 
     }
 
