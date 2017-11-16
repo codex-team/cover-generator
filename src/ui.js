@@ -121,19 +121,26 @@ module.exports = function () {
             object = button.dataset.object,
             element = instances.canvas.createElement(object);
 
-        element.addEventListener('click', (e) => {
-
-            if (e.target.tagName === 'DIV') {
-
-                instances.toolbar.openNear({target: e.target.parentNode});
-                return;
-
-            }
-
-            instances.toolbar.openNear({target: e.target});
-
-        });
         element.dispatchEvent(new window.Event('click'));
+        element.addEventListener('click', toolbarBind);
+
+    }
+
+    /**
+     *
+     */
+    function toolbarBind(event) {
+
+        let toolbarEvent = event.target;
+
+        if (toolbarEvent.tagName == 'DIV') {
+
+            instances.toolbar.openNear({target: toolbarEvent.parentNode});
+            return;
+
+        }
+
+        instances.toolbar.openNear({target: toolbarEvent});
 
     }
 
