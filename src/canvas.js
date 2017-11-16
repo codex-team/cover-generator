@@ -63,7 +63,7 @@ export default class Canvas {
         /**
          * Types of elements at the canvas
         */
-        this.types = {
+        this.elements = {
             mainText: 'mainText',
             image: 'image',
             headline: 'headline'
@@ -73,6 +73,20 @@ export default class Canvas {
          * Padding between the elements and canvas end
         */
         this.padding = 30;
+
+    }
+
+    isText(element) {
+
+        if ([this.elements.headline, this.elements.mainText].indexOf(element.dataset.type) != -1) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
 
     }
 
@@ -115,8 +129,9 @@ export default class Canvas {
      */
     setSize( element, size ) {
 
-        if (size === 'auto' && (element.dataset.type === 'mainText' || element.dataset.type === 'headline')) {
+        if (size === 'auto' && this.isText(element)) {
 
+            console.log('text');
             let text = element.children[0];
 
             element.setAttribute('width', this.tree.svg.clientWidth);
@@ -187,10 +202,9 @@ export default class Canvas {
         }
 
         let canvasSizes = {width: this.tree.svg.clientWidth, height: this.tree.svg.clientWidth},
-            elementSizes = {width: element.clientWidth + 5, height: element.clientWidth + 5},
-            isText = element.dataset.type === 'mainText' || element.dataset.type === 'headline';
+            elementSizes = {width: element.clientWidth + 5, height: element.clientWidth + 5};
 
-        if (isText && ['left', 'center', 'rigth'].indexOf(coords.x)) {
+        if (this.isText(element) && ['left', 'center', 'rigth'].indexOf(coords.x)) {
 
             element.children[0].style.textAlign = coords.x;
 
@@ -260,22 +274,6 @@ export default class Canvas {
     }
 
     /**
-     * Sets text element
-     *
-     * @param {Element} coords - where to place inner text
-     * @param {String} text    - text to append
-     */
-    setInnerText( element, text ) {
-
-        if (element instanceof window.Element) {
-
-            element.textContent = text;
-
-        }
-
-    }
-
-    /**
      * Creates an image element
      *
      * @param {Object|String} coords   - where to place image on canvas
@@ -302,11 +300,11 @@ export default class Canvas {
      */
     createElement( element ) {
 
-        if (element === 'mainText' || element === 'headline') {
+        if (element === this.elements.headline || element === this.elements.mainText) {
 
             return this.createText(element);
 
-        } else if (element === 'image') {
+        } else if (element === this.elements.image) {
 
             return this.createImage(element);
 
