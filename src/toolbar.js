@@ -79,7 +79,7 @@ export default class Toolbar {
         this.CSS = {
             hidden: 'cover-editor--hidden',
             toolbar: {
-                colorMode: 'cover-editor__toolbar--color_mode',
+                colorMode: 'cover-editor__toolbar--color-mode',
                 normal: 'cover-editor__toolbar'
             },
             target: {
@@ -231,6 +231,8 @@ export default class Toolbar {
         }
 
         this.target.dataset.fontSize = next;
+        this.tree.buttons.fontSize.classList.remove(this.CSS.buttons.fontSizes[current]);
+        this.tree.buttons.fontSize.classList.add(this.CSS.buttons.fontSizes[next]);
         this.instances.canvas.setFontSize(this.target, this.properties.fontSize[next]);
         this.moveToTarget();
 
@@ -328,10 +330,14 @@ export default class Toolbar {
      */
     getTargetParams() {
 
-        if (this.target.dataset.fontSize) {
+        if (this.target.dataset.fontSize == undefined) {
 
             this.target.dataset.fontSize = 'small';
             this.changeFontSize(this.target.dataset.fontSize);
+
+        } else {
+
+            this.tree.buttons.fontSize.classList.add(this.CSS.buttons.fontSizes[this.target.dataset.fontSize]);
 
         }
 
