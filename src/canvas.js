@@ -326,12 +326,8 @@ export default class Canvas {
 
         source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
 
-        let link = document.createElement('a');
+        let link = $.make('a', null, {'style': 'display:none;', 'href': 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source), 'download': 'cover.svg'});
 
-        link.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source));
-        link.setAttribute('download', 'cover.svg');
-
-        link.style.display = 'none';
         document.body.appendChild(link);
 
         link.click();
