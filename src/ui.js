@@ -140,7 +140,7 @@ module.exports = function () {
             instances.toolbar.openNear({target: e.target});
 
         });
-        element.click();
+        element.dispatchEvent(new window.Event('click'));
 
     }
 
