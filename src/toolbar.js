@@ -68,7 +68,7 @@ export default class Toolbar {
          * @type {Object}
          */
         this.CSS = {
-            hidden: 'cover-editor__hidden',
+            hidden: 'cover-editor--hidden',
             toolbar: {
                 colorMode: 'cover-editor__toolbar--color_mode',
                 normal: 'cover-editor__toolbar'
