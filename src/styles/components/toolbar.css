@@ -43,10 +43,8 @@
             color: #fff;
         }
 
-        &--font-size {
-            &::before {
-                content: 'font';
-            }
+        &--font-size::before {
+            content: 'font';
         }
 
         &--left::before {
