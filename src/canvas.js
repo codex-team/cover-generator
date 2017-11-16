@@ -78,7 +78,7 @@ export default class Canvas {
 
     isText(element) {
 
-        if ([this.elements.headline, this.elements.mainText].indexOf(element.dataset.type) != -1) {
+        if ([this.elements.headline, this.elements.mainText].indexOf(element.dataset.type) != -1 && element.children.length) {
 
             return true;
 
@@ -131,7 +131,6 @@ export default class Canvas {
 
         if (size === 'auto' && this.isText(element)) {
 
-            console.log('text');
             let text = element.children[0];
 
             element.setAttribute('width', this.tree.svg.clientWidth);
@@ -161,7 +160,11 @@ export default class Canvas {
      */
     setColor(element, color) {
 
-        element.children[0].style.color = color;
+        if (this.isText(element)) {
+
+            element.children[0].style.color = color;
+
+        }
 
     }
 
@@ -173,9 +176,13 @@ export default class Canvas {
      */
     setFontSize( element, size ) {
 
-        element.children[0].style.fontSize = size;
-        this.setSize(element, 'auto');
-        this.setPosition(element, {x: element.dataset.alignment, y: undefined});
+        if (this.isText(element)) {
+
+            element.children[0].style.fontSize = size;
+            this.setSize(element, 'auto');
+            this.setPosition(element, {x: element.dataset.alignment, y: undefined});
+
+        }
 
     }
 
