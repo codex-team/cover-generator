@@ -9,7 +9,7 @@ let $ = require('./dom').default;
 export default class Canvas {
 
     /**
-     * Initialisation of canvas module
+     * Initialization of canvas module
      * @param {Object} properties               - object with properties for canvas creating
      * @param {String|Object} properties.shape  - type of format, can be 'horisontal', 'square' or 'vertical'
      * @param {Number} properties.shape.width   - width of canvas
