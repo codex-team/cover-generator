@@ -164,10 +164,10 @@ module.exports = function () {
     }
 
     /**
-    * Create cover-editor
-    * @param {object} settings - array of paramertres
-    * @param {Element} settings.container - element to create cover-editor
-    */
+     * Create cover-editor
+     * @param {object} settings - array of paramertres
+     * @param {Element} settings.container - element to create cover-editor
+     */
     function create(container, canvasInstance, toolbarInstance) {
 
         var editor   = $.make('div', CSS.editor),

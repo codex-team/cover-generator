@@ -19,14 +19,14 @@ export default class Canvas {
 
         /**
          * DOM of this class
-        */
+         */
         this.tree = {
             svg : null
         };
 
         /**
          * CSS of this class
-        */
+         */
         this.CSS = {
             elements: {
                 text: 'cover-editor__canvas--text'
@@ -34,8 +34,13 @@ export default class Canvas {
         };
 
         /**
+         * Const text value
+         */
+        this.newText = 'New Text';
+
+        /**
          * Formats of the canvas, using with its sizes
-        */
+         */
         this.formats = {
             vertical: 'vertical',
             horisontal: 'horisontal',
@@ -44,7 +49,7 @@ export default class Canvas {
 
         /**
          * Sizes of the canvas
-        */
+         */
         this.sizes = {
             vertical: {width: 510, height: 560},
             horisontal: {width: 650, height: 370},
@@ -53,7 +58,7 @@ export default class Canvas {
 
         /**
          * Positions of elements at the canvas
-        */
+         */
         this.positions = {
             mainText: {x: undefined, y: 271},
             image: {x: undefined, y: 132},
@@ -62,7 +67,7 @@ export default class Canvas {
 
         /**
          * Types of elements at the canvas
-        */
+         */
         this.elements = {
             mainText: 'mainText',
             image: 'image',
@@ -71,11 +76,16 @@ export default class Canvas {
 
         /**
          * Padding between the elements and canvas end
-        */
+         */
         this.padding = 30;
 
     }
 
+    /**
+     * Check if element is text
+     *
+     * @param {Element} - object
+     */
     isText(element) {
 
         if ([this.elements.headline, this.elements.mainText].indexOf(element.dataset.type) != -1 && element.children.length) {
@@ -259,16 +269,21 @@ export default class Canvas {
             position = this.positions[coords];
 
         text.classList.add(this.CSS.elements.text);
-        text.innerHTML = 'New text';
+        text.innerHTML = this.newText;
         text.style.display = 'inline-flex';
         text.setAttribute('contenteditable', true);
-        text.addEventListener('keyup', (event) => {
+        text.addEventListener('keyup', event => {
 
             this.setSize(event.target.parentNode, 'auto');
             this.setPosition(event.target.parentNode, {x: event.target.parentNode.dataset.alignment, y: undefined});
 
         });
-        container.dataset.type = coords;
+
+        if ([this.elements.headline, this.elements.mainText].indexOf(coords) != -1) {
+
+            container.dataset.type = coords;
+
+        }
         container.appendChild(text);
         this.tree.svg.appendChild(container);
 
@@ -322,17 +337,25 @@ export default class Canvas {
     /**
      * Export canvas as SVG file
      */
-    import() {
+    export() {
 
         let serializer = new window.XMLSerializer(),
             source = serializer.serializeToString(this.tree.svg);
 
-        if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+
+        /**
+         * Match 'source' with regex: "xmlns="http//www.w3.org/2000/svg" between one and unlimited times and replace it
+         */
+        if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
 
             source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
 
         }
-        if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+
+        /**
+         * Match 'source' with regex: "xmlns="http//www.w3.org/1999/svg" between one and unlimited times and replace it
+         */
+        if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
 
             source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
 
