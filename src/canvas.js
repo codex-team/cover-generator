@@ -10,12 +10,8 @@ export default class Canvas {
 
     /**
      * Initialization of canvas module
-     * @param {Object} properties               - object with properties for canvas creating
-     * @param {String|Object} properties.shape  - type of format, can be 'horisontal', 'square' or 'vertical'
-     * @param {Number} properties.shape.width   - width of canvas
-     * @param {Number} properties.shape.height  - height of canvas
      */
-    constructor( properties ) {
+    constructor() {
 
         /**
          * DOM of this class
