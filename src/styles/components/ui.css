@@ -10,6 +10,7 @@
      */
     &__controls {
         margin-bottom: 12px;
+        user-select: none;
 
         &::after {
             content: '';
@@ -63,7 +64,6 @@
         letter-spacing: 0.17px;
         cursor: pointer;
         float: right;
-        user-select: none;
 
         &:hover {
             background-color: color(#D6E5F9 lightness(-5%));

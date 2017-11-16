@@ -30,14 +30,14 @@ module.exports = function () {
 
         canvasWrapper          : 'cover-editor__canvas-wrapper',
         canvas                 : 'cover-editor__canvas',
-        canvasActive           : 'cover-editor__canvas-wrapper--active'
+        canvasActive           : 'cover-editor__canvas-wrapper--active',
     };
 
     /**
      * Static instances
      * @type {Object}
      */
-    const instances = {
+    let instances = {
         canvas       : null,
         toolbar      : null
     };
@@ -64,28 +64,21 @@ module.exports = function () {
     };
 
     /**
-     * Counter in function canvasClicked
-     */
-    let i = 0;
-
-    /**
      * Make canvas active
      */
-    function canvasClicked() {
+    function canvasClicked(event) {
 
-        if (i % 2 == 0) {
+        if (event.target.classList.contains(CSS.canvasWrapper) ||
+            event.target.tagName == 'rect') {
 
+            instances.toolbar.hide();
             nodes.canvasWrapper.classList.add(CSS.canvasActive);
-            i++;
 
         } else {
 
             nodes.canvasWrapper.classList.remove(CSS.canvasActive);
-            i--;
 
         }
-
-        instances.toolbar.hide();
 
     }
 
@@ -149,7 +142,7 @@ module.exports = function () {
      */
     function bindEvents() {
 
-        nodes.canvasWrapper.addEventListener('click', canvasClicked);
+        document.body.addEventListener('click', canvasClicked);
 
         nodes.controls.saveButton.addEventListener('click', saveButtonClicked);
 
