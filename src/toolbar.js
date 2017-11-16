@@ -21,10 +21,14 @@ export default class Toolbar {
 
     /**
      * @constructor
-     *
      * Toolbar module
+     *
+     * @param {Object} fontSizes - font sizes for target elements
+     * @param {String} small     - the smalles text size
+     * @param {String} medium    - the medium text size
+     * @param {String} big       - the biggest text size
      */
-    constructor() {
+    constructor(fontSizes) {
 
         /**
          * Components which are controlling something.
@@ -39,11 +43,16 @@ export default class Toolbar {
          * @type {Element|null}
          */
         this.target = null;
+
+        /**
+         * Properties for target element at the SVG
+         * @type {Object}
+         */
         this.properties = {
             fontSize: {
-                small: '25px',
-                medium: '28px',
-                big: '31px'
+                small: fontSizes && fontSizes.small ? fontSizes.small : '25px',
+                medium: fontSizes && fontSizes.medium ? fontSizes.medium : '28px',
+                big: fontSizes && fontSizes.big ? fontSizes.big : '31px'
             }
         };
 
