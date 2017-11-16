@@ -293,8 +293,15 @@ export default class Toolbar {
     moveToTarget() {
 
         let toolbar = this.tree.toolbar,
-            canvasWrapper = {left: this.canvas.parentNode.offsetLeft, top: this.canvas.parentNode.offsetTop},
-            element = {left: window.Number(this.target.getAttribute('x')), top: window.Number(this.target.getAttribute('y')), width: this.target.clientWidth};
+            canvasWrapper = {
+                left: this.canvas.parentNode.offsetLeft,
+                top: this.canvas.parentNode.offsetTop
+            },
+            element = {
+                left: window.Number(this.target.getAttribute('x')),
+                top: window.Number(this.target.getAttribute('y')),
+                width: this.target.clientWidth
+            };
 
         switch (this.target.dataset.alignment) {
 
