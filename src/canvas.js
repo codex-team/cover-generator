@@ -10,70 +10,62 @@ export default class Canvas {
 
     /**
      * Initialization of canvas module
+     * 
+     * @property tree - DOM of this class
+     * @property CSS - CSS of this class
+     * @property newText - const with value: 'New Text'
+     * @property formats - size formats of canvas
+     * @property sizes - sizes of canvas
+     * @property positions - positions if elements at canvas
+     * @property types - types of elements at canvas
+     * @property paddingOfElement - padding between elements and canvas
+     * @property paddingOfCanvas - padding for resizing canvas
+     * @property paddingForPosition - padding for changing element position
+     * @property imageSize - size of image
      */
     constructor() {
 
-        /**
-         * DOM of this class
-         */
         this.tree = {
             svg : null
         };
 
-        /**
-         * CSS of this class
-         */
         this.CSS = {
             elements: {
                 text: 'cover-editor__canvas--text'
             }
         };
 
-        /**
-         * Const text value
-         */
         this.newText = 'New Text';
 
-        /**
-         * Formats of the canvas, using with its sizes
-         */
         this.formats = {
             vertical: 'vertical',
             horisontal: 'horisontal',
             square: 'square'
         };
 
-        /**
-         * Sizes of the canvas
-         */
         this.sizes = {
             vertical: {width: 510, height: 560},
             horisontal: {width: 650, height: 370},
             square: {width: 510, height: 510}
         };
 
-        /**
-         * Positions of elements at the canvas
-         */
         this.positions = {
             mainText: {x: undefined, y: 271},
             image: {x: undefined, y: 132},
             headline: {x: undefined, y: 115}
         };
 
-        /**
-         * Types of elements at the canvas
-         */
         this.elements = {
             mainText: 'mainText',
             image: 'image',
             headline: 'headline'
         };
 
-        /**
-         * Padding between the elements and canvas end
-         */
-        this.padding = 30;
+        this.paddingOfElement = 30;
+        this.paddingOfCanvas = 10;
+        this.paddingForPosition = 5;
+
+        this.imageSize = 87;
 
     }
 
@@ -116,6 +108,7 @@ export default class Canvas {
 
     /**
      * Changing the sizes of canvas by using format
+     *
      * @param {String} format - type of format, can be 'horisontal', 'square' or 'vertical'
      */
     setCanvasFormat( format ) {
@@ -141,7 +134,10 @@ export default class Canvas {
 
             element.setAttribute('width', this.tree.svg.clientWidth);
             element.setAttribute('height', this.tree.svg.clientHeight);
-            size = {width: text.offsetWidth + 10, height: text.offsetHeight + 10};
+            size = {
+                width: text.offsetWidth + this.paddingOfCanvas,
+                height: text.offsetHeight + this.paddingOfCanvas
+            };
 
         }
 
@@ -150,6 +146,7 @@ export default class Canvas {
             element.setAttribute('height', size.height);
 
         }
+
         if (size.width) {
 
             element.setAttribute('width', size.width);
@@ -166,11 +163,9 @@ export default class Canvas {
      */
     setColor(element, color) {
 
-        if (this.isText(element)) {
+        if (!this.isText(element)) return;
 
-            element.children[0].style.color = color;
-
-        }
+        element.children[0].style.color = color;
 
     }
 
@@ -182,13 +177,11 @@ export default class Canvas {
      */
     setFontSize( element, size ) {
 
-        if (this.isText(element)) {
+        if (!this.isText(element)) return;
 
-            element.children[0].style.fontSize = size;
-            this.setSize(element, 'auto');
-            this.setPosition(element, {x: element.dataset.alignment, y: undefined});
-
-        }
+        element.children[0].style.fontSize = size;
+        this.setSize(element, 'auto');
+        this.setPosition(element, {x: element.dataset.alignment, y: undefined});
 
     }
 
@@ -214,8 +207,14 @@ export default class Canvas {
 
         }
 
-        let canvasSizes = {width: this.tree.svg.clientWidth, height: this.tree.svg.clientWidth},
-            elementSizes = {width: element.clientWidth + 5, height: element.clientWidth + 5};
+        let canvasSizes = {
+                width: this.tree.svg.clientWidth,
+                height: this.tree.svg.clientWidth
+            },
+            elementSizes = {
+                width: element.clientWidth + this.paddingForPosition,
+                height: element.clientWidth + this.paddingForPosition
+            };
 
         if (this.isText(element) && ['left', 'center', 'rigth'].indexOf(coords.x)) {
 
@@ -223,17 +222,17 @@ export default class Canvas {
 
         }
 
-        if (coords.x === 'left') {
+        if (coords.x == 'left') {
 
-            coords.x = this.padding;
+            coords.x = this.paddingOfElement;
 
-        } else if (coords.x === 'center') {
+        } else if (coords.x == 'center') {
 
             coords.x = (canvasSizes.width - elementSizes.width) / 2;
 
-        } else if (coords.x === 'right') {
+        } else if (coords.x == 'right') {
 
-            coords.x = canvasSizes.width - elementSizes.width - this.padding;
+            coords.x = canvasSizes.width - elementSizes.width - this.paddingOfElement;
 
         }
 
@@ -242,6 +241,7 @@ export default class Canvas {
             element.setAttribute('y', coords.y);
 
         }
+
         if (coords.x) {
 
             element.setAttribute('x', coords.x);
@@ -304,7 +304,7 @@ export default class Canvas {
         let image = $.svg('image');
 
         this.setPosition(image, coords);
-        this.setSize(image, {width: '87', height: '87'});
+        this.setSize(image, {width: this.imageSize, height: this.imageSize});
         this.tree.svg.appendChild(image);
 
         return image;
@@ -337,7 +337,6 @@ export default class Canvas {
 
         let serializer = new window.XMLSerializer(),
             source = serializer.serializeToString(this.tree.svg);
-
 
         /**
          * Match 'source' with regex: "xmlns="http//www.w3.org/2000/svg" between one and unlimited times and replace it
