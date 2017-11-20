@@ -9,6 +9,7 @@ module.exports = function () {
 
     /**
      * Style classnames
+     *
      * @type {Object}
      */
     const CSS = {
@@ -23,9 +24,9 @@ module.exports = function () {
         resizeButtonHorisontal : 'cover-editor__resize-canvas--horisontal',
 
         controlButton          : 'cover-editor__control-button',
-        headline               : 'cover-editor__control-button--headline',
-        mainText               : 'cover-editor__control-button--main-text',
-        image                  : 'cover-editor__control-button--image',
+        headlineControl        : 'cover-editor__control-button--headline',
+        mainTextControl        : 'cover-editor__control-button--main-text',
+        imageControl           : 'cover-editor__control-button--image',
         controlButtonSave      : 'cover-editor__control-button--save',
 
         canvasWrapper          : 'cover-editor__canvas-wrapper',
@@ -35,6 +36,7 @@ module.exports = function () {
 
     /**
      * Static instances
+     *
      * @type {Object}
      */
     let instances = {
@@ -44,6 +46,7 @@ module.exports = function () {
 
     /**
      * Static nodes cache
+     *
      * @type {Object}
      */
     let nodes = {
@@ -65,6 +68,8 @@ module.exports = function () {
 
     /**
      * Make canvas active
+     *
+     * @param {event} - click
      */
     function canvasClicked(event) {
 
@@ -93,6 +98,7 @@ module.exports = function () {
 
     /**
      * Resize button click listener
+     *
      * @param {MouseEvent} event — click
      */
     function resizeButtonClicked(event) {
@@ -113,6 +119,7 @@ module.exports = function () {
 
     /**
      * Show and hide button click listener
+     *
      * @param  {MouseEvent} event  - click
      */
     function toggleObjectClicked(event) {
@@ -127,7 +134,9 @@ module.exports = function () {
     }
 
     /**
+     * Shaw toolbar
      *
+     * @param {event} - click
      */
     function toolbarBind(event) {
 
@@ -183,9 +192,9 @@ module.exports = function () {
         nodes.controls.resizeVertical   = $.make('span', [CSS.resizeButton, CSS.resizeButtonVertical]);
         nodes.controls.resizeHorisontal = $.make('span', [CSS.resizeButton, CSS.resizeButtonHorisontal]);
         nodes.controls.saveButton       = $.make('span', [CSS.controlButton, CSS.controlButtonSave]);
-        nodes.controls.pictureButton    = $.make('span', [CSS.controlButton, CSS.image], { textContent: 'Image' });
-        nodes.controls.mainTextButton   = $.make('span', [CSS.controlButton, CSS.mainText], { textContent: 'Main Text' });
-        nodes.controls.headlineButton   = $.make('span', [CSS.controlButton, CSS.headline], { textContent: 'Headline' });
+        nodes.controls.pictureButton    = $.make('span', [CSS.controlButton, CSS.imageControl], { textContent: 'Image' });
+        nodes.controls.mainTextButton   = $.make('span', [CSS.controlButton, CSS.mainTextControl], { textContent: 'Main Text' });
+        nodes.controls.headlineButton   = $.make('span', [CSS.controlButton, CSS.headlineControl], { textContent: 'Headline' });
 
         /**
          * Save size in button's data-size
