@@ -128,7 +128,7 @@ module.exports = function () {
             object = button.dataset.object,
             element = instances.canvas.createElement(object);
 
-        element.addEventListener('click', toolbarBind);
+        element.addEventListener('click', showToolbar);
         element.dispatchEvent(new window.Event('click'));
 
     }

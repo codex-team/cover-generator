@@ -107,6 +107,13 @@ export default class Toolbar {
             colorForm : 'cover-editor__color-form'
         };
 
+        /**
+         * Color constants
+         */
+        this.colors = {
+            black : '#000000'
+        };
+
     }
 
     /**
@@ -209,7 +216,8 @@ export default class Toolbar {
      */
     changeFontSize( fontSize ) {
 
-        let current = this.target.dataset.fontSize, next;
+        let current = this.target.dataset.fontSize,
+            next;
 
         switch (current) {
 
@@ -350,7 +358,7 @@ export default class Toolbar {
 
         if (this.target.dataset.color == undefined) {
 
-            this.target.dataset.color = '#000000';
+            this.target.dataset.color = this.colors.black;
             this.changeColor(this.target.dataset.color);
 
         }
