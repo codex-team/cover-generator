@@ -222,17 +222,26 @@ export default class Canvas {
 
         }
 
-        if (coords.x == 'left') {
+        switch (coords.x) {
 
-            coords.x = this.paddingOfElement;
+            case ('left'):
 
-        } else if (coords.x == 'center') {
+                coords.x = this.paddingOfElement;
+                break;
 
-            coords.x = (canvasSizes.width - elementSizes.width) / 2;
+            case ('center'):
 
-        } else if (coords.x == 'right') {
+                coords.x = (canvasSizes.width - elementSizes.width) / 2;
+                break;
 
-            coords.x = canvasSizes.width - elementSizes.width - this.paddingOfElement;
+            case ('right'):
+
+                coords.x = canvasSizes.width - elementSizes.width - this.paddingOfElement;
+                break;
+
+            default:
+
+                break;
 
         }
 
