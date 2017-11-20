@@ -92,7 +92,7 @@ module.exports = function () {
      */
     function saveButtonClicked() {
 
-        instances.canvas.import();
+        instances.canvas.export();
 
     }
 
@@ -134,11 +134,11 @@ module.exports = function () {
     }
 
     /**
-     * Shaw toolbar
+     * Show toolbar
      *
      * @param {event} - click
      */
-    function toolbarBind(event) {
+    function showToolbar(event) {
 
         let toolbarEvent = event.target;
 
