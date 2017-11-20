@@ -5,66 +5,101 @@ let $ = require('./dom').default;
 
 /**
  * Canvas module
+ *
+ * @property {Object} tree
+ * @property {Object} CSS
+ * @property {Constant} newText
+ * @property {Object} formats
+ * @property {Object} sizes
+ * @property {Object} positions
+ * @property {Object} types 
+ * @property {Constant} paddingOfElement
+ * @property {Constant} paddingOfCanvas
+ * @property {Constant} paddingForPosition
+ * @property {Constant} imageSize
  */
 export default class Canvas {
 
     /**
      * Initialization of canvas module
-     * 
-     * @property tree - DOM of this class
-     * @property CSS - CSS of this class
-     * @property newText - const with value: 'New Text'
-     * @property formats - size formats of canvas
-     * @property sizes - sizes of canvas
-     * @property positions - positions if elements at canvas
-     * @property types - types of elements at canvas
-     * @property paddingOfElement - padding between elements and canvas
-     * @property paddingOfCanvas - padding for resizing canvas
-     * @property paddingForPosition - padding for changing element position
-     * @property imageSize - size of image
      */
     constructor() {
 
+        /**
+         * DOM of this class
+         */
         this.tree = {
             svg : null
         };
 
+        /**
+         * CSS of this class
+         */
         this.CSS = {
             elements: {
                 text: 'cover-editor__canvas--text'
             }
         };
 
+        /**
+         * Const with value: 'New Text'
+         */
         this.newText = 'New Text';
 
+        /**
+         * Size formats of canvas
+         */
         this.formats = {
             vertical: 'vertical',
             horisontal: 'horisontal',
             square: 'square'
         };
 
+        /**
+         * Sizes of canvas
+         */
         this.sizes = {
             vertical: {width: 510, height: 560},
             horisontal: {width: 650, height: 370},
             square: {width: 510, height: 510}
         };
 
+        /**
+         * Positions if elements at canvas
+         */
         this.positions = {
             mainText: {x: undefined, y: 271},
             image: {x: undefined, y: 132},
             headline: {x: undefined, y: 115}
         };
 
+        /**
+         * Types of elements at canvas
+         */
         this.elements = {
             mainText: 'mainText',
             image: 'image',
             headline: 'headline'
         };
 
+        /**
+         * Padding between elements and canvas
+         */
         this.paddingOfElement = 30;
+
+        /**
+         * Padding for resizing canvas
+         */
         this.paddingOfCanvas = 10;
+
+        /**
+         * Padding for changing element position
+         */
         this.paddingForPosition = 5;
 
+        /**
+         * Size of image
+         */
         this.imageSize = 87;
 
     }
