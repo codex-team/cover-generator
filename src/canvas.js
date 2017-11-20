@@ -7,7 +7,6 @@ let $ = require('./dom').default;
  * Canvas module
  *
  * @property {Object} tree
- * @property {Object} CSS
  * @property {Constant} newText
  * @property {Object} formats
  * @property {Object} sizes
@@ -30,15 +29,6 @@ export default class Canvas {
          */
         this.tree = {
             svg : null
-        };
-
-        /**
-         * CSS of this class
-         */
-        this.CSS = {
-            elements: {
-                text: 'cover-editor__canvas--text'
-            }
         };
 
         /**
@@ -230,15 +220,15 @@ export default class Canvas {
      */
     setPosition( element, coords ) {
 
-        if (typeof coords === 'string') {
-
-            coords = this.positions[coords];
-
-        }
-
         if (!coords) {
 
             return;
+
+        }
+
+        if (typeof coords === 'string') {
+
+            coords = this.positions[coords];
 
         }
 
@@ -308,7 +298,6 @@ export default class Canvas {
             container = $.svg('foreignObject'),
             position = this.positions[coords];
 
-        text.classList.add(this.CSS.elements.text);
         text.innerHTML = this.newText;
         text.style.display = 'inline-flex';
         text.setAttribute('contenteditable', true);
