@@ -300,8 +300,8 @@ export default class Toolbar {
                 top: this.canvas.parentNode.offsetTop
             },
             element = {
-                left: window.Number(this.target.getAttribute('x')),
-                top: window.Number(this.target.getAttribute('y')),
+                left: window.parseInt(this.target.getAttribute('x')),
+                top: window.parseInt(this.target.getAttribute('y')),
                 width: this.target.clientWidth
             };
 
