@@ -118,14 +118,17 @@ module.exports = function () {
     }
 
     /**
-     * Show and hide button click listener
+     * Button click listener
      *
      * @param  {MouseEvent} event  - click
      */
-    function toggleObjectClicked(event) {
+    function buttonClicked(event) {
 
         let button = event.target,
             object = button.dataset.object,
+            /**
+             * Element gets foreignObject
+             */
             element = instances.canvas.createElement(object);
 
         element.addEventListener('click', showToolbar);
@@ -166,9 +169,9 @@ module.exports = function () {
         nodes.controls.resizeVertical.addEventListener('click', resizeButtonClicked);
         nodes.controls.resizeHorisontal.addEventListener('click', resizeButtonClicked);
 
-        nodes.controls.pictureButton.addEventListener('click', toggleObjectClicked);
-        nodes.controls.mainTextButton.addEventListener('click', toggleObjectClicked);
-        nodes.controls.headlineButton.addEventListener('click', toggleObjectClicked);
+        nodes.controls.pictureButton.addEventListener('click', buttonClicked);
+        nodes.controls.mainTextButton.addEventListener('click', buttonClicked);
+        nodes.controls.headlineButton.addEventListener('click', buttonClicked);
 
     }
 
