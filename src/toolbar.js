@@ -213,26 +213,10 @@ export default class Toolbar {
     changeFontSize( fontSize ) {
 
         let current = this.target.dataset.fontSize,
+            sizes = ['small', 'medium', 'big'],
             next;
 
-        switch (current) {
-
-            case 'small':
-                next = 'medium';
-                break;
-
-            case 'medium':
-                next = 'big';
-                break;
-
-            case 'big':
-                next = 'small';
-                break;
-
-            default:
-                return;
-
-        }
+        next = sizes[sizes.indexOf(current) + 1 == sizes.length ? 0 : sizes.indexOf(current) + 1];
 
         this.target.dataset.fontSize = next;
         this.tree.buttons.fontSize.classList.remove(this.CSS.buttons.fontSizes[current]);
