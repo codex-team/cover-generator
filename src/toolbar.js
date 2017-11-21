@@ -144,7 +144,7 @@ export default class Toolbar {
         /**
          * Add buttons
          */
-        ['fontSize', 'left', 'center', 'right', 'color'].forEach( type => {
+        for (var type in this.tree.buttons) {
 
             let button = $.make('span', [this.CSS.button, this.CSS.buttons[type]]);
 
@@ -162,7 +162,7 @@ export default class Toolbar {
 
             });
 
-        });
+        }
 
         /**
          * Add color form
@@ -250,11 +250,15 @@ export default class Toolbar {
 
         this.target.dataset.alignment = alignment;
 
-        ['left', 'center', 'right'].forEach( type => {
+        for (let type in this.tree.buttons) {
 
-            this.tree.buttons[type].classList.remove(this.CSS.buttons.active);
+            if (type !== 'fontSize' && type !== 'color') {
 
-        });
+                this.tree.buttons[type].classList.remove(this.CSS.buttons.active);
+
+            }
+
+        };
 
         this.instances.canvas.setAlignment(this.target, alignment, undefined);
         this.moveToTarget();
