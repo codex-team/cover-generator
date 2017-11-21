@@ -6,17 +6,17 @@ let $ = require('./dom').default;
 /**
  * Canvas module
  *
- * @property {Object} tree
- * @property {Number} newText
- * @property {Object} formats
- * @property {Object} sizes
- * @property {Object} alignment
- * @property {Object} types 
- * @property {Number} paddingOfElement
- * @property {Number} paddingOfCanvas
- * @property {Number} paddingForPosition
- * @property {Number} imageSize
- * @property {Object} colors
+ * @property {Object} tree               - object with links to DOM-Elements of Canvas
+ * @property {Object} CSS                - object with CSS-styles of the Canvas
+ * @property {String} newText            - string with text showing in main text and headline by default
+ * @property {Object} formats            - types of sizes of the canvas block
+ * @property {Object} sizes              - sizes of canvas block
+ * @property {Object} alignment          - types of alignment
+ * @property {Object} elements           - types of elements on canvas
+ * @property {Number} paddingOfElement   - space field around the text element
+ * @property {Number} paddingOfCanvas    - padding between elements and the canvas
+ * @property {Number} imageSize          - size of image in px
+ * @property {Object} colors             - default colors
  */
 export default class Canvas {
 
@@ -85,19 +85,14 @@ export default class Canvas {
         };
 
         /**
-         * Padding between elements and canvas
+         * Space field around the text element
          */
-        this.paddingOfElement = 30;
+        this.paddingOfElement = 10;
 
         /**
-         * Padding for resizing canvas
+         * Padding between elements and th canvas
          */
-        this.paddingOfCanvas = 10;
-
-        /**
-         * Padding for changing element position
-         */
-        this.paddingForPosition = 5;
+        this.paddingOfCanvas = 30;
 
         /**
          * Size of image
@@ -174,13 +169,13 @@ export default class Canvas {
 
         if (size === 'auto' && this.isText(element)) {
 
-            let text = element.children[0];
+            let text = element.querySelector('div[contenteditable="true"]');
 
             element.setAttribute('width', this.tree.svg.clientWidth);
             element.setAttribute('height', this.tree.svg.clientHeight);
             size = {
-                width: text.offsetWidth + this.paddingOfCanvas,
-                height: text.offsetHeight + this.paddingOfCanvas
+                width: text.offsetWidth + this.paddingOfElement,
+                height: text.offsetHeight + this.paddingOfElement
             };
 
         }
@@ -209,7 +204,7 @@ export default class Canvas {
 
         if (!this.isText(element)) return;
 
-        element.children[0].style.color = color;
+        element.querySelector('div[contenteditable="true"]').style.color = color;
 
     }
 
@@ -223,7 +218,7 @@ export default class Canvas {
 
         if (!this.isText(element)) return;
 
-        element.children[0].style.fontSize = size;
+        element.querySelector('div[contenteditable="true"]').style.fontSize = size;
         this.setSize(element, 'auto');
         this.setAlignment(element, element.dataset.alignment);
 
@@ -243,8 +238,8 @@ export default class Canvas {
                 height: this.tree.svg.clientWidth
             },
             elementSizes = {
-                width: element.clientWidth + this.paddingForPosition,
-                height: element.clientWidth + this.paddingForPosition
+                width: element.clientWidth,
+                height: element.clientWidth
             },
             text = this.isText(element);
 
@@ -300,6 +295,15 @@ export default class Canvas {
 
     }
 
+    autoSizing(event) {
+
+        let target = event.target;
+
+        this.setSize(target.parentNode, 'auto');
+        this.setAlignment(target.parentNode, target.parentNode.dataset.alignment);
+
+    }
+
     /**
      * Creates an text element
      *
@@ -316,14 +320,7 @@ export default class Canvas {
 
         text.innerHTML = this.newText;
         text.setAttribute('contenteditable', true);
-        text.addEventListener('keyup', event => {
-
-            let target = event.target;
-
-            this.setSize(target.parentNode, 'auto');
-            this.setAlignment(target.parentNode, target.parentNode.dataset.alignment);
-
-        });
+        text.addEventListener('keyup', this.autoSizing.bind(this));
 
         container.dataset.type = type;
         container.appendChild(text);
