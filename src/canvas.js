@@ -16,6 +16,7 @@ let $ = require('./dom').default;
  * @property {Number} paddingOfCanvas
  * @property {Number} paddingForPosition
  * @property {Number} imageSize
+ * @property {Object} colors
  */
 export default class Canvas {
 
@@ -28,7 +29,7 @@ export default class Canvas {
          * DOM of this class
          */
         this.tree = {
-            svg : null
+            svg: null
         };
 
         this.CSS = {
@@ -103,6 +104,13 @@ export default class Canvas {
          */
         this.imageSize = 87;
 
+        /**
+         * Colors of this module
+         */
+        this.colors = {
+            mainSVGcolor: '#FFFFFF',
+        };
+
     }
 
     /**
@@ -131,7 +139,7 @@ export default class Canvas {
      */
     create() {
 
-        this.tree.rectangle = $.svg('rect', {fill: '#FFFFFF'});
+        this.tree.rectangle = $.svg('rect', {fill: this.colors.mainSVGcolor});
         this.setSize(this.tree.rectangle, this.sizes.horisontal);
 
         this.tree.svg = $.svg('svg');
@@ -217,7 +225,7 @@ export default class Canvas {
 
         element.children[0].style.fontSize = size;
         this.setSize(element, 'auto');
-        this.setAlignment(element, element.dataset.alignment, undefined);
+        this.setAlignment(element, element.dataset.alignment);
 
     }
 
@@ -244,21 +252,17 @@ export default class Canvas {
 
             case this.alignment.x.left:
 
-                this.setPosition(element, this.paddingOfElement, undefined);
+                this.setPosition(element, this.paddingOfElement);
                 break;
 
             case this.alignment.x.center:
 
-                this.setPosition(element, (canvasSizes.width - elementSizes.width) / 2, undefined);
+                this.setPosition(element, (canvasSizes.width - elementSizes.width) / 2);
                 break;
 
             case this.alignment.x.right:
 
-                this.setPosition(element, canvasSizes.width - elementSizes.width - this.paddingOfElement, undefined);
-                break;
-
-            default:
-
+                this.setPosition(element, canvasSizes.width - elementSizes.width - this.paddingOfElement);
                 break;
 
         }
@@ -314,8 +318,10 @@ export default class Canvas {
         text.setAttribute('contenteditable', true);
         text.addEventListener('keyup', event => {
 
-            this.setSize(event.target.parentNode, 'auto');
-            this.setAlignment(event.target.parentNode, event.target.parentNode.dataset.alignment, undefined);
+            let target = event.target;
+
+            this.setSize(target.parentNode, 'auto');
+            this.setAlignment(target.parentNode, target.parentNode.dataset.alignment);
 
         });
 
@@ -352,7 +358,10 @@ export default class Canvas {
         let image = $.svg('image');
 
         this.setAlignment(image, this.alignment.x.left, this.alignment.y.center);
-        this.setSize(image, {width: this.imageSize, height: this.imageSize});
+        this.setSize(image, {
+            width: this.imageSize,
+            height: this.imageSize
+        });
         this.tree.svg.appendChild(image);
 
         return image;
@@ -406,7 +415,11 @@ export default class Canvas {
 
         source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
 
-        let link = $.make('a', null, {'style': 'display:none;', 'href': 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source), 'download': 'cover.svg'});
+        let link = $.make('a', null, {
+            'style': 'display:none;',
+            'href': 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source),
+            'download': 'cover.svg'
+        });
 
         document.body.appendChild(link);
 
