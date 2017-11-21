@@ -1,8 +1,12 @@
 /**
  * Toolbar styles
  */
-.cover-editor--hidden {
-    display: none !important;
+.cover-editor {
+
+    &--hidden {
+        display: none !important;
+    }
+    
 }
 
 .cover-editor__button {
