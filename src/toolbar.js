@@ -216,7 +216,7 @@ export default class Toolbar {
             sizes = ['small', 'medium', 'big'],
             next;
 
-        next = sizes[(sizes.indexOf(current) + 1) % 3];
+        next = sizes[(sizes.indexOf(current) + 1) % sizes.length];
 
         this.target.dataset.fontSize = next;
         this.tree.buttons.fontSize.classList.remove(this.CSS.buttons.fontSizes[current]);
