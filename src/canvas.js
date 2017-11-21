@@ -15,7 +15,6 @@ let $ = require('./dom').default;
  * @property {Object} elements           - types of elements on canvas
  * @property {Number} paddingOfElement   - space field around the text element
  * @property {Number} paddingOfCanvas    - padding between elements and the canvas
- * @property {Number} paddingForPosition - padding for changing element position
  * @property {Number} imageSize          - size of image in px
  * @property {Object} colors             - default colors
  */
@@ -94,11 +93,6 @@ export default class Canvas {
          * Padding between elements and th canvas
          */
         this.paddingOfCanvas = 30;
-
-        /**
-         * Padding for changing element position
-         */
-        this.paddingForPosition = 5;
 
         /**
          * Size of image
@@ -244,8 +238,8 @@ export default class Canvas {
                 height: this.tree.svg.clientWidth
             },
             elementSizes = {
-                width: element.clientWidth + this.paddingForPosition,
-                height: element.clientWidth + this.paddingForPosition
+                width: element.clientWidth,
+                height: element.clientWidth
             },
             text = this.isText(element);
 
@@ -301,6 +295,15 @@ export default class Canvas {
 
     }
 
+    autoSizing(event) {
+
+        let target = event.target;
+
+        this.setSize(target.parentNode, 'auto');
+        this.setAlignment(target.parentNode, target.parentNode.dataset.alignment);
+
+    }
+
     /**
      * Creates an text element
      *
@@ -317,14 +320,7 @@ export default class Canvas {
 
         text.innerHTML = this.newText;
         text.setAttribute('contenteditable', true);
-        text.addEventListener('keyup', event => {
-
-            let target = event.target;
-
-            this.setSize(target.parentNode, 'auto');
-            this.setAlignment(target.parentNode, target.parentNode.dataset.alignment);
-
-        });
+        text.addEventListener('keyup', this.autoSizing.bind(this));
 
         container.dataset.type = type;
         container.appendChild(text);
