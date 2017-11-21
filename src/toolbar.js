@@ -4,19 +4,15 @@
 let $ = require('./dom').default;
 
 /**
- *   Creates a toolbar
- *   @class Toolbar
- *
+ *  Creates a toolbar
+ *  @class Toolbar
  *
  *  @property {Object} this.tree — toolbar nodes
  *  @property {Object} this.CSS  — styles dictionary
  *  @property {Element} this.editor  — main editor wrapper
  *  @property {Element} this.canvas  — main canvas SVG
-
  *  @property {Element} this.target  — on which element toolbar was open
  */
-
-
 export default class Toolbar {
 
     /**
@@ -24,14 +20,14 @@ export default class Toolbar {
      * Toolbar module
      *
      * @param {Object} fontSizes - font sizes for target elements
-     * @param {String} small     - the smalles text size
-     * @param {String} medium    - the medium text size
-     * @param {String} big       - the biggest text size
+     * @param {String} fontSizes.small     - the smalles text size
+     * @param {String} fontSizes.medium    - the medium text size
+     * @param {String} fontSizes.big       - the biggest text size
      */
     constructor(fontSizes) {
 
         /**
-         * Components which are controlling something.
+         * Component for controlling canvas.
          * @type {Object}
          */
         this.instances = {
@@ -39,7 +35,7 @@ export default class Toolbar {
         };
 
         /**
-         * On which element toolbar was open
+         * On which element toolbar was opened
          * @type {Element|null}
          */
         this.target = null;
@@ -119,8 +115,8 @@ export default class Toolbar {
     /**
      *  Prepares toolbar elements
      *
-     * @param  {object} params
      * @param  {Element} editor         - main wrapper
+     * @param  {Object} canvas          - canvas instance
      * @param  {Element} canvasInstance - canvas object
      */
     create(editor, canvas, canvasInstance) {
