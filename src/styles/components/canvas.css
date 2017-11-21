@@ -1,7 +1,8 @@
 .cover-editor__canvas {
-
+    
     &--text {
-        outline: 0 !important;
-    }
+    	outline: 0 !important;
+    	display: inline-flex;
+	}	
 
 }
