@@ -174,7 +174,7 @@ export default class Canvas {
 
         if (size === 'auto' && this.isText(element)) {
 
-            let text = element.children[0];
+            let text = element.querySelector('div[contenteditable="true"]');
 
             element.setAttribute('width', this.tree.svg.clientWidth);
             element.setAttribute('height', this.tree.svg.clientHeight);
@@ -209,7 +209,7 @@ export default class Canvas {
 
         if (!this.isText(element)) return;
 
-        element.children[0].style.color = color;
+        element.querySelector('div[contenteditable="true"]').style.color = color;
 
     }
 
@@ -223,7 +223,7 @@ export default class Canvas {
 
         if (!this.isText(element)) return;
 
-        element.children[0].style.fontSize = size;
+        element.querySelector('div[contenteditable="true"]').style.fontSize = size;
         this.setSize(element, 'auto');
         this.setAlignment(element, element.dataset.alignment);
 
