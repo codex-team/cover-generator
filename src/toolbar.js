@@ -7,11 +7,11 @@ let $ = require('./dom').default;
  *  Creates a toolbar
  *  @class Toolbar
  *
- *  @property {Object} this.tree — toolbar nodes
- *  @property {Object} this.CSS  — styles dictionary
- *  @property {Element} this.editor  — main editor wrapper
- *  @property {Element} this.canvas  — main canvas SVG
- *  @property {Element} this.target  — on which element toolbar was open
+ *  @property {Object}  tree   — toolbar nodes
+ *  @property {Object}  CSS    — styles dictionary
+ *  @property {Element} editor — main editor wrapper
+ *  @property {Element} canvas — main canvas SVG
+ *  @property {Element} target — on which element toolbar was open
  */
 export default class Toolbar {
 
@@ -19,10 +19,10 @@ export default class Toolbar {
      * @constructor
      * Toolbar module
      *
-     * @param {Object} fontSizes - font sizes for target elements
-     * @param {String} fontSizes.small     - the smalles text size
-     * @param {String} fontSizes.medium    - the medium text size
-     * @param {String} fontSizes.big       - the biggest text size
+     * @param {Object} fontSizes        - font sizes for target elements
+     * @param {String} fontSizes.small  - the smalles text size
+     * @param {String} fontSizes.medium - the medium text size
+     * @param {String} fontSizes.big    - the biggest text size
      */
     constructor(fontSizes) {
 
@@ -107,7 +107,7 @@ export default class Toolbar {
          * Color constants
          */
         this.colors = {
-            black : '#000000'
+            defaultText : '#000000'
         };
 
     }
@@ -184,7 +184,7 @@ export default class Toolbar {
     buttonClicked(event) {
 
         let buttonClicked = event.target,
-            action = event.target.dataset.action;
+            action = buttonClicked.dataset.action;
 
         switch ( action ) {
 
@@ -342,7 +342,7 @@ export default class Toolbar {
 
         if (this.target.dataset.color == undefined) {
 
-            this.target.dataset.color = this.colors.black;
+            this.target.dataset.color = this.colors.defaultText;
             this.changeColor(this.target.dataset.color);
 
         }
