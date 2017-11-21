@@ -6,17 +6,18 @@ let $ = require('./dom').default;
 /**
  * Canvas module
  *
- * @property {Object} tree
- * @property {Number} newText
- * @property {Object} formats
- * @property {Object} sizes
- * @property {Object} alignment
- * @property {Object} types 
- * @property {Number} paddingOfElement
- * @property {Number} paddingOfCanvas
- * @property {Number} paddingForPosition
- * @property {Number} imageSize
- * @property {Object} colors
+ * @property {Object} tree               - object with links to DOM-Elements of Canvas
+ * @property {Object} CSS                - object with CSS-styles of the Canvas
+ * @property {String} newText            - string with text showing in main text and headline by default
+ * @property {Object} formats            - types of sizes of the canvas block
+ * @property {Object} sizes              - sizes of canvas block
+ * @property {Object} alignment          - types of alignment
+ * @property {Object} elements           - types of elements on canvas
+ * @property {Number} paddingOfElement   - space field around the text element
+ * @property {Number} paddingOfCanvas    - padding between elements and the canvas
+ * @property {Number} paddingForPosition - padding for changing element position
+ * @property {Number} imageSize          - size of image in px
+ * @property {Object} colors             - default colors
  */
 export default class Canvas {
 
@@ -85,14 +86,14 @@ export default class Canvas {
         };
 
         /**
-         * Padding between elements and canvas
+         * Space field around the text element
          */
-        this.paddingOfElement = 30;
+        this.paddingOfElement = 10;
 
         /**
-         * Padding for resizing canvas
+         * Padding between elements and th canvas
          */
-        this.paddingOfCanvas = 10;
+        this.paddingOfCanvas = 30;
 
         /**
          * Padding for changing element position
@@ -179,8 +180,8 @@ export default class Canvas {
             element.setAttribute('width', this.tree.svg.clientWidth);
             element.setAttribute('height', this.tree.svg.clientHeight);
             size = {
-                width: text.offsetWidth + this.paddingOfCanvas,
-                height: text.offsetHeight + this.paddingOfCanvas
+                width: text.offsetWidth + this.paddingOfElement,
+                height: text.offsetHeight + this.paddingOfElement
             };
 
         }
