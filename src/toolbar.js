@@ -9,9 +9,9 @@ let $ = require('./dom').default;
  *
  *  @property {Object}  tree   — toolbar nodes
  *  @property {Object}  CSS    — styles dictionary
- *  @property {Element} editor — main editor wrapper
- *  @property {Element} canvas — main canvas SVG
- *  @property {Element} target — on which element toolbar was open
+ *  @property {HTMLElement} editor — main editor wrapper
+ *  @property {SVGElement} canvas — main canvas SVG
+ *  @property {HTMLElement} target — on which element toolbar was open
  */
 export default class Toolbar {
 
@@ -216,7 +216,7 @@ export default class Toolbar {
             sizes = ['small', 'medium', 'big'],
             next;
 
-        next = sizes[sizes.indexOf(current) + 1 == sizes.length ? 0 : sizes.indexOf(current) + 1];
+        next = sizes[(sizes.indexOf(current) + 1) % sizes.length];
 
         this.target.dataset.fontSize = next;
         this.tree.buttons.fontSize.classList.remove(this.CSS.buttons.fontSizes[current]);
