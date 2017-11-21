@@ -7,15 +7,15 @@ let $ = require('./dom').default;
  * Canvas module
  *
  * @property {Object} tree
- * @property {Constant} newText
+ * @property {Number} newText
  * @property {Object} formats
  * @property {Object} sizes
  * @property {Object} alignment
  * @property {Object} types 
- * @property {Constant} paddingOfElement
- * @property {Constant} paddingOfCanvas
- * @property {Constant} paddingForPosition
- * @property {Constant} imageSize
+ * @property {Number} paddingOfElement
+ * @property {Number} paddingOfCanvas
+ * @property {Number} paddingForPosition
+ * @property {Number} imageSize
  */
 export default class Canvas {
 
