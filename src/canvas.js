@@ -10,7 +10,7 @@ let $ = require('./dom').default;
  * @property {Constant} newText
  * @property {Object} formats
  * @property {Object} sizes
- * @property {Object} positions
+ * @property {Object} alignment
  * @property {Object} types 
  * @property {Constant} paddingOfElement
  * @property {Constant} paddingOfCanvas
@@ -29,6 +29,10 @@ export default class Canvas {
          */
         this.tree = {
             svg : null
+        };
+
+        this.CSS = {
+            text: 'cover-editor__canvas--text'
         };
 
         /**
@@ -55,12 +59,19 @@ export default class Canvas {
         };
 
         /**
-         * Positions if elements at canvas
+         * Alignment elements at canvas
          */
-        this.positions = {
-            mainText: {x: undefined, y: 271},
-            image: {x: undefined, y: 132},
-            headline: {x: undefined, y: 115}
+        this.alignment = {
+            x: {
+                left: 'left',
+                right: 'right',
+                center: 'center'
+            },
+            y: {
+                top: 115,
+                center: 132,
+                bottom: 271
+            }
         };
 
         /**
@@ -206,31 +217,18 @@ export default class Canvas {
 
         element.children[0].style.fontSize = size;
         this.setSize(element, 'auto');
-        this.setPosition(element, {x: element.dataset.alignment, y: undefined});
+        this.setAlignment(element, element.dataset.alignment, undefined);
 
     }
 
     /**
-     * Changes a position of element
+     * Sets the alignment of the element at the canvas
      *
-     * @param {Element}                - element to change position
-     * @param {Object|String} coords   - where to place text on canvas
-     * @param {Number} coords.x        - x coord
-     * @param {Number} coords.y        - y coord
+     * @param {Element} element   - element to change alignment
+     * @param {String} horisontal - type of alignment on horisontal
+     * @param {String} vertical   - type of alignment on verlical
      */
-    setPosition( element, coords ) {
-
-        if (!coords) {
-
-            return;
-
-        }
-
-        if (typeof coords === 'string') {
-
-            coords = this.positions[coords];
-
-        }
+    setAlignment( element, horisontal, vertical ) {
 
         let canvasSizes = {
                 width: this.tree.svg.clientWidth,
@@ -239,29 +237,24 @@ export default class Canvas {
             elementSizes = {
                 width: element.clientWidth + this.paddingForPosition,
                 height: element.clientWidth + this.paddingForPosition
-            };
+            },
+            text = this.isText(element);
 
-        if (this.isText(element) && ['left', 'center', 'rigth'].indexOf(coords.x)) {
+        switch (horisontal) {
 
-            element.children[0].style.textAlign = coords.x;
+            case this.alignment.x.left:
 
-        }
-
-        switch (coords.x) {
-
-            case ('left'):
-
-                coords.x = this.paddingOfElement;
+                this.setPosition(element, this.paddingOfElement, undefined);
                 break;
 
-            case ('center'):
+            case this.alignment.x.center:
 
-                coords.x = (canvasSizes.width - elementSizes.width) / 2;
+                this.setPosition(element, (canvasSizes.width - elementSizes.width) / 2, undefined);
                 break;
 
-            case ('right'):
+            case this.alignment.x.right:
 
-                coords.x = canvasSizes.width - elementSizes.width - this.paddingOfElement;
+                this.setPosition(element, canvasSizes.width - elementSizes.width - this.paddingOfElement, undefined);
                 break;
 
             default:
@@ -270,15 +263,34 @@ export default class Canvas {
 
         }
 
-        if (coords.y) {
+        if (this.alignment.y[vertical]) {
 
-            element.setAttribute('y', coords.y);
+            this.setPosition(element, undefined, this.alignment.y[vertical]);
 
         }
 
-        if (coords.x) {
+        return;
 
-            element.setAttribute('x', coords.x);
+    }
+
+    /**
+     * Changes a position of element
+     *
+     * @param {Element} element - element to change position
+     * @param {Number} x        - x coord
+     * @param {Number} y        - y coord
+     */
+    setPosition( element, x, y ) {
+
+        if (typeof y === 'number') {
+
+            element.setAttribute('y', y);
+
+        }
+
+        if (typeof x === 'number') {
+
+            element.setAttribute('x', x);
 
         }
 
@@ -292,33 +304,41 @@ export default class Canvas {
      * @param {Number} coords.y        - y coord
      * @return {Element}               - created text
      */
-    createText( coords ) {
+    createText( type ) {
 
-        let text = $.make('div'),
+        let text = $.make('div', this.CSS.text),
             container = $.svg('foreignObject'),
-            position = this.positions[coords];
+            y = 0;
 
         text.innerHTML = this.newText;
-        text.style.display = 'inline-flex';
         text.setAttribute('contenteditable', true);
         text.addEventListener('keyup', event => {
 
             this.setSize(event.target.parentNode, 'auto');
-            this.setPosition(event.target.parentNode, {x: event.target.parentNode.dataset.alignment, y: undefined});
+            this.setAlignment(event.target.parentNode, event.target.parentNode.dataset.alignment, undefined);
 
         });
 
-        if ([this.elements.headline, this.elements.mainText].indexOf(coords) != -1) {
-
-            container.dataset.type = coords;
-
-        }
+        container.dataset.type = type;
         container.appendChild(text);
         this.tree.svg.appendChild(container);
 
-        position.x = 'left';
+        switch (type) {
+
+            case (this.elements.headline):
+
+                y = 'top';
+                break;
+
+            case (this.elements.mainText):
+
+                y = 'bottom';
+                break;
+
+        }
+
         this.setSize(container, 'auto');
-        this.setPosition(container, coords);
+        this.setAlignment(container, this.alignment.x.left, y);
 
         return container;
 
@@ -326,17 +346,12 @@ export default class Canvas {
 
     /**
      * Creates an image element
-     *
-     * @param {Object|String} coords   - where to place image on canvas
-     * @param {Number} coords.x        - x coord
-     * @param {Number} coords.y        - y coord
-     * @return {Element}               - created image
      */
-    createImage( coords ) {
+    createImage() {
 
         let image = $.svg('image');
 
-        this.setPosition(image, coords);
+        this.setAlignment(image, this.alignment.x.left, this.alignment.y.center);
         this.setSize(image, {width: this.imageSize, height: this.imageSize});
         this.tree.svg.appendChild(image);
 

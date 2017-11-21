@@ -256,7 +256,7 @@ export default class Toolbar {
 
         });
 
-        this.instances.canvas.setAlignment(this.target, alignment, underfined);
+        this.instances.canvas.setAlignment(this.target, alignment, undefined);
         this.moveToTarget();
 
     }
