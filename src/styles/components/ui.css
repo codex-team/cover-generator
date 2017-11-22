@@ -2,7 +2,7 @@
  * User interface styles
  */
 .cover-editor {
-    max-width: 650px;
+    display: table;
     margin: 0 auto;
 
     /**
@@ -10,6 +10,7 @@
      */
     &__controls {
         margin-bottom: 12px;
+        user-select: none;
 
         &::after {
             content: '';
@@ -29,6 +30,10 @@
         cursor: pointer;
 
         &:hover {
+            border-color: var(--blueColor);
+        }
+        
+        &--active {
             border-color: var(--blueColor);
         }
 
@@ -69,10 +74,31 @@
             display: inline-block;
             width: 13px;
             height: 13px;
-            background-color: red;
             margin-right: 0.4em;
             vertical-align: middle;
             margin-top: -3px;
+
+        }
+
+        &--image {
+
+            &::before {
+                background-image: url(../assets/icon-picture.svg);
+            }
+        }
+
+        &--headline {
+            
+            &::before {
+                background-image: url(../assets/icon-text.svg);
+            }
+        }
+
+        &--main-text {
+
+            &::before {
+                background-image: url(../assets/icon-text.svg);
+            }
         }
 
         &--save {
@@ -84,6 +110,7 @@
 
             &::before {
                 margin-right: 0;
+                background-image: url(../assets/icon-save.svg);
             }
         }
     }
@@ -91,6 +118,11 @@
     &__canvas-wrapper {
         border: 2px dashed #c0d5ef;
         padding: 5px;
+        padding-bottom: 2px;
+
+        &--active {
+            border-color: var(--blueColor);
+        }
     }
 
     &__canvas {

@@ -9,6 +9,7 @@ module.exports = function () {
 
     /**
      * Style classnames
+     *
      * @type {Object}
      */
     const CSS = {
@@ -23,20 +24,37 @@ module.exports = function () {
         resizeButtonHorisontal : 'cover-editor__resize-canvas--horisontal',
 
         controlButton          : 'cover-editor__control-button',
+        headlineControl        : 'cover-editor__control-button--headline',
+        mainTextControl        : 'cover-editor__control-button--main-text',
+        imageControl           : 'cover-editor__control-button--image',
         controlButtonSave      : 'cover-editor__control-button--save',
 
         canvasWrapper          : 'cover-editor__canvas-wrapper',
-        canvas                 : 'cover-editor__canvas'
+        canvas                 : 'cover-editor__canvas',
+        canvasActive           : 'cover-editor__canvas-wrapper--active',
+    };
+
+    /**
+     * Static instances
+     *
+     * @type {Object}
+     */
+    let instances = {
+        canvas               : null,
+        toolbar              : null
     };
 
     /**
      * Static nodes cache
+     *
      * @type {Object}
      */
     let nodes = {
-        canvasWrapper    : null,
-        canvas           : null,
-        mainRectangle    : null,
+        foreignObjectElement : null,
+        currentText          : null,
+        canvasWrapper        : null,
+        canvas               : null,
+        mainRectangle        : null,
         controls : {
             resizeSqure      : null,
             resizeVertical   : null,
@@ -45,32 +63,28 @@ module.exports = function () {
             pictureButton    : null,
             mainTextButton   : null,
             headlineButton   : null,
-        }
+        },
+        currentCanvasEditing : null
     };
 
     /**
-    * Creates main form
-    */
-    function createCanvas() {
+     * Make canvas active
+     *
+     * @param {event} - click
+     */
+    function canvasClicked(event) {
 
-        nodes.canvasWrapper = $.make('div', CSS.canvasWrapper);
+        if (event.target.classList.contains(CSS.canvasWrapper) ||
+            event.target.tagName == 'rect') {
 
-        nodes.canvas = $.svg('svg', {
-            width: '100%',
-            height: '100%'
-        });
+            instances.toolbar.hide();
+            nodes.canvasWrapper.classList.add(CSS.canvasActive);
 
-        nodes.mainRectangle = $.svg('rect', {
-            width: '100%',
-            height: '100%',
-            fill: '#FFFFFF'
-        });
+        } else {
 
-        nodes.canvas.classList.add(CSS.canvas);
-        nodes.canvas.appendChild(nodes.mainRectangle);
-        nodes.canvasWrapper.appendChild(nodes.canvas);
+            nodes.canvasWrapper.classList.remove(CSS.canvasActive);
 
-        return nodes.canvasWrapper;
+        }
 
     }
 
@@ -79,12 +93,13 @@ module.exports = function () {
      */
     function saveButtonClicked() {
 
-        console.log('saveButtonClicked');
+        instances.canvas.export();
 
     }
 
     /**
      * Resize button click listener
+     *
      * @param {MouseEvent} event — click
      */
     function resizeButtonClicked(event) {
@@ -92,21 +107,45 @@ module.exports = function () {
         let button = event.target,
             size = button.dataset.size;
 
-        console.log('resize to: %o', size);
+        ['resizeSqure', 'resizeVertical', 'resizeHorisontal'].forEach( header => {
 
+            nodes.controls[header].classList.remove(CSS.resizeButtonActive);
+
+        });
+
+        event.target.classList.add(CSS.resizeButtonActive);
+        instances.canvas.setCanvasFormat(size);
 
     }
 
     /**
-     * Show and hide button click listener
+     * Control buttons click listener
+     *
      * @param  {MouseEvent} event  - click
      */
-    function toggleObjectClicked(event) {
+    function controlButtonsClicked(event) {
 
         let button = event.target,
             object = button.dataset.object;
 
-        console.log('toggle: %o', object);
+            /**
+             * Element gets foreignObject
+             */
+        nodes.foreignObjectElement = instances.canvas.createElement(object);
+        nodes.foreignObjectElement.addEventListener('click', showToolbar);
+
+        showToolbar();
+
+    }
+
+    /**
+     * Show toolbar
+     *
+     * @param {Element} - element at the canvas
+     */
+    function showToolbar(element) {
+
+        instances.toolbar.openNear({target: nodes.foreignObjectElement});
 
     }
 
@@ -115,36 +154,43 @@ module.exports = function () {
      */
     function bindEvents() {
 
+        document.body.addEventListener('click', canvasClicked);
+
         nodes.controls.saveButton.addEventListener('click', saveButtonClicked);
 
         nodes.controls.resizeSqure.addEventListener('click', resizeButtonClicked);
         nodes.controls.resizeVertical.addEventListener('click', resizeButtonClicked);
         nodes.controls.resizeHorisontal.addEventListener('click', resizeButtonClicked);
 
-        nodes.controls.pictureButton.addEventListener('click', toggleObjectClicked);
-        nodes.controls.mainTextButton.addEventListener('click', toggleObjectClicked);
-        nodes.controls.headlineButton.addEventListener('click', toggleObjectClicked);
+        nodes.controls.pictureButton.addEventListener('click', controlButtonsClicked);
+        nodes.controls.mainTextButton.addEventListener('click', controlButtonsClicked);
+        nodes.controls.headlineButton.addEventListener('click', controlButtonsClicked);
 
     }
 
     /**
-    * Create cover-editor
-    * @param {object} settings - array of paramertres
-    * @param {Element} settings.container - element to create cover-editor
-    */
-    function create(container) {
+     * Create cover-editor
+     * @param {object} settings - array of paramertres
+     * @param {Element} settings.container - element to create cover-editor
+     */
+    function create(container, canvasInstance, toolbarInstance) {
 
         var editor   = $.make('div', CSS.editor),
-            controls = $.make('div', CSS.controls),
-            canvas   = createCanvas();
+            controls = $.make('div', CSS.controls);
 
+
+        instances.canvas                = canvasInstance;
+        instances.toolbar               = toolbarInstance;
+
+        nodes.canvasWrapper             = $.make('div', CSS.canvasWrapper);
+        nodes.canvas                    = instances.canvas.create(nodes.canvasWrapper);
         nodes.controls.resizeSqure      = $.make('span', [CSS.resizeButton, CSS.resizeButtonSquare]);
         nodes.controls.resizeVertical   = $.make('span', [CSS.resizeButton, CSS.resizeButtonVertical]);
         nodes.controls.resizeHorisontal = $.make('span', [CSS.resizeButton, CSS.resizeButtonHorisontal]);
         nodes.controls.saveButton       = $.make('span', [CSS.controlButton, CSS.controlButtonSave]);
-        nodes.controls.pictureButton    = $.make('span', CSS.controlButton, { textContent: 'Image' });
-        nodes.controls.mainTextButton   = $.make('span', CSS.controlButton, { textContent: 'Main Text' });
-        nodes.controls.headlineButton   = $.make('span', CSS.controlButton, { textContent: 'Headline' });
+        nodes.controls.pictureButton    = $.make('span', [CSS.controlButton, CSS.imageControl], { textContent: 'Image' });
+        nodes.controls.mainTextButton   = $.make('span', [CSS.controlButton, CSS.mainTextControl], { textContent: 'Main Text' });
+        nodes.controls.headlineButton   = $.make('span', [CSS.controlButton, CSS.headlineControl], { textContent: 'Headline' });
 
         /**
          * Save size in button's data-size
@@ -152,7 +198,7 @@ module.exports = function () {
         nodes.controls.resizeSqure.dataset.size = 'square';
         nodes.controls.resizeVertical.dataset.size = 'vertical';
         nodes.controls.resizeHorisontal.dataset.size = 'horisontal';
-
+        nodes.controls.resizeHorisontal.classList.add(CSS.resizeButtonActive);
 
         /**
          * Save create element type in button's data-object
@@ -168,10 +214,12 @@ module.exports = function () {
         }
 
         editor.appendChild(controls);
-        editor.appendChild(canvas);
+        nodes.canvasWrapper.appendChild(nodes.canvas);
+        editor.appendChild(nodes.canvasWrapper);
 
         container.appendChild(editor);
 
+        instances.toolbar.create(editor, nodes.canvas, instances.canvas);
 
         bindEvents();
 

@@ -19,7 +19,8 @@ module.exports = function () {
      * Canvas module
      * @type {Canvas}
      */
-    let Canvas = require('./canvas').default;
+    let Canvas = require('./canvas').default,
+        Toolbar = require('./toolbar').default;
 
     /**
      * Initialization method
@@ -39,14 +40,13 @@ module.exports = function () {
 
         }
 
+        let canvasInstance = new Canvas(),
+            toolbarInstance = new Toolbar();
+
         /**
          * Make interface and bind events
          */
-        let nodes = ui.create(container);
-
-        let canvas = new Canvas({
-            canvas: nodes.canvas
-        });
+        let nodes = ui.create(container, canvasInstance, toolbarInstance);
 
     };
 

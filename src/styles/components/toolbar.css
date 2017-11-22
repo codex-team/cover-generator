@@ -1,3 +1,96 @@
 /**
  * Toolbar styles
  */
+.cover-editor {
+
+    &--hidden {
+        display: none !important;
+    }
+    
+}
+
+.cover-editor__button {
+    position: relative;
+    border: none;
+    padding: 10px;
+
+    &--active {
+        opacity: 1;
+    }
+
+    &::before {
+        content: '';
+        display: inline-block;
+        width: 15px;
+        height: 13px;
+        background: #191D29;
+        border-radius: 2px;
+        font-size: 11px;
+        overflow: hidden;
+        color: #fff;
+    }
+
+    &--left::before {
+        background-image: url(../assets/icon-align-left.svg);
+    }
+
+    &--center::before {
+        background-image: url(../assets/icon-align-center.svg);
+    }
+
+    &--right::before {
+        background-image: url(../assets/icon-align-right.svg);
+    }
+
+    &--small::before {
+        background-image: url(../assets/icon-font-size-small.svg);
+    }
+
+
+    &--medium::before {
+        background-image: url(../assets/icon-font-size-medium.svg);
+    }
+
+    &--big::before {
+        background-image: url(../assets/icon-font-size-big.svg);
+    }
+
+
+    &--color {
+        display: inline-block !important;
+        &::before {
+            content: 'color';
+        }
+    }
+
+}
+
+.cover-editor__color-form {
+    display: none;
+    width: 110px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+
+    &-color-form:focus {
+        outline: none;
+    }
+}
+
+.cover-editor__toolbar {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    border-radius: 5px;
+    background: #313542;
+
+    &--color-mode .cover-editor__button {
+        display: none;
+    }
+
+    &--color-mode .cover-editor__color-form {
+        display: flex;
+    }
+
+}
