@@ -40,8 +40,8 @@ module.exports = function () {
      * @type {Object}
      */
     let instances = {
-        canvas       : null,
-        toolbar      : null
+        canvas               : null,
+        toolbar              : null
     };
 
     /**
@@ -50,6 +50,7 @@ module.exports = function () {
      * @type {Object}
      */
     let nodes = {
+        foreignObjectElement : null,
         currentText          : null,
         canvasWrapper        : null,
         canvas               : null,
@@ -118,41 +119,33 @@ module.exports = function () {
     }
 
     /**
-     * Button click listener
+     * Control buttons click listener
      *
      * @param  {MouseEvent} event  - click
      */
-    function buttonClicked(event) {
+    function controlButtonsClicked(event) {
 
         let button = event.target,
-            object = button.dataset.object,
+            object = button.dataset.object;
+
             /**
              * Element gets foreignObject
              */
-            element = instances.canvas.createElement(object);
+        nodes.foreignObjectElement = instances.canvas.createElement(object);
+        nodes.foreignObjectElement.addEventListener('click', showToolbar);
 
-        element.addEventListener('click', showToolbar);
-        element.dispatchEvent(new window.Event('click'));
+        showToolbar(nodes.foreignObjectElement);
 
     }
 
     /**
      * Show toolbar
      *
-     * @param {event} - click
+     * @param {Event} - click
      */
-    function showToolbar(event) {
+    function showToolbar(element) {
 
-        let toolbarEvent = event.target;
-
-        if (toolbarEvent.tagName == 'DIV') {
-
-            instances.toolbar.openNear({target: toolbarEvent.parentNode});
-            return;
-
-        }
-
-        instances.toolbar.openNear({target: toolbarEvent});
+        instances.toolbar.openNear({target: this == undefined? element : this});
 
     }
 
@@ -169,9 +162,9 @@ module.exports = function () {
         nodes.controls.resizeVertical.addEventListener('click', resizeButtonClicked);
         nodes.controls.resizeHorisontal.addEventListener('click', resizeButtonClicked);
 
-        nodes.controls.pictureButton.addEventListener('click', buttonClicked);
-        nodes.controls.mainTextButton.addEventListener('click', buttonClicked);
-        nodes.controls.headlineButton.addEventListener('click', buttonClicked);
+        nodes.controls.pictureButton.addEventListener('click', controlButtonsClicked);
+        nodes.controls.mainTextButton.addEventListener('click', controlButtonsClicked);
+        nodes.controls.headlineButton.addEventListener('click', controlButtonsClicked);
 
     }
 
