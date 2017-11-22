@@ -134,18 +134,18 @@ module.exports = function () {
         nodes.foreignObjectElement = instances.canvas.createElement(object);
         nodes.foreignObjectElement.addEventListener('click', showToolbar);
 
-        showToolbar(nodes.foreignObjectElement);
+        showToolbar();
 
     }
 
     /**
      * Show toolbar
      *
-     * @param {Event} - click
+     * @param {Element} - element at the canvas
      */
     function showToolbar(element) {
 
-        instances.toolbar.openNear({target: this == undefined? element : this});
+        instances.toolbar.openNear({target: nodes.foreignObjectElement});
 
     }
 
