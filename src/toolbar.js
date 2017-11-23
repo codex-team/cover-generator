@@ -168,6 +168,11 @@ export default class Toolbar {
          * Add color form
          */
         this.tree.colorForm = $.make('input', [ this.CSS.colorForm ]);
+        this.tree.colorForm.addEventListener('keyup', event => {
+
+            this.changeColorModeByKey(event);
+
+        });
         this.tree.toolbar.insertBefore(this.tree.colorForm, this.tree.buttons.color);
 
         /**
@@ -265,6 +270,20 @@ export default class Toolbar {
         this.instances.canvas.setColor(this.target, color);
         this.target.dataset.color = color;
         this.tree.buttons.color.style.background = color;
+
+    }
+
+    /**
+     * Setts color after enter button was clicked on the keyboard
+     */
+    changeColorModeByKey(event) {
+
+        console.log(event.keyCode);
+        if (event.keyCode == 13) {
+
+            this.changeColorMode();
+
+        }
 
     }
 
