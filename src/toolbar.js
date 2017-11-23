@@ -369,9 +369,9 @@ export default class Toolbar {
         if (this.target.dataset.color == undefined) {
 
             this.target.dataset.color = this.colors.defaultText;
-            this.changeColor(this.target.dataset.color);
 
         }
+        this.changeColor(this.target.dataset.color);
 
     }
 
