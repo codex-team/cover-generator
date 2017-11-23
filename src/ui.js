@@ -143,8 +143,10 @@ module.exports = function () {
      *
      * @param {Element} - element at the canvas
      */
-    function showToolbar(element) {
+    function showToolbar(event) {
 
+        nodes.foreignObjectElement = event ? (event.target.tagName == 'DIV' ? event.target.parentNode : event.target) : nodes.foreignObjectElement;
+        // console.log(nodes.foreignObjectElement);
         instances.toolbar.openNear({target: nodes.foreignObjectElement});
 
     }

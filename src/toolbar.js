@@ -357,6 +357,7 @@ export default class Toolbar {
      */
     openNear({ target }) {
 
+        console.log(target);
         this.target = target;
         this.tree.toolbar.classList.remove(this.CSS.hidden);
         this.moveToTarget();

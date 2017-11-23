@@ -11,47 +11,45 @@
 
 .cover-editor__button {
     position: relative;
-    border: none;
-    padding: 10px;
+    border-color: #313542;
+    margin: 15px 10px;
 
     &--active {
         opacity: 1;
     }
 
-    &::before {
-        content: '';
-        display: inline-block;
-        width: 15px;
-        height: 13px;
-        background: #191D29;
-        border-radius: 2px;
-        font-size: 11px;
-        overflow: hidden;
-        color: #fff;
-    }
+    display: inline-block;
+    width: 20px;
+    height: 13px;
+    border-radius: 2px;
+    font-size: 11px;
+    overflow: hidden;
+    color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
 
-    &--left::before {
+    &--left {
         background-image: url(../assets/icon-align-left.svg);
     }
 
-    &--center::before {
+    &--center {
         background-image: url(../assets/icon-align-center.svg);
     }
 
-    &--right::before {
+    &--right {
         background-image: url(../assets/icon-align-right.svg);
     }
 
-    &--small::before {
+    &--small {
         background-image: url(../assets/icon-font-size-small.svg);
     }
 
 
-    &--medium::before {
+    &--medium {
         background-image: url(../assets/icon-font-size-medium.svg);
     }
 
-    &--big::before {
+    &--big {
         background-image: url(../assets/icon-font-size-big.svg);
     }
 
@@ -59,7 +57,7 @@
     &--color {
         display: inline-block !important;
         &::before {
-            content: 'color';
+            content: '';
         }
     }
 
