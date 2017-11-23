@@ -244,6 +244,7 @@ export default class Toolbar {
 
         };
 
+        this.tree.buttons[alignment].classList.add(this.CSS.buttons.active);
         this.instances.canvas.setAlignment(this.target, alignment, undefined);
         this.moveToTarget();
 
@@ -336,9 +337,9 @@ export default class Toolbar {
         if (this.target.dataset.alignment == undefined) {
 
             this.target.dataset.alignment = 'left';
-            this.changeAlignment(this.target.dataset.alignment);
 
         }
+        this.changeAlignment(this.target.dataset.alignment);
 
         if (this.target.dataset.color == undefined) {
 

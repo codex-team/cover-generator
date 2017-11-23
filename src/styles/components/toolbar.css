@@ -20,18 +20,21 @@
     background-position: center;
 
     &--active {
-        opacity: 1;
+        opacity: 1 !important;
     }
 
     &--left {
+        opacity: 0.5;
         background-image: url(../assets/icon-align-left.svg);
     }
 
     &--center {
+        opacity: 0.5;
         background-image: url(../assets/icon-align-center.svg);
     }
 
     &--right {
+        opacity: 0.5;
         background-image: url(../assets/icon-align-right.svg);
     }
 
