@@ -11,22 +11,17 @@
 
 .cover-editor__button {
     position: relative;
+    padding: 15px 10px;
+    width: 20px;
+    height: 13px;
     border-color: #313542;
-    margin: 15px 10px;
+    border-radius: 2px;
+    background-repeat: no-repeat;
+    background-position: center;
 
     &--active {
         opacity: 1;
     }
-
-    display: inline-block;
-    width: 20px;
-    height: 13px;
-    border-radius: 2px;
-    font-size: 11px;
-    overflow: hidden;
-    color: #fff;
-    background-repeat: no-repeat;
-    background-position: center;
 
     &--left {
         background-image: url(../assets/icon-align-left.svg);
@@ -55,10 +50,11 @@
 
 
     &--color {
-        display: inline-block !important;
-        &::before {
-            content: '';
-        }
+        display: flex !important;
+        margin: 15px 10px;
+        padding: 0px;
+        width: 13px;
+        height: 13px;
     }
 
 }
