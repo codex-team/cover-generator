@@ -294,6 +294,7 @@ export default class Toolbar {
         if (this.tree.toolbar.classList.contains(this.CSS.toolbar.colorMode)) {
 
             this.changeColor(this.tree.colorForm.value);
+            this.tree.colorForm.value = '';
             this.tree.toolbar.classList.remove(this.CSS.toolbar.colorMode);
 
         } else {
