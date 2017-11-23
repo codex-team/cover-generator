@@ -397,6 +397,8 @@ export default class Toolbar {
      */
     removeTargetParams() {
 
+        this.tree.toolbar.classList.remove(this.CSS.toolbar.colorMode);
+
         this.tree.buttons.left.classList.remove(this.CSS.buttons.active);
         this.tree.buttons.center.classList.remove(this.CSS.buttons.active);
         this.tree.buttons.right.classList.remove(this.CSS.buttons.active);
