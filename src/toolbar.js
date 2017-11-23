@@ -278,7 +278,6 @@ export default class Toolbar {
      */
     changeColorModeByKey(event) {
 
-        console.log(event.keyCode);
         if (event.keyCode == 13) {
 
             this.changeColorMode();
@@ -403,7 +402,6 @@ export default class Toolbar {
 
         for (let key in this.CSS.buttons.fontSizes) {
 
-            console.log(key);
             this.tree.buttons.fontSize.classList.remove(this.CSS.buttons.fontSizes[key]);
 
         }
@@ -415,7 +413,6 @@ export default class Toolbar {
      */
     hide() {
 
-        this.removeTargetParams();
         this.target = null;
         this.tree.toolbar.classList.add(this.CSS.hidden);
 

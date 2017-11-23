@@ -146,7 +146,6 @@ module.exports = function () {
     function showToolbar(event) {
 
         nodes.foreignObjectElement = event ? (event.target.tagName == 'DIV' ? event.target.parentNode : event.target) : nodes.foreignObjectElement;
-        // console.log(nodes.foreignObjectElement);
         instances.toolbar.openNear({target: nodes.foreignObjectElement});
 
     }
