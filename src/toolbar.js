@@ -215,7 +215,7 @@ export default class Toolbar {
      * Changes font size of target
      * @param {Integer} fontSize - number of font size
      */
-    changeFontSize( fontSize ) {
+    changeFontSize() {
 
         let current = this.target.dataset.fontSize,
             sizes = ['small', 'medium', 'big'],
@@ -352,7 +352,7 @@ export default class Toolbar {
         if (this.target.dataset.fontSize == undefined) {
 
             this.target.dataset.fontSize = 'big';
-            this.changeFontSize(this.target.dataset.fontSize);
+            this.changeFontSize();
 
         } else {
 
@@ -384,7 +384,7 @@ export default class Toolbar {
      */
     openNear({ target }) {
 
-        console.log(target);
+        this.removeTargetParams();
         this.target = target;
         this.tree.toolbar.classList.remove(this.CSS.hidden);
         this.moveToTarget();
@@ -400,6 +400,13 @@ export default class Toolbar {
         this.tree.buttons.left.classList.remove(this.CSS.buttons.active);
         this.tree.buttons.center.classList.remove(this.CSS.buttons.active);
         this.tree.buttons.right.classList.remove(this.CSS.buttons.active);
+
+        for (let key in this.CSS.buttons.fontSizes) {
+
+            console.log(key);
+            this.tree.buttons.fontSize.classList.remove(this.CSS.buttons.fontSizes[key]);
+
+        }
 
     }
 
