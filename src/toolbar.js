@@ -256,6 +256,12 @@ export default class Toolbar {
      */
     changeColor( color ) {
 
+        if (!color) {
+
+            return;
+
+        }
+
         this.instances.canvas.setColor(this.target, color);
         this.target.dataset.color = color;
         this.tree.buttons.color.style.background = color;
