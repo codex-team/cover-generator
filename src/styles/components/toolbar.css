@@ -11,9 +11,9 @@
 
 .cover-editor__button {
     position: relative;
-    padding: 15px 10px;
     width: 20px;
     height: 13px;
+    padding: 15px 10px;
     border-color: #313542;
     border-radius: 2px;
     background-repeat: no-repeat;
@@ -54,10 +54,10 @@
 
     &--color {
         display: flex !important;
-        margin: 15px 10px;
-        padding: 0px;
         width: 13px;
         height: 13px;
+        margin: 15px 10px;
+        padding: 0px;
     }
 
 }
@@ -88,9 +88,9 @@
 
     &--color-mode .cover-editor__color-form {
         display: flex;
+        height: 20px;
         align-self: center;
         margin-left: 10px;
-        height: 20px;
     }
 
 }
