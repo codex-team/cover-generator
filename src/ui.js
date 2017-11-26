@@ -25,8 +25,11 @@ module.exports = function () {
 
         controlButton          : 'cover-editor__control-button',
         headlineControl        : 'cover-editor__control-button--headline',
+        headlineControlActive  : 'cover-editor__control-button--headline--active',
         mainTextControl        : 'cover-editor__control-button--main-text',
+        mainTextControlActive  : 'cover-editor__control-button--main-text--active',
         imageControl           : 'cover-editor__control-button--image',
+        imageControlActive     : 'cover-editor__control-button--image--active',
         controlButtonSave      : 'cover-editor__control-button--save',
 
         canvasWrapper          : 'cover-editor__canvas-wrapper',
@@ -125,16 +128,33 @@ module.exports = function () {
      */
     function controlButtonsClicked(event) {
 
-        let button = event.target,
-            object = button.dataset.object;
+        let buttons = event.target,
+            object = buttons.dataset.object;
 
-            /**
-             * Element gets foreignObject
-             */
-        nodes.foreignObjectElement = instances.canvas.createElement(object);
-        nodes.foreignObjectElement.addEventListener('click', showToolbar);
+        /**
+         * Element gets foreignObject
+         */
+        checkButton(buttons, CSS.mainTextControl, CSS.mainTextControlActive);
+        checkButton(buttons, CSS.headlineControl, CSS.headlineControlActive);
+        checkButton(buttons, CSS.imageControl, CSS.imageControlActive);
 
-        showToolbar();
+    }
+
+    /**
+     * Check which button user created
+     */
+    function checkButton(button, buttonNameCSS, activeCSS) {
+
+        if (button.classList.contains(buttonNameCSS) && !button.classList.contains(activeCSS)) {
+
+            nodes.foreignObjectElement = instances.canvas.createElement(button.dataset.object);
+            nodes.foreignObjectElement.addEventListener('click', showToolbar);
+
+            button.classList.add(activeCSS);
+
+            showToolbar();
+
+        }
 
     }
 
@@ -143,7 +163,21 @@ module.exports = function () {
      *
      * @param {Element} - element at the canvas
      */
-    function showToolbar(element) {
+    function showToolbar(event) {
+
+        if (event) {
+
+            if (event.target.tagName == 'DIV') {
+
+                nodes.foreignObjectElement = event.target.parentNode;
+
+            } else {
+
+                nodes.foreignObjectElement = event.target;
+
+            }
+
+        }
 
         instances.toolbar.openNear({target: nodes.foreignObjectElement});
 
