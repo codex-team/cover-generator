@@ -136,11 +136,11 @@ module.exports = function () {
     }
 
     /**
-     * {Object} gets element from canvas
+     * Create and add to canvas
      *
-     * @param - control button
+     * @param {String} name - type of element
      */
-    function getElement(object) {
+    function createElement(object) {
 
         if (!nodes[object]) {
 
@@ -166,7 +166,7 @@ module.exports = function () {
     /**
      * Call showToolbar with element as parametr
      */
-    function elementListener() {
+    function elementClickedHandler() {
 
         showToolbar(this);
 
