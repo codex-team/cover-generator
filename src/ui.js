@@ -164,7 +164,7 @@ module.exports = function () {
     }
 
     /**
-     * Call showToolbar at click with element as parametr
+     * Call showToolbar at click to element
      */
     function elementClickedHandler() {
 
