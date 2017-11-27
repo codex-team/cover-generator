@@ -138,9 +138,9 @@ module.exports = function () {
     /**
      * Create element and add to canvas
      *
-     * @param {String} object - type of element
+     * @param {String} elementType - type of element
      */
-    function createType(object) {
+    function createElement(object) {
 
         if (!nodes[object]) {
 
@@ -164,7 +164,7 @@ module.exports = function () {
     }
 
     /**
-     * Call showToolbar at click to element
+     * Listener for element at canvas
      */
     function elementClickedHandler() {
 
