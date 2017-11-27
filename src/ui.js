@@ -131,21 +131,21 @@ module.exports = function () {
         let button = event.target,
             object = button.dataset.object;
 
-        getElement(object);
+        createElement(object);
 
     }
 
     /**
-     * Create and add to canvas
+     * Create element and add to canvas
      *
-     * @param {String} name - type of element
+     * @param {String} object - type of element
      */
     function createElement(object) {
 
         if (!nodes[object]) {
 
             nodes[object] = instances.canvas.createElement(object);
-            nodes[object].addEventListener('click', elementListener);
+            nodes[object].addEventListener('click', elementClickedHandler);
             showToolbar(nodes[object]);
 
         }
