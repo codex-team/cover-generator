@@ -155,7 +155,7 @@ module.exports = function () {
     /**
      * Show toolbar
      *
-     * @param {Element} - element at the canvas
+     * @param {Element} element - element at the canvas
      */
     function showToolbar(element) {
 
