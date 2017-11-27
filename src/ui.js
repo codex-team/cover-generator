@@ -140,13 +140,13 @@ module.exports = function () {
      *
      * @param {String} elementType - type of element
      */
-    function createElement(object) {
+    function createElement(elementType) {
 
-        if (!nodes[object]) {
+        if (!nodes[elementType]) {
 
-            nodes[object] = instances.canvas.createElement(object);
-            nodes[object].addEventListener('click', elementClickedHandler);
-            showToolbar(nodes[object]);
+            nodes[elementType] = instances.canvas.createElement(elementType);
+            nodes[elementType].addEventListener('click', elementClickedHandler);
+            showToolbar(nodes[elemetType]);
 
         }
 
@@ -164,7 +164,7 @@ module.exports = function () {
     }
 
     /**
-     * Listener for element at canvas
+     * Эта штука нужна для того, чтобы обработчик с элемента, создаваемого в канвасе, отправлялся в showTolbar и вызывал на себя тулбар.
      */
     function elementClickedHandler() {
 
