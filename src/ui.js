@@ -140,7 +140,7 @@ module.exports = function () {
      *
      * @param {String} object - type of element
      */
-    function createElement(object) {
+    function createType(object) {
 
         if (!nodes[object]) {
 
@@ -164,7 +164,7 @@ module.exports = function () {
     }
 
     /**
-     * Call showToolbar with element as parametr
+     * Call showToolbar at click with element as parametr
      */
     function elementClickedHandler() {
 
