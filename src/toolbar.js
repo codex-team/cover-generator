@@ -278,11 +278,13 @@ export default class Toolbar {
      */
     changeColorModeByKey(event) {
 
-        if (event.keyCode == 13) {
+        if (event.keyCode != 13) {
 
-            this.changeColorMode();
+            return;
 
         }
+
+        this.changeColorMode();
 
     }
 
@@ -379,7 +381,7 @@ export default class Toolbar {
     /**
      * Opens toolbar near element
      *
-     * @param {Element} target - element to show toolbar
+     * @param {Element} target - element to which toolbar will be bound
      */
     openNear(target) {
 
