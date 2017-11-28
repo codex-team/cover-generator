@@ -299,6 +299,7 @@ export default class Toolbar {
 
         } else {
 
+            this.tree.buttons.color.style.display = 'flex';
             this.tree.toolbar.classList.add(this.CSS.toolbar.colorMode);
             this.tree.colorForm.focus();
 
