@@ -355,9 +355,11 @@ export default class Canvas {
     /**
      * Creates an image element
      */
-    createImage() {
+    createImage(link) {
 
         let image = $.svg('image');
+
+        image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', link);
 
         this.setAlignment(image, this.alignment.x.left, this.alignment.y.center);
         this.setSize(image, {
@@ -367,6 +369,23 @@ export default class Canvas {
         this.tree.svg.appendChild(image);
 
         return image;
+
+    }
+
+    loadImage(evt) {
+
+        var files = evt.target.files;
+        var f = files[0];
+
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+
+            // Render thumbnail
+            createImage (e.target.result); // и передать ему эту ссылку на изображение
+
+        };
+        reader.readAsDataURL(f);
 
     }
 
