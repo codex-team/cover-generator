@@ -164,7 +164,7 @@ module.exports = function () {
     }
 
     /**
-     * Эта штука нужна для того, чтобы обработчик с элемента, создаваемого в канвасе, отправлялся в showTolbar и вызывал на себя тулбар.
+     * Handle click on canvas elements to show toolbar near clicked one
      */
     function elementClickedHandler() {
 
