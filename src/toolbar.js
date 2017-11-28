@@ -93,7 +93,7 @@ export default class Toolbar {
                 center    : 'cover-editor__button--center',
                 right     : 'cover-editor__button--right',
                 fontSize  : 'cover-editor__button--font-size',
-                fontSizes  : {
+                fontSizes : {
                     small: 'cover-editor__button--small',
                     medium: 'cover-editor__button--medium',
                     big: 'cover-editor__button--big'
@@ -299,7 +299,6 @@ export default class Toolbar {
 
         } else {
 
-            this.tree.buttons.color.style.display = 'flex';
             this.tree.toolbar.classList.add(this.CSS.toolbar.colorMode);
             this.tree.colorForm.focus();
 

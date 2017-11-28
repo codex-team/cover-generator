@@ -1,3 +1,28 @@
+.cover-editor__toolbar {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    border-radius: 5px;
+    background: #313542;
+
+    &--color-mode .cover-editor__button {
+        display: none;
+    }
+
+    &--color-mode .cover-editor__button--color {
+        display: flex;
+    }
+
+    &--color-mode .cover-editor__color-form {
+        display: flex;
+        height: 20px;
+        align-self: center;
+        margin-left: 10px;
+    }
+
+}
+
 .cover-editor__button {
     position: relative;
     width: 20px;
@@ -60,30 +85,6 @@
     }
 }
 
-.cover-editor__toolbar {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    top: 0;
-    border-radius: 5px;
-    background: #313542;
-
-    &--color-mode .cover-editor__button {
-        display: none;
-    }
-
-    &--color-mode .cover-editor__color-form {
-        display: flex;
-        height: 20px;
-        align-self: center;
-        margin-left: 10px;
-    }
-
-}
-
-/**
- * Toolbar styles
- */
 .cover-editor {
 
     &--hidden {
