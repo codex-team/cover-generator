@@ -145,7 +145,9 @@ module.exports = function () {
          * Check if elementType has already created
          */
         if (nodes[elementType]) {
+
             return;
+
         }
 
         nodes[elementType] = instances.canvas.createElement(elementType);
