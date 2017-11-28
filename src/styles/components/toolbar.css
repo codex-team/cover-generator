@@ -6,19 +6,21 @@
     border-radius: 5px;
     background: #313542;
 
-    &--color-mode .cover-editor__button {
-        display: none;
-    }
+    &--color-mode {
+        .cover-editor__button {
+            display: none;
 
-    &--color-mode .cover-editor__button--color {
-        display: flex;
-    }
+            &--color {
+                display: flex;
+            }
+        }
 
-    &--color-mode .cover-editor__color-form {
-        display: flex;
-        height: 20px;
-        align-self: center;
-        margin-left: 10px;
+        .cover-editor__color-form {
+            display: flex;
+            height: 20px;
+            align-self: center;
+            margin-left: 10px;
+        }
     }
 
 }
