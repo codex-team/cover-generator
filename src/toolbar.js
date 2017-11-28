@@ -379,7 +379,7 @@ export default class Toolbar {
     }
 
     /**
-     * Opens toolbar near element
+     * Open toolbar near element
      *
      * @param {Element} target - element to which toolbar will be bound
      */
