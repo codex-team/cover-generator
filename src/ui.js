@@ -150,6 +150,8 @@ module.exports = function () {
 
         }
 
+        let a = 0;
+
         nodes[elementType] = instances.canvas.createElement(elementType);
         nodes[elementType].addEventListener('click', elementClickedHandler);
         showToolbar(nodes[elementType]);
