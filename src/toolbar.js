@@ -93,7 +93,7 @@ export default class Toolbar {
                 center    : 'cover-editor__button--center',
                 right     : 'cover-editor__button--right',
                 fontSize  : 'cover-editor__button--font-size',
-                fontSizes  : {
+                fontSizes : {
                     small: 'cover-editor__button--small',
                     medium: 'cover-editor__button--medium',
                     big: 'cover-editor__button--big'
@@ -168,6 +168,11 @@ export default class Toolbar {
          * Add color form
          */
         this.tree.colorForm = $.make('input', [ this.CSS.colorForm ]);
+        this.tree.colorForm.addEventListener('keyup', event => {
+
+            this.changeColorModeByKey(event);
+
+        });
         this.tree.toolbar.insertBefore(this.tree.colorForm, this.tree.buttons.color);
 
         /**
@@ -207,10 +212,10 @@ export default class Toolbar {
     }
 
     /**
-     * Changes font size of target
+     * Change font size of target
      * @param {Integer} fontSize - number of font size
      */
-    changeFontSize( fontSize ) {
+    changeFontSize() {
 
         let current = this.target.dataset.fontSize,
             sizes = ['small', 'medium', 'big'],
@@ -227,7 +232,7 @@ export default class Toolbar {
     }
 
     /**
-     * Opens toolbar near element
+     * Open toolbar near element
      * @param {String} alignment - alignment of target: 'left', 'center' or 'right'
      */
     changeAlignment( alignment ) {
@@ -244,16 +249,23 @@ export default class Toolbar {
 
         };
 
+        this.tree.buttons[alignment].classList.add(this.CSS.buttons.active);
         this.instances.canvas.setAlignment(this.target, alignment, undefined);
         this.moveToTarget();
 
     }
 
     /**
-     * Changes color of target and toolbar color button
+     * Change color of target and toolbar color button
      * @param {String} color - color of target
      */
     changeColor( color ) {
+
+        if (!color) {
+
+            return;
+
+        }
 
         this.instances.canvas.setColor(this.target, color);
         this.target.dataset.color = color;
@@ -262,18 +274,35 @@ export default class Toolbar {
     }
 
     /**
-     * Toggles color mode of toolbar
+     * Set color after enter button was clicked on the keyboard
+     */
+    changeColorModeByKey(event) {
+
+        if (event.keyCode != 13) {
+
+            return;
+
+        }
+
+        this.changeColorMode();
+
+    }
+
+    /**
+     * Toggle color mode of toolbar
      */
     changeColorMode() {
 
         if (this.tree.toolbar.classList.contains(this.CSS.toolbar.colorMode)) {
 
             this.changeColor(this.tree.colorForm.value);
+            this.tree.colorForm.value = '';
             this.tree.toolbar.classList.remove(this.CSS.toolbar.colorMode);
 
         } else {
 
             this.tree.toolbar.classList.add(this.CSS.toolbar.colorMode);
+            this.tree.colorForm.focus();
 
         }
 
@@ -282,7 +311,7 @@ export default class Toolbar {
     }
 
     /**
-     * Moves toolbar to target
+     * Move toolbar to target
      */
     moveToTarget() {
 
@@ -318,14 +347,14 @@ export default class Toolbar {
     }
 
     /**
-     * Reads states of buttons from target
+     * Read states of buttons from target
      */
     getTargetParams() {
 
         if (this.target.dataset.fontSize == undefined) {
 
             this.target.dataset.fontSize = 'big';
-            this.changeFontSize(this.target.dataset.fontSize);
+            this.changeFontSize();
 
         } else {
 
@@ -336,27 +365,27 @@ export default class Toolbar {
         if (this.target.dataset.alignment == undefined) {
 
             this.target.dataset.alignment = 'left';
-            this.changeAlignment(this.target.dataset.alignment);
 
         }
+        this.changeAlignment(this.target.dataset.alignment);
 
         if (this.target.dataset.color == undefined) {
 
             this.target.dataset.color = this.colors.defaultText;
-            this.changeColor(this.target.dataset.color);
 
         }
+        this.changeColor(this.target.dataset.color);
 
     }
 
     /**
-     * Opens toolbar near element
+     * Open toolbar near element
      *
-     * @param {Object} opitons
-     * @param {Element} options.target - element to show toolbar
+     * @param {Element} target - element to which toolbar will be bound
      */
-    openNear({ target }) {
+    openNear(target) {
 
+        this.removeTargetParams();
         this.target = target;
         this.tree.toolbar.classList.remove(this.CSS.hidden);
         this.moveToTarget();
@@ -369,18 +398,25 @@ export default class Toolbar {
      */
     removeTargetParams() {
 
+        this.tree.toolbar.classList.remove(this.CSS.toolbar.colorMode);
+
         this.tree.buttons.left.classList.remove(this.CSS.buttons.active);
         this.tree.buttons.center.classList.remove(this.CSS.buttons.active);
         this.tree.buttons.right.classList.remove(this.CSS.buttons.active);
 
+        for (let key in this.CSS.buttons.fontSizes) {
+
+            this.tree.buttons.fontSize.classList.remove(this.CSS.buttons.fontSizes[key]);
+
+        }
+
     }
 
     /**
-     * Hides a toolbar
+     * Hide toolbar
      */
     hide() {
 
-        this.removeTargetParams();
         this.target = null;
         this.tree.toolbar.classList.add(this.CSS.hidden);
 

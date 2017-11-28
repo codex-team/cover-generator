@@ -145,7 +145,9 @@ module.exports = function () {
          * Check if elementType has already created
          */
         if (nodes[elementType]) {
+
             return;
+
         }
 
         nodes[elementType] = instances.canvas.createElement(elementType);
@@ -161,7 +163,7 @@ module.exports = function () {
      */
     function showToolbar(element) {
 
-        instances.toolbar.openNear({target: element});
+        instances.toolbar.openNear(element);
 
     }
 
