@@ -145,7 +145,7 @@ module.exports = function () {
 
             nodes[elementType] = instances.canvas.createElement(elementType);
             nodes[elementType].addEventListener('click', elementClickedHandler);
-            showToolbar(nodes[elemetType]);
+            showToolbar(nodes[elementType]);
 
         }
 
@@ -158,7 +158,7 @@ module.exports = function () {
      */
     function showToolbar(element) {
 
-        instances.toolbar.openNear(element);
+        instances.toolbar.openNear({target: element});
 
     }
 
