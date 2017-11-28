@@ -50,7 +50,9 @@ module.exports = function () {
      * @type {Object}
      */
     let nodes = {
-        foreignObjectElement : null,
+        mainTextElement      : null,
+        headlineElement      : null,
+        pictureElement       : null,
         currentText          : null,
         canvasWrapper        : null,
         canvas               : null,
@@ -128,24 +130,47 @@ module.exports = function () {
         let button = event.target,
             object = button.dataset.object;
 
-            /**
-             * Element gets foreignObject
-             */
-        nodes.foreignObjectElement = instances.canvas.createElement(object);
-        nodes.foreignObjectElement.addEventListener('click', showToolbar);
+        createElement(object);
 
-        showToolbar();
+    }
+
+    /**
+     * Create element and add to canvas
+     *
+     * @param {String} elementType - type of element
+     */
+    function createElement(elementType) {
+
+        /**
+         * Check if elementType has already created
+         */
+        if (nodes[elementType]) {
+            return;
+        }
+
+        nodes[elementType] = instances.canvas.createElement(elementType);
+        nodes[elementType].addEventListener('click', elementClickedHandler);
+        showToolbar(nodes[elementType]);
 
     }
 
     /**
      * Show toolbar
      *
-     * @param {Element} - element at the canvas
+     * @param {Element} element - element at the canvas
      */
     function showToolbar(element) {
 
-        instances.toolbar.openNear({target: nodes.foreignObjectElement});
+        instances.toolbar.openNear({target: element});
+
+    }
+
+    /**
+     * Handle click on canvas elements to show toolbar near clicked one
+     */
+    function elementClickedHandler() {
+
+        showToolbar(this);
 
     }
 
