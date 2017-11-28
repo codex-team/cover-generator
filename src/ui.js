@@ -141,13 +141,16 @@ module.exports = function () {
      */
     function createElement(elementType) {
 
-        if (!nodes[elementType]) {
-
-            nodes[elementType] = instances.canvas.createElement(elementType);
-            nodes[elementType].addEventListener('click', elementClickedHandler);
-            showToolbar(nodes[elementType]);
-
+        /**
+         * Check if elementType has already created
+         */
+        if (nodes[elementType]) {
+            return;
         }
+
+        nodes[elementType] = instances.canvas.createElement(elementType);
+        nodes[elementType].addEventListener('click', elementClickedHandler);
+        showToolbar(nodes[elementType]);
 
     }
 
