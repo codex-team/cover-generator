@@ -380,10 +380,9 @@ export default class Toolbar {
     /**
      * Opens toolbar near element
      *
-     * @param {Object} opitons
-     * @param {Element} options.target - element to show toolbar
+     * @param {Element} target - element to show toolbar
      */
-    openNear({ target }) {
+    openNear(target) {
 
         this.removeTargetParams();
         this.target = target;

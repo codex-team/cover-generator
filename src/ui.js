@@ -163,7 +163,7 @@ module.exports = function () {
      */
     function showToolbar(element) {
 
-        instances.toolbar.openNear({target: element});
+        instances.toolbar.openNear(element);
 
     }
 
