@@ -297,7 +297,7 @@ export default class Canvas {
 
     /**
      * For auto resizing text
-     * 
+     *
      * @param {Event} event - KeyUp
      */
     autoSizing(event) {
