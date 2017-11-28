@@ -53,7 +53,6 @@ module.exports = function () {
         mainTextElement      : null,
         headlineElement      : null,
         pictureElement       : null,
-        foreignObjectElement : null,
         currentText          : null,
         canvasWrapper        : null,
         canvas               : null,
