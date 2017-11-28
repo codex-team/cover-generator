@@ -212,7 +212,7 @@ export default class Toolbar {
     }
 
     /**
-     * Changes font size of target
+     * Change font size of target
      * @param {Integer} fontSize - number of font size
      */
     changeFontSize() {
@@ -232,7 +232,7 @@ export default class Toolbar {
     }
 
     /**
-     * Opens toolbar near element
+     * Open toolbar near element
      * @param {String} alignment - alignment of target: 'left', 'center' or 'right'
      */
     changeAlignment( alignment ) {
@@ -256,7 +256,7 @@ export default class Toolbar {
     }
 
     /**
-     * Changes color of target and toolbar color button
+     * Change color of target and toolbar color button
      * @param {String} color - color of target
      */
     changeColor( color ) {
@@ -274,7 +274,7 @@ export default class Toolbar {
     }
 
     /**
-     * Setts color after enter button was clicked on the keyboard
+     * Set color after enter button was clicked on the keyboard
      */
     changeColorModeByKey(event) {
 
@@ -289,7 +289,7 @@ export default class Toolbar {
     }
 
     /**
-     * Toggles color mode of toolbar
+     * Toggle color mode of toolbar
      */
     changeColorMode() {
 
@@ -311,7 +311,7 @@ export default class Toolbar {
     }
 
     /**
-     * Moves toolbar to target
+     * Move toolbar to target
      */
     moveToTarget() {
 
@@ -347,7 +347,7 @@ export default class Toolbar {
     }
 
     /**
-     * Reads states of buttons from target
+     * Read states of buttons from target
      */
     getTargetParams() {
 
@@ -413,7 +413,7 @@ export default class Toolbar {
     }
 
     /**
-     * Hides a toolbar
+     * Hide toolbar
      */
     hide() {
 
