@@ -345,6 +345,7 @@ module.exports = function () {
         });
 
         event.target.classList.add(CSS.resizeButtonActive);
+        instances.toolbar.hide();
         instances.canvas.setCanvasFormat(size);
     }
 
