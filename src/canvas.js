@@ -69,9 +69,9 @@ export default class Canvas {
                 center: 'center'
             },
             y: {
-                top: 115,
-                center: 132,
-                bottom: 271
+                top: 'top',
+                center: 'center',
+                bottom: 'bottom'
             }
         };
 
@@ -83,6 +83,11 @@ export default class Canvas {
             image: 'image',
             headline: 'headline'
         };
+
+        /**
+         * Space between elements
+         */
+        this.alignmentPadding = 17;
 
         /**
          * Space field around the text element
@@ -154,6 +159,33 @@ export default class Canvas {
 
         this.setSize(this.tree.svg, this.sizes[format]);
         this.setSize(this.tree.rectangle, this.sizes[format]);
+
+        for (let counter = 0; counter < this.tree.svg.children.length; counter++) {
+
+            let element = this.tree.svg.children[counter];
+
+            switch (element.dataset.type) {
+
+                case this.elements.headline:
+
+                    this.setAlignment(element, undefined, this.alignment.y.top);
+                    break;
+
+                case this.elements.image:
+
+                    this.setAlignment(element, undefined, this.alignment.y.center);
+                    break;
+
+                case this.elements.mainText:
+
+                    this.setAlignment(element, undefined, this.alignment.y.bottom);
+                    break;
+
+            }
+
+            this.setAlignment(element, element.dataset.alignment);
+
+        }
 
     }
 
@@ -235,13 +267,14 @@ export default class Canvas {
 
         let canvasSizes = {
                 width: this.tree.svg.clientWidth,
-                height: this.tree.svg.clientWidth
+                height: this.tree.svg.clientHeight
             },
             elementSizes = {
-                width: element.clientWidth,
-                height: element.clientWidth
-            },
-            text = this.isText(element);
+                width: window.Number(element.getAttribute('width')),
+                height: window.Number(element.getAttribute('height'))
+            };
+
+        // console.log('%o\n%s\n%s', element, horisontal, vertical);
 
         switch (horisontal) {
 
@@ -262,9 +295,22 @@ export default class Canvas {
 
         }
 
-        if (this.alignment.y[vertical]) {
+        switch (vertical) {
 
-            this.setPosition(element, undefined, this.alignment.y[vertical]);
+            case this.alignment.y.top:
+
+                this.setPosition(element, undefined, (canvasSizes.height - 2 * this.alignmentPadding) / 3 - elementSizes.height);
+                break;
+
+            case this.alignment.y.center:
+
+                this.setPosition(element, undefined, (canvasSizes.height - 2 * this.alignmentPadding) / 3 + this.alignmentPadding);
+                break;
+
+            case this.alignment.y.bottom:
+
+                this.setPosition(element, undefined, (canvasSizes.height - 2 * this.alignmentPadding) / 3 * 2 + this.alignmentPadding * 2);
+                break;
 
         }
 
@@ -297,7 +343,7 @@ export default class Canvas {
 
     /**
      * For auto resizing text
-     * 
+     *
      * @param {Event} event - KeyUp
      */
     autoSizing(event) {
