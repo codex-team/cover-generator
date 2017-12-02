@@ -80,7 +80,7 @@ export default class Canvas {
          */
         this.elements = {
             mainText: 'mainText',
-            image: 'image',
+            image: 'picture',
             headline: 'headline'
         };
 
@@ -326,6 +326,7 @@ export default class Canvas {
         text.innerHTML = this.newText;
         text.setAttribute('contenteditable', true);
         text.addEventListener('keyup', this.autoSizing.bind(this));
+        text.addEventListener('paste', this.pasteFromClipboard.bind(this));
 
         container.dataset.type = type;
         container.appendChild(text);
@@ -353,11 +354,81 @@ export default class Canvas {
     }
 
     /**
-     * Creates an image element
+     * Paste text form clipboard
+     *
+     * @param {Event} event - paste
      */
-    createImage() {
+    pasteFromClipboard(event) {
+
+        event.stopPropagation();
+        event.preventDefault();
+
+        let data = (event.clipboardData || window.clipboardData).getData('Text');
+
+        if (!data) {
+
+            return;
+
+        }
+
+        this.insertAtCaret(event.target, data);
+
+    }
+
+    /*
+     * Get selection of user
+     */
+    getSelection() {
+
+        /*
+         * If for not IE browser else for IE.
+         */
+        if (window.getSelection) {
+
+            return window.getSelection();
+
+        } else {
+
+            return document.selection.createRange();
+
+        }
+
+    }
+
+    /**
+     * Inserting text to caret position
+     *
+     * @param {Object} element - element in which to insert
+     * @param {String} text - text for inserting
+     */
+    insertAtCaret(element, text) {
+
+        let br = this.getSelection();
+
+        let front = (element.textContent).substring(0, (br.anchorOffset < br.focusOffset ? br.anchorOffset : br.focusOffset));
+        let back = (element.textContent).substring((br.anchorOffset < br.focusOffset ? br.focusOffset : br.anchorOffset), element.textContent.length);
+
+        let range = document.createRange();
+
+        element.textContent = front + text + back;
+
+        range.setStart(element.firstChild, front.length + text.length);
+        range.collapse();
+        br.removeAllRanges();
+        br.addRange(range);
+
+    }
+
+    /**
+     * Creates an image element
+     *
+     * @param {String} link - URL of image
+     */
+    createImage(link) {
 
         let image = $.svg('image');
+
+        image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', link);
 
         this.setAlignment(image, this.alignment.x.left, this.alignment.y.center);
         this.setSize(image, {
@@ -375,7 +446,8 @@ export default class Canvas {
      *
      * @param {String} - type of elements: 'mainText', 'headline', 'image'
      */
-    createElement( element ) {
+    createElement(element) {
+
 
         if (element === this.elements.headline || element === this.elements.mainText) {
 
