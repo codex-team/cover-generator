@@ -356,7 +356,7 @@ export default class Canvas {
     /**
      * Paste text form clipboard
      *
-     * @param {Event} event - paste
+     * @param {ClipboardEvent} event - paste event
      */
     pasteFromClipboard(event) {
 
@@ -371,51 +371,18 @@ export default class Canvas {
 
         }
 
-        this.insertAtCaret(event.target, data);
-
-    }
-
-    /*
-     * Get selection of user
-     */
-    getSelection() {
-
-        /*
-         * If for not IE browser else for IE.
-         */
-        if (window.getSelection) {
-
-            return window.getSelection();
-
-        } else {
-
-            return document.selection.createRange();
-
-        }
+        this.insertAtCaret(data);
 
     }
 
     /**
      * Inserting text to caret position
      *
-     * @param {Object} element - element in which to insert
      * @param {String} text - text for inserting
      */
-    insertAtCaret(element, text) {
+    insertAtCaret(text) {
 
-        let br = this.getSelection();
-
-        let front = (element.textContent).substring(0, (br.anchorOffset < br.focusOffset ? br.anchorOffset : br.focusOffset));
-        let back = (element.textContent).substring((br.anchorOffset < br.focusOffset ? br.focusOffset : br.anchorOffset), element.textContent.length);
-
-        let range = document.createRange();
-
-        element.textContent = front + text + back;
-
-        range.setStart(element.firstChild, front.length + text.length);
-        range.collapse();
-        br.removeAllRanges();
-        br.addRange(range);
+        document.execCommand('insertText', false, text);
 
     }
 
@@ -447,7 +414,6 @@ export default class Canvas {
      * @param {String} - type of elements: 'mainText', 'headline', 'image'
      */
     createElement(element) {
-
 
         if (element === this.elements.headline || element === this.elements.mainText) {
 
