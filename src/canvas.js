@@ -80,7 +80,7 @@ export default class Canvas {
          */
         this.elements = {
             mainText: 'mainText',
-            image: 'image',
+            image: 'picture',
             headline: 'headline'
         };
 
@@ -326,6 +326,7 @@ export default class Canvas {
         text.innerHTML = this.newText;
         text.setAttribute('contenteditable', true);
         text.addEventListener('keyup', this.autoSizing.bind(this));
+        text.addEventListener('paste', this.pasteFromClipboard.bind(this));
 
         container.dataset.type = type;
         container.appendChild(text);
@@ -353,11 +354,48 @@ export default class Canvas {
     }
 
     /**
-     * Creates an image element
+     * Paste text form clipboard
+     *
+     * @param {ClipboardEvent} event - paste event
      */
-    createImage() {
+    pasteFromClipboard(event) {
+
+        event.stopPropagation();
+        event.preventDefault();
+
+        let data = (event.clipboardData || window.clipboardData).getData('Text');
+
+        if (!data) {
+
+            return;
+
+        }
+
+        this.insertAtCaret(data);
+
+    }
+
+    /**
+     * Inserting text to caret position
+     *
+     * @param {String} text - text for inserting
+     */
+    insertAtCaret(text) {
+
+        document.execCommand('insertText', false, text);
+
+    }
+
+    /**
+     * Creates an image element
+     *
+     * @param {String} link - URL of image
+     */
+    createImage(link) {
 
         let image = $.svg('image');
+
+        image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', link);
 
         this.setAlignment(image, this.alignment.x.left, this.alignment.y.center);
         this.setSize(image, {
@@ -375,7 +413,7 @@ export default class Canvas {
      *
      * @param {String} - type of elements: 'mainText', 'headline', 'image'
      */
-    createElement( element ) {
+    createElement(element) {
 
         if (element === this.elements.headline || element === this.elements.mainText) {
 
