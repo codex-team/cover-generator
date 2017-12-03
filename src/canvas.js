@@ -162,28 +162,32 @@ export default class Canvas {
 
         for (let counter = 0; counter < this.tree.svg.children.length; counter++) {
 
-            let element = this.tree.svg.children[counter];
+            let element = this.tree.svg.children[counter],
+                align = {
+                    x: element.dataset.alignment,
+                    y: null
+                };
 
             switch (element.dataset.type) {
 
                 case this.elements.headline:
 
-                    this.setAlignment(element, undefined, this.alignment.y.top);
+                    align.y = this.alignment.y.top;
                     break;
 
                 case this.elements.image:
 
-                    this.setAlignment(element, undefined, this.alignment.y.center);
+                    align.y = this.alignment.y.center;
                     break;
 
                 case this.elements.mainText:
 
-                    this.setAlignment(element, undefined, this.alignment.y.bottom);
+                    align.y = this.alignment.y.bottom;
                     break;
 
             }
 
-            this.setAlignment(element, element.dataset.alignment);
+            this.setAlignment(element, align.x, align.y);
 
         }
 
@@ -272,47 +276,56 @@ export default class Canvas {
             elementSizes = {
                 width: window.Number(element.getAttribute('width')),
                 height: window.Number(element.getAttribute('height'))
+            },
+            blockHeight = (canvasSizes.height - 2 * this.alignmentPadding) / 3,
+            align = {
+                x: this.alignment.x,
+                y: this.alignment.y
+            },
+            position = {
+                x: null,
+                y: null
             };
-
-        // console.log('%o\n%s\n%s', element, horisontal, vertical);
 
         switch (horisontal) {
 
-            case this.alignment.x.left:
+            case align.x.left:
 
-                this.setPosition(element, this.paddingOfElement);
+                position.x = this.paddingOfElement;
                 break;
 
-            case this.alignment.x.center:
+            case align.x.center:
 
-                this.setPosition(element, (canvasSizes.width - elementSizes.width) / 2);
+                position.x = (canvasSizes.width - elementSizes.width) / 2;
                 break;
 
-            case this.alignment.x.right:
+            case align.x.right:
 
-                this.setPosition(element, canvasSizes.width - elementSizes.width - this.paddingOfElement);
+                position.x = canvasSizes.width - elementSizes.width - this.paddingOfElement;
                 break;
 
         }
 
         switch (vertical) {
 
-            case this.alignment.y.top:
+            case align.y.top:
 
-                this.setPosition(element, undefined, (canvasSizes.height - 2 * this.alignmentPadding) / 3 - elementSizes.height);
+                position.y = blockHeight - elementSizes.height;
                 break;
 
-            case this.alignment.y.center:
+            case align.y.center:
 
-                this.setPosition(element, undefined, (canvasSizes.height - 2 * this.alignmentPadding) / 3 + this.alignmentPadding);
+                position.y = blockHeight + this.alignmentPadding;
                 break;
 
-            case this.alignment.y.bottom:
+            case align.y.bottom:
 
-                this.setPosition(element, undefined, (canvasSizes.height - 2 * this.alignmentPadding) / 3 * 2 + this.alignmentPadding * 2);
+                position.y = blockHeight * 2 + this.alignmentPadding * 2;
                 break;
 
         }
+
+        this.setPosition(element, position.x, position.y);
 
         return;
 

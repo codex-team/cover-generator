@@ -89,7 +89,7 @@ module.exports = {
         }),
 
         /** Минифицируем CSS и JS */
-        new webpack.optimize.UglifyJsPlugin(),
+        //new webpack.optimize.UglifyJsPlugin(),
 
         /** Block build if errors found */
         new webpack.NoEmitOnErrorsPlugin(),
