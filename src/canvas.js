@@ -182,7 +182,7 @@ export default class Canvas {
 
             }
 
-            this.setAlignment(element, align.horisontal, align.vertical);
+            this.setElementAlignment(element, align.horisontal, align.vertical);
 
         }
 
@@ -198,7 +198,7 @@ export default class Canvas {
         this.setSize(this.tree.svg, this.sizes[format]);
         this.setSize(this.tree.rectangle, this.sizes[format]);
 
-        this.updateElementsPositions();
+        this.updateElementsPosition();
 
     }
 
@@ -245,7 +245,7 @@ export default class Canvas {
      * @param {Element} element - element to change size
      * @param {String} color    - color of text to set
      */
-    setColor(element, color) {
+    setTextColor(element, color) {
 
         if (!this.isText(element)) return;
 
@@ -259,13 +259,13 @@ export default class Canvas {
      * @param {Element} element    - element to change size
      * @param {Number} size        - size of text to set
      */
-    setFontSize( element, size ) {
+    setTextFontSize( element, size ) {
 
         if (!this.isText(element)) return;
 
         element.querySelector('div[contenteditable="true"]').style.fontSize = size;
         this.setSize(element, 'auto');
-        this.setAlignment(element, element.dataset.alignment);
+        this.setElementAlignment(element, element.dataset.alignment);
 
     }
 
@@ -276,7 +276,7 @@ export default class Canvas {
      * @param {String} horisontal - type of alignment on horisontal
      * @param {String} vertical   - type of alignment on verlical
      */
-    setAlignment( element, horisontal, vertical ) {
+    setElementAlignment( element, horisontal, vertical ) {
 
         let canvasSizes = {
                 width: this.tree.svg.clientWidth,
@@ -334,7 +334,7 @@ export default class Canvas {
 
         }
 
-        this.setPosition(element, position.x, position.y);
+        this.setElementPosition(element, position.x, position.y);
 
         return;
 
@@ -347,7 +347,7 @@ export default class Canvas {
      * @param {Number} x        - x coord
      * @param {Number} y        - y coord
      */
-    setPosition( element, x, y ) {
+    setElementPosition( element, x, y ) {
 
         if (typeof y === 'number') {
 
@@ -373,7 +373,7 @@ export default class Canvas {
         let target = event.target;
 
         this.setSize(target.parentNode, 'auto');
-        this.setAlignment(target.parentNode, target.parentNode.dataset.alignment);
+        this.setElementAlignment(target.parentNode, target.parentNode.dataset.alignment);
 
     }
 
@@ -415,7 +415,7 @@ export default class Canvas {
         }
 
         this.setSize(container, 'auto');
-        this.setAlignment(container, this.alignment.horisontal.left, y);
+        this.setElementAlignment(container, this.alignment.horisontal.left, y);
 
         return container;
 
@@ -465,7 +465,7 @@ export default class Canvas {
 
         image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', link);
 
-        this.setAlignment(image, this.alignment.horisontal.left, this.alignment.vertical.center);
+        this.setElementAlignment(image, this.alignment.horisontal.left, this.alignment.vertical.center);
         this.setSize(image, {
             width: this.imageSize,
             height: this.imageSize
