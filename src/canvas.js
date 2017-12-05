@@ -151,14 +151,9 @@ export default class Canvas {
     }
 
     /**
-     * Changing the sizes of canvas by using format
-     *
-     * @param {String} format - type of format, can be 'horisontal', 'square' or 'vertical'
+     * Change position of elements after canvas resize
      */
-    setCanvasFormat( format ) {
-
-        this.setSize(this.tree.svg, this.sizes[format]);
-        this.setSize(this.tree.rectangle, this.sizes[format]);
+    updateElementsPosition() {
 
         for (let counter = 0; counter < this.tree.svg.children.length; counter++) {
 
@@ -190,6 +185,20 @@ export default class Canvas {
             this.setAlignment(element, align.horisontal, align.vertical);
 
         }
+
+    }
+
+    /**
+     * Changing the sizes of canvas by using format
+     *
+     * @param {String} format - type of format, can be 'horisontal', 'square' or 'vertical'
+     */
+    setCanvasFormat( format ) {
+
+        this.setSize(this.tree.svg, this.sizes[format]);
+        this.setSize(this.tree.rectangle, this.sizes[format]);
+
+        this.updateElementsPositions();
 
     }
 
