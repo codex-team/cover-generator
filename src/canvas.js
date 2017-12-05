@@ -283,8 +283,8 @@ export default class Canvas {
                 height: this.tree.svg.clientHeight
             },
             elementSizes = {
-                width: window.Number(element.getAttribute('width')),
-                height: window.Number(element.getAttribute('height'))
+                width: parseInt(element.getAttribute('width')),
+                height: parseInt(element.getAttribute('height'))
             },
             blockHeight = (canvasSizes.height - 2 * this.alignmentPadding) / 3,
             align = {
