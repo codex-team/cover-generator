@@ -63,15 +63,15 @@ export default class Canvas {
          * Alignment elements at canvas
          */
         this.alignment = {
-            x: {
+            horisontal: {
                 left: 'left',
                 right: 'right',
                 center: 'center'
             },
-            y: {
-                top: 115,
-                center: 132,
-                bottom: 271
+            vertical: {
+                top: 'top',
+                center: 'center',
+                bottom: 'bottom'
             }
         };
 
@@ -83,6 +83,11 @@ export default class Canvas {
             image: 'picture',
             headline: 'headline'
         };
+
+        /**
+         * Space between elements
+         */
+        this.alignmentPadding = 17;
 
         /**
          * Space field around the text element
@@ -146,6 +151,44 @@ export default class Canvas {
     }
 
     /**
+     * Change position of elements after canvas resize
+     */
+    updateElementsPosition() {
+
+        for (let counter = 0; counter < this.tree.svg.children.length; counter++) {
+
+            let element = this.tree.svg.children[counter],
+                align = {
+                    horisontal: element.dataset.alignment,
+                    vertical: null
+                };
+
+            switch (element.dataset.type) {
+
+                case this.elements.headline:
+
+                    align.vertical = this.alignment.vertical.top;
+                    break;
+
+                case this.elements.image:
+
+                    align.vertical = this.alignment.vertical.center;
+                    break;
+
+                case this.elements.mainText:
+
+                    align.vertical = this.alignment.vertical.bottom;
+                    break;
+
+            }
+
+            this.setElementAlignment(element, align.horisontal, align.vertical);
+
+        }
+
+    }
+
+    /**
      * Changing the sizes of canvas by using format
      *
      * @param {String} format - type of format, can be 'horisontal', 'square' or 'vertical'
@@ -154,6 +197,8 @@ export default class Canvas {
 
         this.setSize(this.tree.svg, this.sizes[format]);
         this.setSize(this.tree.rectangle, this.sizes[format]);
+
+        this.updateElementsPosition();
 
     }
 
@@ -200,7 +245,7 @@ export default class Canvas {
      * @param {Element} element - element to change size
      * @param {String} color    - color of text to set
      */
-    setColor(element, color) {
+    setTextColor(element, color) {
 
         if (!this.isText(element)) return;
 
@@ -214,13 +259,13 @@ export default class Canvas {
      * @param {Element} element    - element to change size
      * @param {Number} size        - size of text to set
      */
-    setFontSize( element, size ) {
+    setTextFontSize( element, size ) {
 
         if (!this.isText(element)) return;
 
         element.querySelector('div[contenteditable="true"]').style.fontSize = size;
         this.setSize(element, 'auto');
-        this.setAlignment(element, element.dataset.alignment);
+        this.setElementAlignment(element, element.dataset.alignment);
 
     }
 
@@ -231,42 +276,65 @@ export default class Canvas {
      * @param {String} horisontal - type of alignment on horisontal
      * @param {String} vertical   - type of alignment on verlical
      */
-    setAlignment( element, horisontal, vertical ) {
+    setElementAlignment( element, horisontal, vertical ) {
 
         let canvasSizes = {
                 width: this.tree.svg.clientWidth,
-                height: this.tree.svg.clientWidth
+                height: this.tree.svg.clientHeight
             },
             elementSizes = {
-                width: element.clientWidth,
-                height: element.clientWidth
+                width: parseInt(element.getAttribute('width')),
+                height: parseInt(element.getAttribute('height'))
             },
-            text = this.isText(element);
+            blockHeight = (canvasSizes.height - 2 * this.alignmentPadding) / 3,
+            align = {
+                horisontal: this.alignment.horisontal,
+                vertical: this.alignment.vertical
+            },
+            position = {
+                x: null,
+                y: null
+            };
 
         switch (horisontal) {
 
-            case this.alignment.x.left:
+            case align.horisontal.left:
 
-                this.setPosition(element, this.paddingOfElement);
+                position.x = this.paddingOfElement;
                 break;
 
-            case this.alignment.x.center:
+            case align.horisontal.center:
 
-                this.setPosition(element, (canvasSizes.width - elementSizes.width) / 2);
+                position.x = (canvasSizes.width - elementSizes.width) / 2;
                 break;
 
-            case this.alignment.x.right:
+            case align.horisontal.right:
 
-                this.setPosition(element, canvasSizes.width - elementSizes.width - this.paddingOfElement);
+                position.x = canvasSizes.width - elementSizes.width - this.paddingOfElement;
                 break;
 
         }
 
-        if (this.alignment.y[vertical]) {
+        switch (vertical) {
 
-            this.setPosition(element, undefined, this.alignment.y[vertical]);
+            case align.vertical.top:
+
+                position.y = blockHeight - elementSizes.height;
+                break;
+
+            case align.vertical.center:
+
+                position.y = blockHeight + this.alignmentPadding;
+                break;
+
+            case align.vertical.bottom:
+
+                position.y = blockHeight * 2 + this.alignmentPadding * 2;
+                break;
 
         }
+
+        this.setElementPosition(element, position.x, position.y);
 
         return;
 
@@ -279,7 +347,7 @@ export default class Canvas {
      * @param {Number} x        - x coord
      * @param {Number} y        - y coord
      */
-    setPosition( element, x, y ) {
+    setElementPosition( element, x, y ) {
 
         if (typeof y === 'number') {
 
@@ -297,7 +365,7 @@ export default class Canvas {
 
     /**
      * For auto resizing text
-     * 
+     *
      * @param {Event} event - KeyUp
      */
     autoSizing(event) {
@@ -305,7 +373,7 @@ export default class Canvas {
         let target = event.target;
 
         this.setSize(target.parentNode, 'auto');
-        this.setAlignment(target.parentNode, target.parentNode.dataset.alignment);
+        this.setElementAlignment(target.parentNode, target.parentNode.dataset.alignment);
 
     }
 
@@ -347,7 +415,7 @@ export default class Canvas {
         }
 
         this.setSize(container, 'auto');
-        this.setAlignment(container, this.alignment.x.left, y);
+        this.setElementAlignment(container, this.alignment.horisontal.left, y);
 
         return container;
 
@@ -397,7 +465,7 @@ export default class Canvas {
 
         image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', link);
 
-        this.setAlignment(image, this.alignment.x.left, this.alignment.y.center);
+        this.setElementAlignment(image, this.alignment.horisontal.left, this.alignment.vertical.center);
         this.setSize(image, {
             width: this.imageSize,
             height: this.imageSize

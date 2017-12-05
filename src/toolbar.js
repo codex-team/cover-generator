@@ -226,7 +226,7 @@ export default class Toolbar {
         this.target.dataset.fontSize = next;
         this.tree.buttons.fontSize.classList.remove(this.CSS.buttons.fontSizes[current]);
         this.tree.buttons.fontSize.classList.add(this.CSS.buttons.fontSizes[next]);
-        this.instances.canvas.setFontSize(this.target, this.properties.fontSize[next]);
+        this.instances.canvas.setTextFontSize(this.target, this.properties.fontSize[next]);
         this.moveToTarget();
 
     }
@@ -250,7 +250,7 @@ export default class Toolbar {
         };
 
         this.tree.buttons[alignment].classList.add(this.CSS.buttons.active);
-        this.instances.canvas.setAlignment(this.target, alignment, undefined);
+        this.instances.canvas.setElementAlignment(this.target, alignment, undefined);
         this.moveToTarget();
 
     }
@@ -267,7 +267,7 @@ export default class Toolbar {
 
         }
 
-        this.instances.canvas.setColor(this.target, color);
+        this.instances.canvas.setTextColor(this.target, color);
         this.target.dataset.color = color;
         this.tree.buttons.color.style.background = color;
 
