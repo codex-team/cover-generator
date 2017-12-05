@@ -63,12 +63,12 @@ export default class Canvas {
          * Alignment elements at canvas
          */
         this.alignment = {
-            x: {
+            horisontal: {
                 left: 'left',
                 right: 'right',
                 center: 'center'
             },
-            y: {
+            vertical: {
                 top: 'top',
                 center: 'center',
                 bottom: 'bottom'
@@ -164,30 +164,30 @@ export default class Canvas {
 
             let element = this.tree.svg.children[counter],
                 align = {
-                    x: element.dataset.alignment,
-                    y: null
+                    horisontal: element.dataset.alignment,
+                    vertical: null
                 };
 
             switch (element.dataset.type) {
 
                 case this.elements.headline:
 
-                    align.y = this.alignment.y.top;
+                    align.vertical = this.alignment.vertical.top;
                     break;
 
                 case this.elements.image:
 
-                    align.y = this.alignment.y.center;
+                    align.vertical = this.alignment.vertical.center;
                     break;
 
                 case this.elements.mainText:
 
-                    align.y = this.alignment.y.bottom;
+                    align.vertical = this.alignment.vertical.bottom;
                     break;
 
             }
 
-            this.setAlignment(element, align.x, align.y);
+            this.setAlignment(element, align.horisontal, align.vertical);
 
         }
 
@@ -279,8 +279,8 @@ export default class Canvas {
             },
             blockHeight = (canvasSizes.height - 2 * this.alignmentPadding) / 3,
             align = {
-                x: this.alignment.x,
-                y: this.alignment.y
+                horisontal: this.alignment.horisontal,
+                vertical: this.alignment.vertical
             },
             position = {
                 x: null,
@@ -289,17 +289,17 @@ export default class Canvas {
 
         switch (horisontal) {
 
-            case align.x.left:
+            case align.horisontal.left:
 
                 position.x = this.paddingOfElement;
                 break;
 
-            case align.x.center:
+            case align.horisontal.center:
 
                 position.x = (canvasSizes.width - elementSizes.width) / 2;
                 break;
 
-            case align.x.right:
+            case align.horisontal.right:
 
                 position.x = canvasSizes.width - elementSizes.width - this.paddingOfElement;
                 break;
@@ -308,17 +308,17 @@ export default class Canvas {
 
         switch (vertical) {
 
-            case align.y.top:
+            case align.vertical.top:
 
                 position.y = blockHeight - elementSizes.height;
                 break;
 
-            case align.y.center:
+            case align.vertical.center:
 
                 position.y = blockHeight + this.alignmentPadding;
                 break;
 
-            case align.y.bottom:
+            case align.vertical.bottom:
 
                 position.y = blockHeight * 2 + this.alignmentPadding * 2;
                 break;
@@ -406,7 +406,7 @@ export default class Canvas {
         }
 
         this.setSize(container, 'auto');
-        this.setAlignment(container, this.alignment.x.left, y);
+        this.setAlignment(container, this.alignment.horisontal.left, y);
 
         return container;
 
@@ -456,7 +456,7 @@ export default class Canvas {
 
         image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', link);
 
-        this.setAlignment(image, this.alignment.x.left, this.alignment.y.center);
+        this.setAlignment(image, this.alignment.horisontal.left, this.alignment.vertical.center);
         this.setSize(image, {
             width: this.imageSize,
             height: this.imageSize
