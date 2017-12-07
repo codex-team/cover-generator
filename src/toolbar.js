@@ -110,6 +110,11 @@ export default class Toolbar {
             defaultText : '#000000'
         };
 
+        /**
+         * Margin between the canvas element and the toolbar
+         */
+        this.margin = 10;
+
     }
 
     /**
@@ -311,38 +316,58 @@ export default class Toolbar {
     }
 
     /**
+     * Get coords of element
+     * @param {Element} element - DOM tree which coords will be got
+     */
+    getCoords(element) {
+
+        var parent = element.offsetParent,
+            coords =
+            {
+                top: 0,
+                left: 0
+            };
+
+        while (element && element.offsetTop !== undefined && element.offsetLeft !== undefined) {
+
+            coords.top += element.offsetTop;
+            coords.left += element.offsetLeft;
+            element = element.offsetParent;
+
+        }
+
+        return coords;
+
+    }
+
+    /**
      * Move toolbar to target
      */
     moveToTarget() {
 
         let toolbar = this.tree.toolbar,
-            canvasWrapper = {
-                left: this.canvas.parentNode.offsetLeft,
-                top: this.canvas.parentNode.offsetTop
-            },
-            element = {
-                left: window.parseInt(this.target.getAttribute('x')),
-                top: window.parseInt(this.target.getAttribute('y')),
-                width: this.target.clientWidth
-            };
+            element = this.getCoords(this.target),
+            canvasWrapper = this.getCoords(this.canvas.parentNode.parentNode);
+
+        element.width = this.target.offsetWidth;
 
         switch (this.target.dataset.alignment) {
 
             case 'left':
-                toolbar.style.left = canvasWrapper.left + element.left + 'px';
+                toolbar.style.left = element.left - canvasWrapper.left + 'px';
                 break;
 
             case 'center':
-                toolbar.style.left = canvasWrapper.left + element.left + (element.width - toolbar.clientWidth) / 2 + 'px';
+                toolbar.style.left = element.left - canvasWrapper.left - (toolbar.clientWidth - element.width) / 2 + 'px';
                 break;
 
             case 'right':
-                toolbar.style.left = canvasWrapper.left + element.left + element.width - toolbar.clientWidth + 'px';
+                toolbar.style.left = element.left - canvasWrapper.left + element.width - toolbar.clientWidth + 'px';
                 break;
 
         }
 
-        toolbar.style.top = canvasWrapper.top + element.top - toolbar.clientHeight + 'px';
+        toolbar.style.top = element.top - canvasWrapper.top - this.margin - toolbar.clientHeight + 'px';
 
     }
 

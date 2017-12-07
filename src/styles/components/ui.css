@@ -2,6 +2,7 @@
  * User interface styles
  */
 .cover-editor {
+    position: relative;
     display: table;
     margin: 0 auto;
 
@@ -116,6 +117,7 @@
     }
 
     &__canvas-wrapper {
+        position: relative;
         border: 2px dashed #c0d5ef;
         padding: 5px;
         padding-bottom: 2px;

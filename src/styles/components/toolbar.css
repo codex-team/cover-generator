@@ -23,6 +23,20 @@
         }
     }
 
+    &--left {
+        left: 5%;
+    }
+
+    &--center {
+        margin: 0;
+        transform: translate(-50%, 0%);
+        left: 50%;
+    }
+
+    &--right {
+        right: 5%;
+    }
+
 }
 
 .cover-editor__button {
