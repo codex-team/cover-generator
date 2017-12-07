@@ -178,8 +178,9 @@ module.exports = function () {
    * Canvas module
    * @type {Canvas}
    */
-  var Canvas = __webpack_require__(4).default,
-      Toolbar = __webpack_require__(5).default;
+  var Redrawer = __webpack_require__(4).default,
+      Canvas = __webpack_require__(5).default,
+      Toolbar = __webpack_require__(6).default;
 
   /**
    * Initialization method
@@ -200,13 +201,14 @@ module.exports = function () {
       return;
     }
 
-    var canvasInstance = new Canvas(),
+    var redrawerInstance = new Redrawer(),
+        canvasInstance = new Canvas(),
         toolbarInstance = new Toolbar();
 
     /**
      * Make interface and bind events
      */
-    var nodes = ui.create(container, canvasInstance, toolbarInstance);
+    var nodes = ui.create(container, redrawerInstance, canvasInstance, toolbarInstance);
   };
 
   /**
@@ -275,6 +277,7 @@ module.exports = function () {
      * @type {Object}
      */
     var instances = {
+        redrawer: null,
         canvas: null,
         toolbar: null
     };
@@ -326,7 +329,8 @@ module.exports = function () {
      */
     function saveButtonClicked() {
 
-        instances.canvas.export();
+        instances.redrawer.shot(nodes.canvas);
+        instances.redrawer.download();
     }
 
     /**
@@ -423,11 +427,12 @@ module.exports = function () {
      * @param {object} settings - array of paramertres
      * @param {Element} settings.container - element to create cover-editor
      */
-    function create(container, canvasInstance, toolbarInstance) {
+    function create(container, redrawerInstance, canvasInstance, toolbarInstance) {
 
         var editor = $.make('div', CSS.editor),
             controls = $.make('div', CSS.controls);
 
+        instances.redrawer = redrawerInstance;
         instances.canvas = canvasInstance;
         instances.toolbar = toolbarInstance;
 
@@ -481,6 +486,209 @@ module.exports = function () {
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * DOM utility
+ */
+var $ = __webpack_require__(0).default;
+
+var Redrawer = function () {
+    function Redrawer() {
+        _classCallCheck(this, Redrawer);
+
+        this.canvasElement = document.createElement('canvas');
+        this.canvas = this.canvasElement.getContext('2d');
+        this.shootingElement = null;
+        this.shootingCoords = {
+            top: 0,
+            left: 0
+        };
+
+        // document.body.appendChild(this.canvasElement);
+    }
+
+    /**
+     * Redraws a HTMLElement to the HTMLCanvas recoursively
+     * @param {Element} element - DOM tree element which will be redrawed
+     * @return {Object}         - object with top and left coords
+     */
+
+
+    _createClass(Redrawer, [{
+        key: 'getCoords',
+        value: function getCoords(element) {
+
+            var parent = element.offsetParent,
+                coords = {
+                top: 0,
+                left: 0
+            };
+
+            while (element && element.offsetTop !== undefined && element.offsetLeft !== undefined) {
+
+                coords.top += element.offsetTop;
+                coords.left += element.offsetLeft;
+                element = element.offsetParent;
+            }
+
+            coords.top -= this.shootingCoords.top;
+            coords.left -= this.shootingCoords.left;
+
+            return coords;
+        }
+
+        /**
+         * Remove unnesessary spacing and tabulation
+         * @param {String} text - text to edit
+         */
+
+    }, {
+        key: 'formatText',
+        value: function formatText(text) {
+
+            var regexp = /\s+/g;
+
+            text = text.replace(regexp, ' ');
+
+            regexp = /^\s/g;
+            text = text.replace(regexp, '');
+
+            regexp = /\s$/g;
+            text = text.replace(regexp, '');
+
+            return text;
+        }
+
+        /**
+         * Setts a text styles
+         * @param {Element} element - DOM tree element from what style will be got
+         */
+
+    }, {
+        key: 'setTextStyle',
+        value: function setTextStyle(element) {
+
+            var style = window.getComputedStyle(element);
+
+            this.canvas.fillStyle = style.color;
+            this.canvas.font = style.fontStyle + ' ' + style.fontSize + ' ' + style.fontFamily;
+        }
+
+        /**
+         * Redraws a HTMLElement to the HTMLCanvas recoursively
+         * @param {Element} element - DOM tree element which will be redrawed
+         * @param {Number} left     - left coordinate of element
+         * @param {Number} top      - top coordinate of element
+         */
+
+    }, {
+        key: 'redraw',
+        value: function redraw(element) {
+
+            var coords = void 0;
+
+            switch (element.tagName) {
+
+                case undefined:
+
+                    var text = element.cloneNode(true),
+                        span = document.createElement('span');
+
+                    element.parentNode.insertBefore(span, element);
+                    coords = this.getCoords(span);
+                    span.textContent = element;
+
+                    this.setTextStyle(element.parentNode);
+                    this.canvas.fillText(this.formatText(element.textContent), coords.left, span.offsetHeight + coords.top);
+                    element.parentNode.removeChild(span);
+                    break;
+
+                case 'IMG':
+
+                    var image = new window.Image();
+
+                    coords = this.getCoords(element);
+
+                    image.src = element.getAttribute('SRC');
+                    image.onload = function () {
+
+                        this.canvas.drawImage(image, coords.left, coords.top);
+                    };
+
+                    break;
+
+                default:
+
+                    for (var counter = 0; counter < element.childNodes.length; counter++) {
+
+                        var child = element.childNodes[counter];
+
+                        this.redraw(child);
+                    }
+                    break;
+
+            }
+        }
+
+        /**
+         * Redraws a HTMLElement to the HTMLCanvas
+         * @param {Element} element - DOM tree element which will be redrawed
+         */
+
+    }, {
+        key: 'shot',
+        value: function shot(element) {
+
+            this.shootingElement = element;
+            this.shootingCoords = this.getCoords(this.shootingElement);
+
+            this.canvasElement.setAttribute('WIDTH', element.clientWidth);
+            this.canvasElement.setAttribute('HEIGHT', element.clientHeight);
+
+            this.redraw(this.shootingElement, 0, 0);
+        }
+
+        /**
+         * Export the HTMLCanvas element with screenshot to image and start downloading
+         * @param {Element} element - DOM tree element where to post canvas
+         */
+
+    }, {
+        key: 'download',
+        value: function download(element) {
+
+            var link = $.make('a', null, {
+                'style': 'display:none;',
+                'href': this.canvasElement.toDataURL('image/png'),
+                'download': 'cover.png'
+            });
+
+            document.body.appendChild(link);
+
+            link.click();
+            document.body.removeChild(link);
+        }
+    }]);
+
+    return Redrawer;
+}();
+
+exports.default = Redrawer;
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -909,7 +1117,7 @@ var Canvas = function () {
 exports.default = Canvas;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
