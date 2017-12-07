@@ -201,9 +201,7 @@ export default class Canvas {
      */
     setTextColor(element, color) {
 
-        if (!this.isText(element)) return;
-
-        element.querySelector('div[contenteditable="true"]').style.color = color;
+        element.style.color = color;
 
     }
 
@@ -215,11 +213,7 @@ export default class Canvas {
      */
     setTextFontSize( element, size ) {
 
-        if (!this.isText(element)) return;
-
-        element.querySelector('div[contenteditable="true"]').style.fontSize = size;
-        this.setSize(element, 'auto');
-        this.setElementAlignment(element, element.dataset.alignment);
+        element.style.fontSize = size;
 
     }
 
@@ -262,20 +256,6 @@ export default class Canvas {
         }
 
         return;
-
-    }
-
-    /**
-     * For auto resizing text
-     *
-     * @param {Event} event - KeyUp
-     */
-    autoSizing(event) {
-
-        let target = event.target;
-
-        this.setSize(target.parentNode, 'auto');
-        this.setElementAlignment(target.parentNode, target.parentNode.dataset.alignment);
 
     }
 
