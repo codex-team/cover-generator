@@ -30,12 +30,18 @@
 
     &__headline {
         position: absolute;
-        bottom: 66%;
+        bottom: 68%;
+    }
+
+    &__image {
+        position: absolute;
+        height: 33%;
+        top: 33%;
     }
 
     &__mainText {
         position: absolute;
-        top: 66%;
+        top: 68%;
     }
 
 }

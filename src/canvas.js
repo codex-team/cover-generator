@@ -111,11 +111,6 @@ export default class Canvas {
         this.paddingOfCanvas = 30;
 
         /**
-         * Size of image
-         */
-        this.imageSize = 87;
-
-        /**
          * Colors of this module
          */
         this.colors = {
@@ -324,15 +319,9 @@ export default class Canvas {
      */
     createImage(link) {
 
-        let image = $.svg('image');
+        let image = $.make('img', [this.CSS.element, this.CSS.elements.image], {src: 'src/assets/icon-picture.svg'});
 
-        image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', link);
-
-        this.setElementAlignment(image, this.alignment.horisontal.left, this.alignment.vertical.center);
-        this.setSize(image, {
-            width: this.imageSize,
-            height: this.imageSize
-        });
+        this.setElementAlignment(image, this.alignment.horisontal.left);
         this.tree.svg.appendChild(image);
 
         return image;
