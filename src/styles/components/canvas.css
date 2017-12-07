@@ -1,14 +1,41 @@
 .cover-editor {
-    
-    &__text {
-        display: inline-flex;
-        position: absolute;
-        outline: 0 !important;
-    }
 
     &__canvas {
+        display: flex;
         position: relative;
         background: white;
+    }
+
+    &__element {
+        display: flex;
+        position: absolute;
+        outline: 0 !important;
+        left: none;
+        margin: 0px;
+
+        &--left {
+            left: 5%;
+        }
+
+        &--center {
+            margin: 0;
+            transform: translate(-50%, -50%);
+            left: 50%;
+        }
+
+        &--right {
+            right: 5%;
+        }
+    }
+
+    &__headline {
+        position: absolute;
+        bottom: 66%;
+    }
+
+    &__mainText {
+        position: absolute;
+        top: 66%;
     }
 
 }

@@ -34,7 +34,17 @@ export default class Canvas {
 
         this.CSS = {
             canvas: 'cover-editor__canvas',
-            text: 'cover-editor__text'
+            element: 'cover-editor__element',
+            elements: {
+                headline: 'cover-editor__headline',
+                image: 'cover-editor__image',
+                mainText: 'cover-editor__mainText'
+            },
+            alignment: {
+                left: 'cover-editor__element--left',
+                center: 'cover-editor__element--center',
+                right: 'cover-editor__element--right',
+            }
         };
 
         /**
@@ -220,90 +230,38 @@ export default class Canvas {
      * @param {String} horisontal - type of alignment on horisontal
      * @param {String} vertical   - type of alignment on verlical
      */
-    setElementAlignment( element, horisontal, vertical ) {
+    setElementAlignment( element, horisontal) {
 
-        let canvasSizes = {
-                width: this.tree.svg.clientWidth,
-                height: this.tree.svg.clientHeight
-            },
-            elementSizes = {
-                width: parseInt(element.offsetWidth),
-                height: parseInt(element.offsetHeight)
-            },
-            blockHeight = (canvasSizes.height - 2 * this.alignmentPadding) / 3,
-            align = {
-                horisontal: this.alignment.horisontal,
-                vertical: this.alignment.vertical
-            },
-            position = {
-                x: null,
-                y: null
-            };
+        let align = {
+            horisontal: this.alignment.horisontal
+        };
+
+        for (let key in this.CSS.alignment) {
+
+            element.classList.remove(this.CSS.alignment[key]);
+
+        }
 
         switch (horisontal) {
 
             case align.horisontal.left:
 
-                position.x = this.paddingOfElement;
+                element.classList.add(this.CSS.alignment.left);
                 break;
 
             case align.horisontal.center:
 
-                position.x = (canvasSizes.width - elementSizes.width) / 2;
+                element.classList.add(this.CSS.alignment.center);
                 break;
 
             case align.horisontal.right:
 
-                position.x = canvasSizes.width - elementSizes.width - this.paddingOfElement;
+                element.classList.add(this.CSS.alignment.right);
                 break;
 
         }
-
-        switch (vertical) {
-
-            case align.vertical.top:
-
-                position.y = blockHeight - elementSizes.height;
-                break;
-
-            case align.vertical.center:
-
-                position.y = blockHeight + this.alignmentPadding;
-                break;
-
-            case align.vertical.bottom:
-
-                position.y = blockHeight * 2 + this.alignmentPadding * 2;
-                break;
-
-        }
-
-        this.setElementPosition(element, position.x, position.y);
 
         return;
-
-    }
-
-    /**
-     * Changes a position of element
-     *
-     * @param {Element} element - element to change position
-     * @param {Number} x        - x coord
-     * @param {Number} y        - y coord
-     */
-    setElementPosition( element, x, y ) {
-
-        if (typeof y === 'number') {
-
-            element.style.top = y + 'px';
-
-        }
-
-        if (typeof x === 'number') {
-
-            element.style.left = x + 'px';
-
-        }
 
     }
 
@@ -331,31 +289,16 @@ export default class Canvas {
      */
     createText( type ) {
 
-        let text = $.make('div', this.CSS.text),
-            y;
+        let text = $.make('div', [this.CSS.element, this.CSS.elements[type]]);
 
         text.innerHTML = this.newText;
+        text.dataset.type = type;
+
         text.setAttribute('contenteditable', true);
         text.addEventListener('paste', this.pasteFromClipboard.bind(this));
 
-        text.dataset.type = type;
         this.tree.svg.appendChild(text);
-
-        switch (type) {
-
-            case (this.elements.headline):
-
-                y = 'top';
-                break;
-
-            case (this.elements.mainText):
-
-                y = 'bottom';
-                break;
-
-        }
-
-        this.setElementAlignment(text, this.alignment.horisontal.left, y);
+        this.setElementAlignment(text, this.alignment.horisontal.left);
 
         return text;
 
