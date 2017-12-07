@@ -110,11 +110,11 @@ export default class Redrawer {
             coords = this.getCoords(element);
 
         image.src = element.getAttribute('SRC');
-        image.onload = function () {
+        image.onload = (function () {
 
             this.canvas.drawImage(image, coords.left, coords.top);
 
-        };
+        }).bind(this);
 
     }
 
@@ -151,7 +151,7 @@ export default class Redrawer {
 
             case 'IMG':
 
-                this.drawHTMLImageOnCanvasOnCanvas(element);
+                this.drawHTMLImageOnCanvas(element);
                 break;
 
             default:

@@ -624,7 +624,7 @@ var Redrawer = function () {
             image.onload = function () {
 
                 this.canvas.drawImage(image, coords.left, coords.top);
-            };
+            }.bind(this);
         }
 
         /**
@@ -665,7 +665,7 @@ var Redrawer = function () {
 
                 case 'IMG':
 
-                    this.drawHTMLImageOnCanvasOnCanvas(element);
+                    this.drawHTMLImageOnCanvas(element);
                     break;
 
                 default:
