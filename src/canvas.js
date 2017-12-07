@@ -33,7 +33,8 @@ export default class Canvas {
         };
 
         this.CSS = {
-            text: 'cover-editor__canvas--text'
+            canvas: 'cover-editor__canvas',
+            text: 'cover-editor__text'
         };
 
         /**
@@ -139,52 +140,11 @@ export default class Canvas {
      */
     create() {
 
-        this.tree.rectangle = $.svg('rect', {fill: this.colors.mainSVGcolor});
-        this.setSize(this.tree.rectangle, this.sizes.horisontal);
-
-        this.tree.svg = $.svg('svg');
+        this.tree.svg = $.make('div');
+        this.tree.svg.classList.add(this.CSS.canvas);
         this.setCanvasFormat(this.formats.horisontal);
-        this.tree.svg.appendChild(this.tree.rectangle);
 
         return this.tree.svg;
-
-    }
-
-    /**
-     * Change position of elements after canvas resize
-     */
-    updateElementsPosition() {
-
-        for (let counter = 0; counter < this.tree.svg.children.length; counter++) {
-
-            let element = this.tree.svg.children[counter],
-                align = {
-                    horisontal: element.dataset.alignment,
-                    vertical: null
-                };
-
-            switch (element.dataset.type) {
-
-                case this.elements.headline:
-
-                    align.vertical = this.alignment.vertical.top;
-                    break;
-
-                case this.elements.image:
-
-                    align.vertical = this.alignment.vertical.center;
-                    break;
-
-                case this.elements.mainText:
-
-                    align.vertical = this.alignment.vertical.bottom;
-                    break;
-
-            }
-
-            this.setElementAlignment(element, align.horisontal, align.vertical);
-
-        }
 
     }
 
@@ -196,9 +156,6 @@ export default class Canvas {
     setCanvasFormat( format ) {
 
         this.setSize(this.tree.svg, this.sizes[format]);
-        this.setSize(this.tree.rectangle, this.sizes[format]);
-
-        this.updateElementsPosition();
 
     }
 
@@ -212,28 +169,15 @@ export default class Canvas {
      */
     setSize( element, size ) {
 
-        if (size === 'auto' && this.isText(element)) {
-
-            let text = element.querySelector('div[contenteditable="true"]');
-
-            element.setAttribute('width', this.tree.svg.clientWidth);
-            element.setAttribute('height', this.tree.svg.clientHeight);
-            size = {
-                width: text.offsetWidth + this.paddingOfElement,
-                height: text.offsetHeight + this.paddingOfElement
-            };
-
-        }
-
         if (size.height) {
 
-            element.setAttribute('height', size.height);
+            element.style.height = size.height + 'px';
 
         }
 
         if (size.width) {
 
-            element.setAttribute('width', size.width);
+            element.style.width = size.width + 'px';
 
         }
 
@@ -283,8 +227,8 @@ export default class Canvas {
                 height: this.tree.svg.clientHeight
             },
             elementSizes = {
-                width: parseInt(element.getAttribute('width')),
-                height: parseInt(element.getAttribute('height'))
+                width: parseInt(element.offsetWidth),
+                height: parseInt(element.offsetHeight)
             },
             blockHeight = (canvasSizes.height - 2 * this.alignmentPadding) / 3,
             align = {
@@ -351,13 +295,13 @@ export default class Canvas {
 
         if (typeof y === 'number') {
 
-            element.setAttribute('y', y);
+            element.style.top = y + 'px';
 
         }
 
         if (typeof x === 'number') {
 
-            element.setAttribute('x', x);
+            element.style.left = x + 'px';
 
         }
 
@@ -388,17 +332,14 @@ export default class Canvas {
     createText( type ) {
 
         let text = $.make('div', this.CSS.text),
-            container = $.svg('foreignObject'),
-            y = 0;
+            y;
 
         text.innerHTML = this.newText;
         text.setAttribute('contenteditable', true);
-        text.addEventListener('keyup', this.autoSizing.bind(this));
         text.addEventListener('paste', this.pasteFromClipboard.bind(this));
 
-        container.dataset.type = type;
-        container.appendChild(text);
-        this.tree.svg.appendChild(container);
+        text.dataset.type = type;
+        this.tree.svg.appendChild(text);
 
         switch (type) {
 
@@ -414,10 +355,9 @@ export default class Canvas {
 
         }
 
-        this.setSize(container, 'auto');
-        this.setElementAlignment(container, this.alignment.horisontal.left, y);
+        this.setElementAlignment(text, this.alignment.horisontal.left, y);
 
-        return container;
+        return text;
 
     }
 

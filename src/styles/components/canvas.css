@@ -1,8 +1,14 @@
-.cover-editor__canvas {
+.cover-editor {
     
-    &--text {
-        outline: 0 !important;
+    &__text {
         display: inline-flex;
-    }   
+        position: absolute;
+        outline: 0 !important;
+    }
+
+    &__canvas {
+        position: relative;
+        background: white;
+    }
 
 }
