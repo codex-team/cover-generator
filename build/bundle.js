@@ -587,6 +587,63 @@ var Redrawer = function () {
         }
 
         /**
+         * Draw HTML #text element on the HTMLCanvas
+         * @param {Element} element - DOM tree element from what style will be got
+         */
+
+    }, {
+        key: 'drawHTMLTextOnCanvas',
+        value: function drawHTMLTextOnCanvas(element) {
+
+            var text = element.cloneNode(true),
+                span = document.createElement('span'),
+                coords = void 0;
+
+            element.parentNode.insertBefore(span, element);
+            coords = this.getCoords(span);
+            span.textContent = element;
+
+            this.setTextStyle(element.parentNode);
+            this.canvas.fillText(this.formatText(element.textContent), coords.left, span.offsetHeight + coords.top);
+            element.parentNode.removeChild(span);
+        }
+
+        /**
+         * Draw HTMLImage element on the HTMLCanvas
+         * @param {Element} element - DOM tree element from what style will be got
+         */
+
+    }, {
+        key: 'drawHTMLImageOnCanvas',
+        value: function drawHTMLImageOnCanvas(element) {
+
+            var image = new window.Image(),
+                coords = this.getCoords(element);
+
+            image.src = element.getAttribute('SRC');
+            image.onload = function () {
+
+                this.canvas.drawImage(image, coords.left, coords.top);
+            };
+        }
+
+        /**
+         * Draw HTMLDiv or another block element on the HTMLCanvas
+         * @param {Element} element - DOM tree element from what style will be got
+         */
+
+    }, {
+        key: 'drawHTMLBlockOnCanvas',
+        value: function drawHTMLBlockOnCanvas(element) {
+
+            var styles = window.getComputedStyle(element),
+                coords = this.getCoords(element);
+
+            this.canvas.fillStyle = styles.backgroundColor;
+            this.canvas.fillRect(coords.left, coords.top, element.offsetWidth, element.offsetHeight);
+        }
+
+        /**
          * Redraws a HTMLElement to the HTMLCanvas recoursively
          * @param {Element} element - DOM tree element which will be redrawed
          * @param {Number} left     - left coordinate of element
@@ -603,33 +660,17 @@ var Redrawer = function () {
 
                 case undefined:
 
-                    var text = element.cloneNode(true),
-                        span = document.createElement('span');
-
-                    element.parentNode.insertBefore(span, element);
-                    coords = this.getCoords(span);
-                    span.textContent = element;
-
-                    this.setTextStyle(element.parentNode);
-                    this.canvas.fillText(this.formatText(element.textContent), coords.left, span.offsetHeight + coords.top);
-                    element.parentNode.removeChild(span);
+                    this.drawHTMLTextOnCanvas(element);
                     break;
 
                 case 'IMG':
 
-                    var image = new window.Image();
-
-                    coords = this.getCoords(element);
-
-                    image.src = element.getAttribute('SRC');
-                    image.onload = function () {
-
-                        this.canvas.drawImage(image, coords.left, coords.top);
-                    };
-
+                    this.drawHTMLImageOnCanvasOnCanvas(element);
                     break;
 
                 default:
+
+                    this.drawHTMLBlockOnCanvas(element);
 
                     for (var counter = 0; counter < element.childNodes.length; counter++) {
 
