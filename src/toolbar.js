@@ -349,7 +349,7 @@ export default class Toolbar {
             element = this.getCoords(this.target),
             canvasWrapper = this.getCoords(this.canvas.parentNode.parentNode);
 
-        element.width = this.target.offsetWidth;
+        element.width = this.target.clientWidth;
 
         switch (this.target.dataset.alignment) {
 
@@ -358,7 +358,7 @@ export default class Toolbar {
                 break;
 
             case 'center':
-                toolbar.style.left = element.left - canvasWrapper.left - (toolbar.clientWidth - element.width) / 2 + 'px';
+                toolbar.style.left = element.left - canvasWrapper.left - toolbar.clientWidth / 2 + 'px';
                 break;
 
             case 'right':
