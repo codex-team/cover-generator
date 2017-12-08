@@ -3,6 +3,16 @@
  */
 let $ = require('./dom').default;
 
+/**
+ * @class     Redrawer
+ * @classdesc Makes a screenshot of HTMLElement with it's children
+ *
+ * @typedef  {Redrawer} Redrawer
+ * @property {Element}  canvasElement   - HTMLCanvas element where HTMLElement will be redrawn
+ * @property {Object}   canvas          - HTMLCanvas context
+ * @property {Element}  shootingElement - HTMLElement which will be screenshoted
+ * @property {Object}   shootingCoords  - coords of the shootingElement in the DOM tree
+ */
 export default class Redrawer {
 
     constructor() {

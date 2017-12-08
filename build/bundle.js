@@ -504,6 +504,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var $ = __webpack_require__(0).default;
 
+/**
+ * @class     Redrawer
+ * @classdesc Makes a screenshot of HTMLElement with it's children
+ *
+ * @typedef  {Redrawer} Redrawer
+ * @property {Element}  canvasElement   - HTMLCanvas element where HTMLElement will be redrawn
+ * @property {Object}   canvas          - HTMLCanvas context
+ * @property {Element}  shootingElement - HTMLElement which will be screenshoted
+ * @property {Object}   shootingCoords  - coords of the shootingElement in the DOM tree
+ */
+
 var Redrawer = function () {
     function Redrawer() {
         _classCallCheck(this, Redrawer);
@@ -758,9 +769,6 @@ var $ = __webpack_require__(0).default;
  * @property {Object} sizes              - sizes of canvas block
  * @property {Object} alignment          - types of alignment
  * @property {Object} elements           - types of elements on canvas
- * @property {Number} paddingOfElement   - space field around the text element
- * @property {Number} paddingOfCanvas    - padding between elements and the canvas
- * @property {Number} imageSize          - size of image in px
  * @property {Object} colors             - default colors
  */
 
@@ -843,21 +851,6 @@ var Canvas = function () {
         };
 
         /**
-         * Space between elements
-         */
-        this.alignmentPadding = 17;
-
-        /**
-         * Space field around the text element
-         */
-        this.paddingOfElement = 10;
-
-        /**
-         * Padding between elements and th canvas
-         */
-        this.paddingOfCanvas = 30;
-
-        /**
          * Colors of this module
          */
         this.colors = {
@@ -895,8 +888,7 @@ var Canvas = function () {
         key: 'create',
         value: function create() {
 
-            this.tree.svg = $.make('div');
-            this.tree.svg.classList.add(this.CSS.canvas);
+            this.tree.svg = $.make('div', this.CSS.canvas);
             this.setCanvasFormat(this.formats.horisontal);
 
             return this.tree.svg;
