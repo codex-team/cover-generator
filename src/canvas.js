@@ -13,9 +13,6 @@ let $ = require('./dom').default;
  * @property {Object} sizes              - sizes of canvas block
  * @property {Object} alignment          - types of alignment
  * @property {Object} elements           - types of elements on canvas
- * @property {Number} paddingOfElement   - space field around the text element
- * @property {Number} paddingOfCanvas    - padding between elements and the canvas
- * @property {Number} imageSize          - size of image in px
  * @property {Object} colors             - default colors
  */
 export default class Canvas {
@@ -96,21 +93,6 @@ export default class Canvas {
         };
 
         /**
-         * Space between elements
-         */
-        this.alignmentPadding = 17;
-
-        /**
-         * Space field around the text element
-         */
-        this.paddingOfElement = 10;
-
-        /**
-         * Padding between elements and th canvas
-         */
-        this.paddingOfCanvas = 30;
-
-        /**
          * Colors of this module
          */
         this.colors = {
@@ -145,8 +127,7 @@ export default class Canvas {
      */
     create() {
 
-        this.tree.svg = $.make('div');
-        this.tree.svg.classList.add(this.CSS.canvas);
+        this.tree.svg = $.make('div', this.CSS.canvas);
         this.setCanvasFormat(this.formats.horisontal);
 
         return this.tree.svg;
