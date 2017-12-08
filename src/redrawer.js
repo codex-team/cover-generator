@@ -119,7 +119,7 @@ export default class Redrawer {
         let image = new window.Image(),
             coords = this.getCoords(element);
 
-        image.src = element.getAttribute('SRC');
+        image.src = element.getAttribute('scr');
         image.onload = (function () {
 
             this.canvas.drawImage(image, coords.left, coords.top);
