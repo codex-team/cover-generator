@@ -241,6 +241,16 @@ export default class Canvas {
 
             event.preventDefault();
 
+            let shift = document.createElement('br'),
+                range = window.getSelection().getRangeAt(0),
+                cursorPosition = 0,
+                text = event.target.innerHTML;
+
+            range.deleteContents();
+            range.insertNode(shift);
+            range.selectNode(event.target, cursorPosition);
+            range.collapse(false);
+
         }
 
     }
