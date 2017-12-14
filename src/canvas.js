@@ -26,11 +26,11 @@ export default class Canvas {
          * DOM of this class
          */
         this.tree = {
-            cover: null
+            editor: null
         };
 
         this.CSS = {
-            canvas: 'cover-editor__cover',
+            canvas: 'cover-editor__editor',
             element: 'cover-editor__element',
             elements: {
                 headline: 'cover-editor__headline',
@@ -127,10 +127,10 @@ export default class Canvas {
      */
     create() {
 
-        this.tree.cover = $.make('div', this.CSS.canvas);
+        this.tree.editor = $.make('div', this.CSS.canvas);
         this.setCanvasFormat(this.formats.horisontal);
 
-        return this.tree.cover;
+        return this.tree.editor;
 
     }
 
@@ -141,7 +141,7 @@ export default class Canvas {
      */
     setCanvasFormat( format ) {
 
-        this.setSize(this.tree.cover, this.sizes[format]);
+        this.setSize(this.tree.editor, this.sizes[format]);
 
     }
 
@@ -253,7 +253,7 @@ export default class Canvas {
         text.setAttribute('contenteditable', true);
         text.addEventListener('paste', this.pasteFromClipboard.bind(this));
 
-        this.tree.cover.appendChild(text);
+        this.tree.editor.appendChild(text);
         this.setElementAlignment(text, this.alignment.horisontal.left);
 
         return text;
@@ -303,7 +303,7 @@ export default class Canvas {
         let image = $.make('img', [this.CSS.element, this.CSS.elements.image], {src: 'src/assets/icon-picture.svg'});
 
         this.setElementAlignment(image, this.alignment.horisontal.left);
-        this.tree.cover.appendChild(image);
+        this.tree.editor.appendChild(image);
 
         return image;
 
@@ -334,7 +334,7 @@ export default class Canvas {
     export() {
 
         let serializer = new window.XMLSerializer(),
-            source = serializer.serializeToString(this.tree.cover);
+            source = serializer.serializeToString(this.tree.editor);
 
         /**
          * Match 'source' with regex: "xmlns="http//www.w3.org/2000/svg" between one and unlimited times and replace it
