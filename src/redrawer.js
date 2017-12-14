@@ -67,13 +67,7 @@ export default class Redrawer {
 
         text = text.replace(regexp, ' ');
 
-        regexp = /^\s/g;
-        text = text.replace(regexp, '');
-
-        regexp = /\s$/g;
-        text = text.replace(regexp, '');
-
-        return text;
+        return text.trim();
 
     }
 
