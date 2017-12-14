@@ -110,6 +110,11 @@ export default class Toolbar {
             defaultText : '#000000'
         };
 
+        /**
+         * Margin between the canvas element and the toolbar
+         */
+        this.margin = 10;
+
     }
 
     /**
@@ -316,33 +321,26 @@ export default class Toolbar {
     moveToTarget() {
 
         let toolbar = this.tree.toolbar,
-            canvasWrapper = {
-                left: this.canvas.parentNode.offsetLeft,
-                top: this.canvas.parentNode.offsetTop
-            },
-            element = {
-                left: window.parseInt(this.target.getAttribute('x')),
-                top: window.parseInt(this.target.getAttribute('y')),
-                width: this.target.clientWidth
-            };
+            element = this.target.getBoundingClientRect(),
+            canvasWrapper = this.canvas.parentNode.getBoundingClientRect();
 
         switch (this.target.dataset.alignment) {
 
             case 'left':
-                toolbar.style.left = canvasWrapper.left + element.left + 'px';
+                toolbar.style.left = element.left - canvasWrapper.left + 'px';
                 break;
 
             case 'center':
-                toolbar.style.left = canvasWrapper.left + element.left + (element.width - toolbar.clientWidth) / 2 + 'px';
+                toolbar.style.left = element.left - canvasWrapper.left - (toolbar.clientWidth - this.target.clientWidth) / 2 + 'px';
                 break;
 
             case 'right':
-                toolbar.style.left = canvasWrapper.left + element.left + element.width - toolbar.clientWidth + 'px';
+                toolbar.style.left = element.left - canvasWrapper.left + this.target.clientWidth - toolbar.clientWidth + 'px';
                 break;
 
         }
 
-        toolbar.style.top = canvasWrapper.top + element.top - toolbar.clientHeight + 'px';
+        toolbar.style.top = element.top - this.margin - toolbar.clientHeight + 'px';
 
     }
 

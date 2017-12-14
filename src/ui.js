@@ -40,6 +40,7 @@ module.exports = function () {
      * @type {Object}
      */
     let instances = {
+        redrawer             : null,
         canvas               : null,
         toolbar              : null
     };
@@ -95,7 +96,8 @@ module.exports = function () {
      */
     function saveButtonClicked() {
 
-        instances.canvas.export();
+        instances.redrawer.shot(nodes.canvas);
+        instances.redrawer.download();
 
     }
 
@@ -201,12 +203,12 @@ module.exports = function () {
      * @param {object} settings - array of paramertres
      * @param {Element} settings.container - element to create cover-editor
      */
-    function create(container, canvasInstance, toolbarInstance) {
+    function create(container, redrawerInstance, canvasInstance, toolbarInstance) {
 
         var editor   = $.make('div', CSS.editor),
             controls = $.make('div', CSS.controls);
 
-
+        instances.redrawer              = redrawerInstance;
         instances.canvas                = canvasInstance;
         instances.toolbar               = toolbarInstance;
 

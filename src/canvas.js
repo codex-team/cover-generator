@@ -13,9 +13,6 @@ let $ = require('./dom').default;
  * @property {Object} sizes              - sizes of canvas block
  * @property {Object} alignment          - types of alignment
  * @property {Object} elements           - types of elements on canvas
- * @property {Number} paddingOfElement   - space field around the text element
- * @property {Number} paddingOfCanvas    - padding between elements and the canvas
- * @property {Number} imageSize          - size of image in px
  * @property {Object} colors             - default colors
  */
 export default class Canvas {
@@ -29,11 +26,22 @@ export default class Canvas {
          * DOM of this class
          */
         this.tree = {
-            svg: null
+            editor: null
         };
 
         this.CSS = {
-            text: 'cover-editor__canvas--text'
+            canvas: 'cover-editor__editor',
+            element: 'cover-editor__element',
+            elements: {
+                headline: 'cover-editor__headline',
+                image: 'cover-editor__image',
+                mainText: 'cover-editor__mainText'
+            },
+            alignment: {
+                left: 'cover-editor__element--left',
+                center: 'cover-editor__element--center',
+                right: 'cover-editor__element--right',
+            }
         };
 
         /**
@@ -85,26 +93,6 @@ export default class Canvas {
         };
 
         /**
-         * Space between elements
-         */
-        this.alignmentPadding = 17;
-
-        /**
-         * Space field around the text element
-         */
-        this.paddingOfElement = 10;
-
-        /**
-         * Padding between elements and th canvas
-         */
-        this.paddingOfCanvas = 30;
-
-        /**
-         * Size of image
-         */
-        this.imageSize = 87;
-
-        /**
          * Colors of this module
          */
         this.colors = {
@@ -139,52 +127,10 @@ export default class Canvas {
      */
     create() {
 
-        this.tree.rectangle = $.svg('rect', {fill: this.colors.mainSVGcolor});
-        this.setSize(this.tree.rectangle, this.sizes.horisontal);
-
-        this.tree.svg = $.svg('svg');
+        this.tree.editor = $.make('div', this.CSS.canvas);
         this.setCanvasFormat(this.formats.horisontal);
-        this.tree.svg.appendChild(this.tree.rectangle);
 
-        return this.tree.svg;
-
-    }
-
-    /**
-     * Change position of elements after canvas resize
-     */
-    updateElementsPosition() {
-
-        for (let counter = 0; counter < this.tree.svg.children.length; counter++) {
-
-            let element = this.tree.svg.children[counter],
-                align = {
-                    horisontal: element.dataset.alignment,
-                    vertical: null
-                };
-
-            switch (element.dataset.type) {
-
-                case this.elements.headline:
-
-                    align.vertical = this.alignment.vertical.top;
-                    break;
-
-                case this.elements.image:
-
-                    align.vertical = this.alignment.vertical.center;
-                    break;
-
-                case this.elements.mainText:
-
-                    align.vertical = this.alignment.vertical.bottom;
-                    break;
-
-            }
-
-            this.setElementAlignment(element, align.horisontal, align.vertical);
-
-        }
+        return this.tree.editor;
 
     }
 
@@ -195,10 +141,7 @@ export default class Canvas {
      */
     setCanvasFormat( format ) {
 
-        this.setSize(this.tree.svg, this.sizes[format]);
-        this.setSize(this.tree.rectangle, this.sizes[format]);
-
-        this.updateElementsPosition();
+        this.setSize(this.tree.editor, this.sizes[format]);
 
     }
 
@@ -212,28 +155,15 @@ export default class Canvas {
      */
     setSize( element, size ) {
 
-        if (size === 'auto' && this.isText(element)) {
-
-            let text = element.querySelector('div[contenteditable="true"]');
-
-            element.setAttribute('width', this.tree.svg.clientWidth);
-            element.setAttribute('height', this.tree.svg.clientHeight);
-            size = {
-                width: text.offsetWidth + this.paddingOfElement,
-                height: text.offsetHeight + this.paddingOfElement
-            };
-
-        }
-
         if (size.height) {
 
-            element.setAttribute('height', size.height);
+            element.style.height = size.height + 'px';
 
         }
 
         if (size.width) {
 
-            element.setAttribute('width', size.width);
+            element.style.width = size.width + 'px';
 
         }
 
@@ -247,9 +177,7 @@ export default class Canvas {
      */
     setTextColor(element, color) {
 
-        if (!this.isText(element)) return;
-
-        element.querySelector('div[contenteditable="true"]').style.color = color;
+        element.style.color = color;
 
     }
 
@@ -261,11 +189,7 @@ export default class Canvas {
      */
     setTextFontSize( element, size ) {
 
-        if (!this.isText(element)) return;
-
-        element.querySelector('div[contenteditable="true"]').style.fontSize = size;
-        this.setSize(element, 'auto');
-        this.setElementAlignment(element, element.dataset.alignment);
+        element.style.fontSize = size;
 
     }
 
@@ -276,104 +200,38 @@ export default class Canvas {
      * @param {String} horisontal - type of alignment on horisontal
      * @param {String} vertical   - type of alignment on verlical
      */
-    setElementAlignment( element, horisontal, vertical ) {
+    setElementAlignment( element, horisontal) {
 
-        let canvasSizes = {
-                width: this.tree.svg.clientWidth,
-                height: this.tree.svg.clientHeight
-            },
-            elementSizes = {
-                width: parseInt(element.getAttribute('width')),
-                height: parseInt(element.getAttribute('height'))
-            },
-            blockHeight = (canvasSizes.height - 2 * this.alignmentPadding) / 3,
-            align = {
-                horisontal: this.alignment.horisontal,
-                vertical: this.alignment.vertical
-            },
-            position = {
-                x: null,
-                y: null
-            };
+        let align = {
+            horisontal: this.alignment.horisontal
+        };
+
+        for (let key in this.CSS.alignment) {
+
+            element.classList.remove(this.CSS.alignment[key]);
+
+        }
 
         switch (horisontal) {
 
             case align.horisontal.left:
 
-                position.x = this.paddingOfElement;
+                element.classList.add(this.CSS.alignment.left);
                 break;
 
             case align.horisontal.center:
 
-                position.x = (canvasSizes.width - elementSizes.width) / 2;
+                element.classList.add(this.CSS.alignment.center);
                 break;
 
             case align.horisontal.right:
 
-                position.x = canvasSizes.width - elementSizes.width - this.paddingOfElement;
+                element.classList.add(this.CSS.alignment.right);
                 break;
 
         }
-
-        switch (vertical) {
-
-            case align.vertical.top:
-
-                position.y = blockHeight - elementSizes.height;
-                break;
-
-            case align.vertical.center:
-
-                position.y = blockHeight + this.alignmentPadding;
-                break;
-
-            case align.vertical.bottom:
-
-                position.y = blockHeight * 2 + this.alignmentPadding * 2;
-                break;
-
-        }
-
-        this.setElementPosition(element, position.x, position.y);
 
         return;
-
-    }
-
-    /**
-     * Changes a position of element
-     *
-     * @param {Element} element - element to change position
-     * @param {Number} x        - x coord
-     * @param {Number} y        - y coord
-     */
-    setElementPosition( element, x, y ) {
-
-        if (typeof y === 'number') {
-
-            element.setAttribute('y', y);
-
-        }
-
-        if (typeof x === 'number') {
-
-            element.setAttribute('x', x);
-
-        }
-
-    }
-
-    /**
-     * For auto resizing text
-     *
-     * @param {Event} event - KeyUp
-     */
-    autoSizing(event) {
-
-        let target = event.target;
-
-        this.setSize(target.parentNode, 'auto');
-        this.setElementAlignment(target.parentNode, target.parentNode.dataset.alignment);
 
     }
 
@@ -387,37 +245,18 @@ export default class Canvas {
      */
     createText( type ) {
 
-        let text = $.make('div', this.CSS.text),
-            container = $.svg('foreignObject'),
-            y = 0;
+        let text = $.make('div', [this.CSS.element, this.CSS.elements[type]]);
 
         text.innerHTML = this.newText;
+        text.dataset.type = type;
+
         text.setAttribute('contenteditable', true);
-        text.addEventListener('keyup', this.autoSizing.bind(this));
         text.addEventListener('paste', this.pasteFromClipboard.bind(this));
 
-        container.dataset.type = type;
-        container.appendChild(text);
-        this.tree.svg.appendChild(container);
+        this.tree.editor.appendChild(text);
+        this.setElementAlignment(text, this.alignment.horisontal.left);
 
-        switch (type) {
-
-            case (this.elements.headline):
-
-                y = 'top';
-                break;
-
-            case (this.elements.mainText):
-
-                y = 'bottom';
-                break;
-
-        }
-
-        this.setSize(container, 'auto');
-        this.setElementAlignment(container, this.alignment.horisontal.left, y);
-
-        return container;
+        return text;
 
     }
 
@@ -461,16 +300,10 @@ export default class Canvas {
      */
     createImage(link) {
 
-        let image = $.svg('image');
+        let image = $.make('img', [this.CSS.element, this.CSS.elements.image], {src: 'src/assets/icon-picture.svg'});
 
-        image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', link);
-
-        this.setElementAlignment(image, this.alignment.horisontal.left, this.alignment.vertical.center);
-        this.setSize(image, {
-            width: this.imageSize,
-            height: this.imageSize
-        });
-        this.tree.svg.appendChild(image);
+        this.setElementAlignment(image, this.alignment.horisontal.left);
+        this.tree.editor.appendChild(image);
 
         return image;
 
@@ -501,7 +334,7 @@ export default class Canvas {
     export() {
 
         let serializer = new window.XMLSerializer(),
-            source = serializer.serializeToString(this.tree.svg);
+            source = serializer.serializeToString(this.tree.editor);
 
         /**
          * Match 'source' with regex: "xmlns="http//www.w3.org/2000/svg" between one and unlimited times and replace it

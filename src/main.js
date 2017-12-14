@@ -19,7 +19,8 @@ module.exports = function () {
      * Canvas module
      * @type {Canvas}
      */
-    let Canvas = require('./canvas').default,
+    let Redrawer = require('./redrawer').default,
+        Canvas = require('./canvas').default,
         Toolbar = require('./toolbar').default;
 
     /**
@@ -40,13 +41,14 @@ module.exports = function () {
 
         }
 
-        let canvasInstance = new Canvas(),
+        let redrawerInstance = new Redrawer(),
+            canvasInstance = new Canvas(),
             toolbarInstance = new Toolbar();
 
         /**
          * Make interface and bind events
          */
-        let nodes = ui.create(container, canvasInstance, toolbarInstance);
+        let nodes = ui.create(container, redrawerInstance, canvasInstance, toolbarInstance);
 
     };
 
