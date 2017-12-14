@@ -1,6 +1,6 @@
 .cover-editor {
 
-    &__canvas {
+    &__cover {
         display: flex;
         background: white;
     }
