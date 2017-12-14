@@ -235,6 +235,16 @@ export default class Canvas {
 
     }
 
+    insertShift(event) {
+
+        if (event.keyCode == 13) {
+
+            event.preventDefault();
+
+        }
+
+    }
+
     /**
      * Creates an text element
      *
@@ -251,6 +261,7 @@ export default class Canvas {
         text.dataset.type = type;
 
         text.setAttribute('contenteditable', true);
+        text.addEventListener('keydown', this.insertShift);
         text.addEventListener('paste', this.pasteFromClipboard.bind(this));
 
         this.tree.editor.appendChild(text);
