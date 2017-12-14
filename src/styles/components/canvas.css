@@ -2,7 +2,6 @@
 
     &__canvas {
         display: flex;
-        position: relative;
         background: white;
     }
 
@@ -29,18 +28,15 @@
     }
 
     &__headline {
-        position: absolute;
         bottom: 68%;
     }
 
     &__image {
-        position: absolute;
         height: 33%;
         top: 33%;
     }
 
     &__mainText {
-        position: absolute;
         top: 68%;
     }
 

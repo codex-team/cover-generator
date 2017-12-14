@@ -316,40 +316,13 @@ export default class Toolbar {
     }
 
     /**
-     * Get coords of element
-     * @param {Element} element - DOM tree which coords will be got
-     */
-    getCoords(element) {
-
-        var parent = element.offsetParent,
-            coords =
-            {
-                top: 0,
-                left: 0
-            };
-
-        while (element && element.offsetTop !== undefined && element.offsetLeft !== undefined) {
-
-            coords.top += element.offsetTop;
-            coords.left += element.offsetLeft;
-            element = element.offsetParent;
-
-        }
-
-        return coords;
-
-    }
-
-    /**
      * Move toolbar to target
      */
     moveToTarget() {
 
         let toolbar = this.tree.toolbar,
-            element = this.getCoords(this.target),
-            canvasWrapper = this.getCoords(this.canvas.parentNode.parentNode);
-
-        element.width = this.target.clientWidth;
+            element = this.target.getBoundingClientRect(),
+            canvasWrapper = this.canvas.parentNode.getBoundingClientRect();
 
         switch (this.target.dataset.alignment) {
 
@@ -358,16 +331,16 @@ export default class Toolbar {
                 break;
 
             case 'center':
-                toolbar.style.left = element.left - canvasWrapper.left - toolbar.clientWidth / 2 + 'px';
+                toolbar.style.left = element.left - canvasWrapper.left - (toolbar.clientWidth - this.target.clientWidth) / 2 + 'px';
                 break;
 
             case 'right':
-                toolbar.style.left = element.left - canvasWrapper.left + element.width - toolbar.clientWidth + 'px';
+                toolbar.style.left = element.left - canvasWrapper.left + this.target.clientWidth - toolbar.clientWidth + 'px';
                 break;
 
         }
 
-        toolbar.style.top = element.top - canvasWrapper.top - this.margin - toolbar.clientHeight + 'px';
+        toolbar.style.top = element.top - this.margin - toolbar.clientHeight + 'px';
 
     }
 
